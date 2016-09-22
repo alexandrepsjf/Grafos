@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -77,5 +80,8 @@ public class Usuario {
 
     public void setIdNivel(int idNivel) {
         this.idNivel = idNivel;
+    }
+     public static List<Usuario> obterUsuario() throws ClassNotFoundException, SQLException {
+        return Usuario.obterUsuario();
     }
 }

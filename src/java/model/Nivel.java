@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -123,5 +126,8 @@ public class Nivel {
 
     public void setId(int id) {
         this.id = id;
+    }
+     public static List<Nivel> obterNivel() throws ClassNotFoundException, SQLException {
+        return Nivel.obterNivel();
     }
 }

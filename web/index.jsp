@@ -12,10 +12,10 @@ and open the template in the editor.
     </head>
     <body>
         <div><h3><a href="">Pedidos</a></h3>
-        <h3><a href="">Clientes</a></h3>
+        <h3><a href="PesquisaClienteController">Clientes</a></h3>
         <h3><a href="">Ligacoes Recebidas</a></h3>
-        <h3><a href="">Produtos</a></h3>
-        <h3><a href="">Formas Pagamento</a></h3>
+        <h3><a href="PesquisaProdutoController">Produtos</a></h3>
+        <h3><a href="PesquisaFormaPagamentoController">Formas Pagamento</a></h3>
         <h3><a href="">Relatorios</a></h3>
         <h3><a href="">Configuracoes</a></h3>
         </div>

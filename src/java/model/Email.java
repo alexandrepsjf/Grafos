@@ -5,6 +5,10 @@
  */
 package model;
 
+import dao.EmailDAO;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Alexandre
@@ -25,6 +29,7 @@ public class Email {
         this.servidorSaida = servidorSaida;
         this.servidorEntrada = servidorEntrada;
     }
+
 
     public int getId() {
         return id;
@@ -72,6 +77,9 @@ public class Email {
 
     public void setServidorEntrada(String servidorEntrada) {
         this.servidorEntrada = servidorEntrada;
+    }
+    public static List<Email> obterEmail() throws ClassNotFoundException, SQLException {
+        return EmailDAO.obterEmail();
     }
     
     

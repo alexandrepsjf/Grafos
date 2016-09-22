@@ -5,6 +5,10 @@
  */
 package model;
 
+import dao.FormaPagamentoDAO;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -33,5 +37,7 @@ public class FormaPagamento {
     public void setId(int id) {
         this.id = id;
     }
-    
+    public static List<FormaPagamento> obterFormaPagamento() throws ClassNotFoundException, SQLException {
+        return FormaPagamentoDAO.obterFormaPagamento();
+    }
 }

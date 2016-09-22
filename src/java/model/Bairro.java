@@ -5,11 +5,16 @@
  */
 package model;
 
+import dao.BairroDAO;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
  */
 public class Bairro {
+
     private int id;
     private String nome;
     private float taxa;
@@ -19,17 +24,20 @@ public class Bairro {
         this.nome = nome;
         this.taxa = taxa;
     }
-    
-    public void setNome(String nome){
-        this.nome=nome;
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-    public String getNome(){
+
+    public String getNome() {
         return this.nome;
     }
-    public void setTaxa(float taxa){
-        this.taxa=taxa;
+
+    public void setTaxa(float taxa) {
+        this.taxa = taxa;
     }
-    public float getTaxa(){
+
+    public float getTaxa() {
         return this.taxa;
     }
 
@@ -39,5 +47,9 @@ public class Bairro {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public static List<Bairro> obterBairro() throws ClassNotFoundException, SQLException {
+        return BairroDAO.obterBairros();
     }
 }

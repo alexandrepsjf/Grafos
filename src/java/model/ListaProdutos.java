@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -46,5 +47,7 @@ public class ListaProdutos {
     public void setIdProduto(int aInt) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+     public static List<ListaProdutos> obterListaProdutos() throws ClassNotFoundException, SQLException {
+        return ListaProdutos.obterListaProdutos();
+    }
 }

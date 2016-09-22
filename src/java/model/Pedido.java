@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -123,5 +126,7 @@ public class Pedido {
     public void setIdFormaPgto(int idFormaPgto) {
         this.idFormaPgto = idFormaPgto;
     }
-
+public static List<Pedido> obterPedido() throws ClassNotFoundException, SQLException {
+        return Pedido.obterPedido();
+    }
 }

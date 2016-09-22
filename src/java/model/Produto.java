@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -51,5 +54,8 @@ public class Produto {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public static List<Produto> obterProduto() throws ClassNotFoundException, SQLException {
+        return Produto.obterProduto();
     }
 }

@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -47,6 +50,9 @@ public class Telefone {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+    public static List<Telefone> obterTelefone() throws ClassNotFoundException, SQLException {
+        return Telefone.obterTelefone();
     }
 
 }

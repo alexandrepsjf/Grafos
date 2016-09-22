@@ -9,27 +9,29 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import model.Usuario;
-/**
- *
- * @author Mateu
- */
-public class UsuarioDAO {
-    public static List<Usuario> obterUsuarios() throws ClassNotFoundException, SQLException {
+import java.util.ArrayList;
+import model.Email;
+
+public class EmailDAO {
+
+    public static List<Email> obterEmail() throws ClassNotFoundException, SQLException {
         Connection conexao = null;
         Statement comando = null;
-        List<Usuario> usuarios = new ArrayList<Usuario>();
+        List<Email> emails = new ArrayList<Email>();
 
         try {
             conexao = BD.getConexao();
             comando = conexao.createStatement();
-            ResultSet rs = comando.executeQuery("select*from usuario");
+            ResultSet rs = comando.executeQuery("select*from email");
             while (rs.next()) {
-                Usuario usuario = new Usuario (rs.getInt("ID"),rs.getString("USUARIO"), null, 0,rs.getString("SENHA"), null, 0, rs.getString("LOGIN"), null,0);
-                usuario.setIdNivel(rs.getInt("NIVEL_ID"));
-                usuarios.add(usuario);
+                Email email = new Email(rs.getInt("ID"),
+                rs.getString("EMAIL"),
+                rs.getString("SENHA"),
+                rs.getString("AUTENTICA"),
+                rs.getString("SERVIDOR_SAIDA"),
+                rs.getString("SERVIDOR_ENTRADA"));
+                
             }
 
         } catch (SQLException e) {
@@ -37,7 +39,7 @@ public class UsuarioDAO {
         } finally {
             fecharConexao(conexao, comando);
         }
-        return usuarios;
+        return emails;
     }
 
     public static void fecharConexao(Connection conexao, Statement comando) {

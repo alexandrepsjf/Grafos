@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Sujajeb
@@ -52,5 +55,8 @@ public class Ligacao {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+    public static List<Ligacao> obterLigacao() throws ClassNotFoundException, SQLException {
+        return Ligacao.obterLigacao();
     }
 }
