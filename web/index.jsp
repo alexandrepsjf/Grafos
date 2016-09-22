@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div><h3><a href="">Pedidos</a></h3>
+        <h3><a href="">Clientes</a></h3>
+        <h3><a href="">Ligacoes Recebidas</a></h3>
+        <h3><a href="">Produtos</a></h3>
+        <h3><a href="">Formas Pagamento</a></h3>
+        <h3><a href="">Relatorios</a></h3>
+        <h3><a href="">Configuracoes</a></h3>
+        </div>
+    </body>
+</html>
