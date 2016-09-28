@@ -10,11 +10,11 @@
     </servlet>
     <servlet>
         <servlet-name>PesquisaFormaPagamentocontroller</servlet-name>
-        <servlet-class>controller.PesquisaFormaPagamentocontroller</servlet-class>
+        <servlet-class>controller.PesquisaFormaPagamentoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PesquisaLigacaocontroller</servlet-name>
-        <servlet-class>controller.PesquisaLigacaocontroller</servlet-class>
+        <servlet-class>controller.PesquisaLigacaoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PesquisaUsuarioController</servlet-name>
@@ -22,11 +22,11 @@
     </servlet>
     <servlet>
         <servlet-name>PesquisaListaProduto</servlet-name>
-        <servlet-class>controller.PesquisaListaProduto</servlet-class>
+        <servlet-class>controller.PesquisaListaProdutoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PesquisaNivelcontroller</servlet-name>
-        <servlet-class>controller.PesquisaNivelcontroller</servlet-class>
+        <servlet-class>controller.PesquisaNivelController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PesquisaPedidoController</servlet-name>
@@ -35,6 +35,10 @@
     <servlet>
         <servlet-name>PesquisaProdutoController</servlet-name>
         <servlet-class>controller.PesquisaProdutoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PesquisaFormaPagamentoController</servlet-name>
+        <servlet-class>controller.PesquisaFormaPagamentoController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PesquisaBairroController</servlet-name>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>PesquisaProdutoController</servlet-name>
         <url-pattern>/PesquisaProdutoController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PesquisaFormaPagamentoController</servlet-name>
+        <url-pattern>/PesquisaFormaPagamentoController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

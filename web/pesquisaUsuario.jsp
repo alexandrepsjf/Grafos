@@ -13,15 +13,15 @@ and open the template in the editor.
     <head>
         <title>Usuario</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
     </head>
     <body>
         <div><h1>Usuario</h1></div>
-        <table> 
+        <table border="1"> 
             <tr> 
                 <th>Cod Usuário</th>
                 <th>Nome Usuário </th>
-                <th colspan =2>AÃ§Ã£o</th>
+                <th colspan =2>Ação</th>
             </tr>
             <c:forEach items="${usuarios}" var="usuario">
             <tr> 

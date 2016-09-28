@@ -16,7 +16,7 @@ and open the template in the editor.
         <h3><a href="PesquisaLigacaoController">Ligacoes Recebidas</a></h3>
         <h3><a href="PesquisaBairroController">Bairros</a></h3>
         <h3><a href="PesquisaUsuarioController">Usuarios</a></h3>
-        <h3><a href="PesquisaEmailController">Email</a></h3>
+        <h3><a href="PesquisaEmailController"></a>Email</h3>
         <h3><a href="PesquisaProdutoController">Produtos</a></h3>
         <h3><a href="PesquisaFormaPagamentoController">Formas Pagamento</a></h3>
         <h3><a href="">Relatorios</a></h3>

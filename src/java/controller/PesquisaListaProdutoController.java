@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,13 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Bairro;
+import model.ListaProdutos;
 
 /**
  *
  * @author mateu
  */
-public class PesquisaBairroController extends HttpServlet {
+public class PesquisaListaProdutoController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,25 +31,19 @@ public class PesquisaBairroController extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-                      
-           request.setAttribute("bairros", Bairro.obterBairro());
-           RequestDispatcher view = 
-                    request.getRequestDispatcher("/pesquisaBairros.jsp");
-           view.forward(request,response);
-        
-        }catch (ClassNotFoundException ex){
-                    
-                    }
-           
+        try (PrintWriter out = response.getWriter()) {
+            request.setAttribute("listaProdutos", ListaProdutos.obterListaProdutos());
+            RequestDispatcher view = request.getRequestDispatcher("/pesquisaListaProduto.jsp");
+            view.forward(request, response);
         }
-    
+        catch (ClassNotFoundException ex){
+        
+    }
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -64,8 +59,8 @@ public class PesquisaBairroController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(PesquisaBairroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaListaProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,8 +77,8 @@ public class PesquisaBairroController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(PesquisaBairroController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaListaProdutoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

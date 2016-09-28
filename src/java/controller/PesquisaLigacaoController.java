@@ -15,13 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.ListaProdutos;
+import model.Ligacao;
 
 /**
  *
  * @author mateu
  */
-public class PesquisaListaProduto extends HttpServlet {
+public class PesquisaLigacaoController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,14 +36,13 @@ public class PesquisaListaProduto extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.setAttribute("listaProdutos", ListaProdutos.obterListaProdutos());
-            RequestDispatcher view = request.getRequestDispatcher("/pesquisaListaProduto.jsp");
+            request.setAttribute("ligacoes", Ligacao.obterLigacao());
+            RequestDispatcher view = request.getRequestDispatcher("/pesquisaLigacao.jsp");
             view.forward(request, response);
+        } catch (ClassNotFoundException ex) {
         }
-        catch (ClassNotFoundException ex){
-        
     }
-}
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -60,7 +59,7 @@ public class PesquisaListaProduto extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(PesquisaListaProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PesquisaLigacaoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -78,7 +77,7 @@ public class PesquisaListaProduto extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(PesquisaListaProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PesquisaLigacaoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
