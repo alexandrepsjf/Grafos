@@ -5,12 +5,17 @@
  */
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Disciplina;
 /**
  *
  * @author Weber
  */
 public class FrmDisciplinaModal extends javax.swing.JDialog {
-
+ DefaultListModel model = new DefaultListModel();
+ List disciplinas=new ArrayList<Disciplina>();
     /**
      * Creates new form FrmDisciplinaModal
      */
@@ -31,7 +36,7 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
         anoDisciplina = new javax.swing.JTextField();
         limparLista = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        semestreDisciplina = new javax.swing.JTextField();
+        periodoDisciplina = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaDisciplinas = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
@@ -51,11 +56,11 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Semestre:");
+        jLabel4.setText("Período");
 
-        semestreDisciplina.addActionListener(new java.awt.event.ActionListener() {
+        periodoDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                semestreDisciplinaActionPerformed(evt);
+                periodoDisciplinaActionPerformed(evt);
             }
         });
 
@@ -92,41 +97,35 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(semestreDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                             .addComponent(nomeDisciplina)
-                            .addComponent(anoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(gravarDisciplina)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(anoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(89, 89, 89)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(gravarDisciplina)
+                            .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(77, 77, 77)
                         .addComponent(listarDisciplina)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(68, 68, 68)
                         .addComponent(limparLista)
-                        .addGap(55, 55, 55))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
@@ -141,13 +140,17 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(semestreDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                            .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(31, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(limparLista)
                     .addComponent(listarDisciplina)
                     .addComponent(gravarDisciplina))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -155,18 +158,27 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
 
     private void limparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparListaActionPerformed
         // TODO add your handling code here:
+        nomeDisciplina.setText("");
+        anoDisciplina.setText("");
+        periodoDisciplina.setText("");
     }//GEN-LAST:event_limparListaActionPerformed
 
-    private void semestreDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semestreDisciplinaActionPerformed
+    private void periodoDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_periodoDisciplinaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_semestreDisciplinaActionPerformed
+    }//GEN-LAST:event_periodoDisciplinaActionPerformed
 
     private void gravarDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gravarDisciplinaActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+        Disciplina disciplina=new Disciplina();
+   disciplina.setNome(nomeDisciplina.getText());
+    disciplina.setAno(anoDisciplina.getText());
+    disciplina.setPeriodo(periodoDisciplina.getText());
+    disciplinas.add(disciplina);
     }//GEN-LAST:event_gravarDisciplinaActionPerformed
 
     private void listarDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarDisciplinaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_listarDisciplinaActionPerformed
 
     /**
@@ -223,6 +235,6 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
     private javax.swing.JButton limparLista;
     private javax.swing.JButton listarDisciplina;
     private javax.swing.JTextField nomeDisciplina;
-    private javax.swing.JTextField semestreDisciplina;
+    private javax.swing.JTextField periodoDisciplina;
     // End of variables declaration//GEN-END:variables
 }
