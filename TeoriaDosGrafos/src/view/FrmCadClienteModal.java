@@ -10,12 +10,13 @@ package view;
  * @author Sujajeb
  */
 public class FrmCadClienteModal extends javax.swing.JDialog {
-
+java.awt.Frame pai;
     /**
      * Creates new form FrmCadClienteModal
      */
     public FrmCadClienteModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+         pai= parent;
         initComponents();
     }
 
@@ -29,7 +30,6 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
     private void initComponents() {
 
         jTextField2 = new javax.swing.JTextField();
-        anoAluno = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         nomeAluno = new javax.swing.JTextField();
@@ -39,16 +39,12 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
 
         jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        anoAluno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anoAlunoActionPerformed(evt);
-            }
-        });
+        setTitle("Cadastro de alunos");
 
         jLabel2.setText("Ano:");
 
@@ -68,7 +64,7 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
         jButton2.setText("Cadastrar Disciplina");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                chamarTelaCadDisciplina(evt);
             }
         });
 
@@ -81,6 +77,8 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         jLabel3.setText("Cadastro de Alunos");
+
+        jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1475167430443L), new java.util.Date(1451662980000L), null, java.util.Calendar.DAY_OF_WEEK));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,7 +105,7 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(disciplinaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -119,11 +117,11 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(nomeAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(disciplinaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -142,13 +140,11 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void anoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anoAlunoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_anoAlunoActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void chamarTelaCadDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamarTelaCadDisciplina
+        FrmDisciplinaModal frmCadDisciplina;
+        frmCadDisciplina = new FrmDisciplinaModal(pai,true);
+        frmCadDisciplina.setVisible(true);
+    }//GEN-LAST:event_chamarTelaCadDisciplina
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -197,7 +193,6 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField anoAluno;
     private javax.swing.JComboBox<String> disciplinaAluno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -206,6 +201,7 @@ public class FrmCadClienteModal extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField nomeAluno;
     // End of variables declaration//GEN-END:variables

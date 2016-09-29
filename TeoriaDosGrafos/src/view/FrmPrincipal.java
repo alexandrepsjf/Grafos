@@ -31,10 +31,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("NADA");
+        setTitle("Sistema de cadastro");
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 3, 24)); // NOI18N
         jLabel1.setText("Sistema de Cadastro de Alunos");
+        jLabel1.setToolTipText("Clique aqui para cadastrar alunos");
 
         jButton1.setText("Avançar");
         jButton1.setName("chamarTelaCadastro"); // NOI18N
