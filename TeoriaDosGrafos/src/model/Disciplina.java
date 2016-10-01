@@ -10,9 +10,21 @@ package model;
  * @author Alexandre
  */
 public class Disciplina {
-private String nome;
+
+    private String nome;
     private String ano;
     private String periodo;
+
+    public Disciplina(String nome, String ano, String periodo) {
+        this.nome = nome;
+        this.ano = ano;
+        this.periodo = periodo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public Disciplina() {
     }
 
@@ -41,8 +53,6 @@ private String nome;
         this.periodo = periodo;
     }
 
-    public void setNome(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
 }
