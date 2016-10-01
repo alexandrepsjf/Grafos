@@ -73,7 +73,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chamarTelaCadastro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamarTelaCadastro
-        FrmCadClienteModal frmCad = new FrmCadClienteModal(this,true);
+        FrmCadAlunoModal frmCad = new FrmCadAlunoModal(this,true);
         frmCad.setVisible(true);        
     }//GEN-LAST:event_chamarTelaCadastro
 

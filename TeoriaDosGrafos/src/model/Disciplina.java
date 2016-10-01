@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Alexandre
@@ -14,11 +17,20 @@ public class Disciplina {
     private String nome;
     private String ano;
     private String periodo;
+    public static List disciplinas = new ArrayList<Disciplina>();
 
     public Disciplina(String nome, String ano, String periodo) {
         this.nome = nome;
         this.ano = ano;
         this.periodo = periodo;
+           }
+
+    public static List getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List disciplinas) {
+        this.disciplinas = disciplinas;
     }
 
     public void setNome(String nome) {
@@ -51,6 +63,10 @@ public class Disciplina {
 
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
+    }
+
+    private void adicionaDisciplina(Disciplina disciplina) {
+        Disciplina.disciplinas.add(disciplina);
     }
 
    

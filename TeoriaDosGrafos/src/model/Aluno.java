@@ -11,13 +11,13 @@ package model;
  */
 public class Aluno {
     private String nome;
-    private int ano;
+    private String ano;
     private Disciplina disciplina;
 
     public Aluno() {
     }
 
-    public Aluno(String nome, int ano, Disciplina disciplina) {
+    public Aluno(String nome, String ano, Disciplina disciplina) {
         this.nome = nome;
         this.ano = ano;
         this.disciplina = disciplina;
@@ -31,11 +31,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public int getAno() {
+    public String getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(String ano) {
         this.ano = ano;
     }
 
