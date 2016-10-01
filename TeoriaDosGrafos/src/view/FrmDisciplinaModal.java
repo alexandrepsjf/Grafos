@@ -8,8 +8,10 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.Disciplina;
 
 /**
@@ -17,8 +19,7 @@ import model.Disciplina;
  * @author Weber
  */
 public class FrmDisciplinaModal extends javax.swing.JDialog {
-private List disciplinasAluno = Disciplina.getDisciplinas();
-    
+private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();    
     private DefaultListModel model = new DefaultListModel();
 
     /**
@@ -55,6 +56,7 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de disciplinas");
 
+        limparLista.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         limparLista.setText("Limpar");
         limparLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,6 +64,7 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel4.setText("Período");
 
         periodoDisciplina.addActionListener(new java.awt.event.ActionListener() {
@@ -70,15 +73,28 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
+        listaDisciplinas.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                listaDisciplinasComponentAdded(evt);
+            }
+        });
+        listaDisciplinas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                listaDisciplinasComponentShown(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaDisciplinas);
 
-        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setText("Cadastro de Disciplinas");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel1.setText("Nome:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel2.setText("Ano:");
 
+        gravarDisciplina.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         gravarDisciplina.setText("Gravar");
         gravarDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,6 +102,7 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
+        listarDisciplina.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         listarDisciplina.setText("Remover Disciplina");
         listarDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +110,7 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
+        limparLista1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         limparLista1.setText("Fechar");
         limparLista1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,32 +123,34 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                            .addComponent(nomeDisciplina)
-                            .addComponent(anoDisciplina)))
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(68, 68, 68))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nomeDisciplina)
+                                    .addComponent(anoDisciplina)))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(gravarDisciplina)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(listarDisciplina)
-                                .addGap(18, 18, 18)
-                                .addComponent(limparLista)))
-                        .addGap(18, 18, 18)
-                        .addComponent(limparLista1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(limparLista)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(limparLista1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
 
@@ -140,36 +160,54 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(nomeDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(72, 72, 72)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(41, 41, 41)
+                                .addComponent(nomeDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(anoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(limparLista)
                             .addComponent(listarDisciplina)
                             .addComponent(gravarDisciplina)
-                            .addComponent(limparLista1))
-                        .addContainerGap(40, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(61, 61, 61))))
+                            .addComponent(limparLista1))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {anoDisciplina, nomeDisciplina, periodoDisciplina});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JButton getListarDisciplina() {
+        return listarDisciplina;
+    }
+
+    public void setListarDisciplina(JButton listarDisciplina) {
+        this.listarDisciplina = listarDisciplina;
+    }
+
+    public JTextField getNomeDisciplina() {
+        return nomeDisciplina;
+    }
+
+    public void setNomeDisciplina(JTextField nomeDisciplina) {
+        this.nomeDisciplina = nomeDisciplina;
+    }
 
     private void limparListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparListaActionPerformed
         // TODO add your handling code here:
@@ -222,17 +260,22 @@ private List disciplinasAluno = Disciplina.getDisciplinas();
       this.dispose();
     }//GEN-LAST:event_fecharActionPerformed
 
-    public JList<String> getListaDisciplinas() {
-        return listaDisciplinas;
-    }
+    private void listaDisciplinasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_listaDisciplinasComponentAdded
+        // TODO add your handling code here:
+        
+        model.clear();
+        for(Disciplina disc:disciplinasAluno){
+                 
+            model.addElement(disc.getNome());
+        }
+    }//GEN-LAST:event_listaDisciplinasComponentAdded
 
-    public DefaultListModel getModel() {
-        return model;
-    }
+    private void listaDisciplinasComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_listaDisciplinasComponentShown
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,  " foi removido com sucesso ");
+    }//GEN-LAST:event_listaDisciplinasComponentShown
 
-    public void setModel(DefaultListModel model) {
-        this.model = model;
-    }
+   
 
     /**
      * @param args the command line arguments

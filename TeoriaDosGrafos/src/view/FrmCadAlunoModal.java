@@ -13,27 +13,25 @@ import javax.swing.table.DefaultTableModel;
 import model.Aluno;
 import model.Disciplina;
 
-
 /**
  *
  * @author Sujajeb
  */
 public class FrmCadAlunoModal extends javax.swing.JDialog {
-java.awt.Frame pai;
-private final DefaultListModel modelA = new DefaultListModel();
-private final DefaultListModel model = new DefaultListModel();
-private DefaultTableModel modelo = new DefaultTableModel();
+
+    java.awt.Frame pai;
+    private final DefaultListModel modelA = new DefaultListModel();
+    private DefaultTableModel modelo = new DefaultTableModel();
     private final List alunos = new ArrayList<Aluno>();
     private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
-    
 
     /**
      * Creates new form FrmCadClienteModal
      */
     public FrmCadAlunoModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-         pai= parent;
-         
+        pai = parent;
+
         initComponents();
     }
 
@@ -52,30 +50,31 @@ private DefaultTableModel modelo = new DefaultTableModel();
         nomeAluno = new javax.swing.JTextField();
         GravarAluno = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        gerarXML = new javax.swing.JButton();
+        cadastrarDisciplina = new javax.swing.JButton();
         limparAlunos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaDisciplinas = new javax.swing.JList<>();
         anoAluno = new javax.swing.JTextField();
-        cadastrarDisciplina = new javax.swing.JButton();
+        gerarXml = new javax.swing.JButton();
         removerAluno = new javax.swing.JButton();
-        cadastrarDisciplina1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        disciplinaAluno = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaAlunos = new javax.swing.JTable();
-        limparLista1 = new javax.swing.JButton();
+        fechar = new javax.swing.JButton();
+        listabox = new javax.swing.JComboBox<>();
 
         jTextField2.setText("jTextField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de alunos");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel2.setText("Ano:");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel1.setText("Nome:");
 
+        nomeAluno.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+
+        GravarAluno.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         GravarAluno.setText("Gravar");
         GravarAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,15 +82,18 @@ private DefaultTableModel modelo = new DefaultTableModel();
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel4.setText("Disciplina:");
 
-        gerarXML.setText("Cadastrar Disciplina");
-        gerarXML.addActionListener(new java.awt.event.ActionListener() {
+        cadastrarDisciplina.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        cadastrarDisciplina.setText("Cadastrar Disciplina");
+        cadastrarDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chamarTelaCadDisciplina(evt);
             }
         });
 
+        limparAlunos.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         limparAlunos.setText("Limpar");
         limparAlunos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,15 +104,13 @@ private DefaultTableModel modelo = new DefaultTableModel();
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setText("Cadastro de Alunos");
 
-        listaDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaDisciplinasMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(listaDisciplinas);
+        anoAluno.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
 
-        cadastrarDisciplina.setText("Gerar XML");
+        gerarXml.setBackground(new java.awt.Color(255, 51, 51));
+        gerarXml.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        gerarXml.setText("Gerar XML");
 
+        removerAluno.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         removerAluno.setText("Remover");
         removerAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,22 +118,7 @@ private DefaultTableModel modelo = new DefaultTableModel();
             }
         });
 
-        cadastrarDisciplina1.setText("Atualizar Disciplinas");
-        cadastrarDisciplina1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atualizarDisciplinaActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel5.setText("Selecione uma  Disciplina");
-
-        disciplinaAluno.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                disciplinaAlunoMouseClicked(evt);
-            }
-        });
-
+        tabelaAlunos.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -144,10 +129,17 @@ private DefaultTableModel modelo = new DefaultTableModel();
         ));
         jScrollPane3.setViewportView(tabelaAlunos);
 
-        limparLista1.setText("Fechar");
-        limparLista1.addActionListener(new java.awt.event.ActionListener() {
+        fechar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        fechar.setText("Fechar");
+        fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limparLista1fecharActionPerformed(evt);
+                fecharActionPerformed(evt);
+            }
+        });
+
+        listabox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaboxMouseClicked(evt);
             }
         });
 
@@ -156,143 +148,134 @@ private DefaultTableModel modelo = new DefaultTableModel();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel4))
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(nomeAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                            .addComponent(anoAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                            .addComponent(disciplinaAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(GravarAluno)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(limparAlunos))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel1)
+                                                .addComponent(jLabel4))
+                                            .addGap(26, 26, 26)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(nomeAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                                                .addComponent(anoAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                                                .addComponent(listabox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                                 .addGap(30, 30, 30))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(GravarAluno)
-                                .addGap(5, 5, 5)
-                                .addComponent(limparAlunos)
-                                .addGap(18, 18, 18)
+                                .addGap(174, 174, 174)
                                 .addComponent(removerAluno)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                                .addComponent(limparLista1)))
-                        .addGap(30, 30, 30)
+                                .addComponent(fechar)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(gerarXML)
-                                            .addComponent(cadastrarDisciplina1)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(51, 51, 51)
-                                        .addComponent(cadastrarDisciplina))))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 42, Short.MAX_VALUE)))
+                                .addGap(269, 269, 269)
+                                .addComponent(cadastrarDisciplina))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(292, 292, 292)
+                                .addComponent(gerarXml)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3)))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cadastrarDisciplina1, gerarXML});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(gerarXML)
-                        .addGap(59, 59, 59)
-                        .addComponent(cadastrarDisciplina1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cadastrarDisciplina))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(17, 17, 17)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(56, Short.MAX_VALUE)
+                        .addComponent(cadastrarDisciplina)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                        .addComponent(gerarXml))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
-                            .addComponent(disciplinaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
+                            .addComponent(listabox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(limparAlunos)
                             .addComponent(removerAluno)
-                            .addComponent(limparLista1)
-                            .addComponent(GravarAluno))))
-                .addGap(18, 19, Short.MAX_VALUE)
+                            .addComponent(fechar)
+                            .addComponent(GravarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {anoAluno, nomeAluno});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {GravarAluno, cadastrarDisciplina, fechar, gerarXml, limparAlunos, removerAluno});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GravarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GravarAlunoActionPerformed
         // TODO add your handling code here:
-        
-        int opcao=listaDisciplinas.getSelectedIndex();        
-        Aluno aluno=new Aluno();
+
+        Aluno aluno = new Aluno();
         aluno.setNome(nomeAluno.getText());
-        aluno.setAno((String) anoAluno.getText());        
-        aluno.setDisciplina(disciplinasAluno.get(opcao));
-        this.tabelaAlunos.setModel(modelo);        
+        aluno.setAno((String) anoAluno.getText());
+        aluno.setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));
+        this.tabelaAlunos.setModel(modelo);
         modelA.addElement(aluno.getNome());
         modelo.addColumn("nome");
         modelo.addColumn("ano");
         modelo.addColumn("disciplina");
-        modelo.addRow(new Object[]{nomeAluno.getText(),anoAluno.getText(), disciplinaAluno.getText()});
+        modelo.addRow(new Object[]{nomeAluno.getText(), anoAluno.getText(), aluno.getDisciplina().getNome()});
         alunos.add(aluno);
         nomeAluno.setText("");
         anoAluno.setText("");
-        disciplinaAluno.setText("");    
-        
-        
+
+
     }//GEN-LAST:event_GravarAlunoActionPerformed
 
     private void chamarTelaCadDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamarTelaCadDisciplina
         FrmDisciplinaModal frmCadDisciplina;
-        frmCadDisciplina = new FrmDisciplinaModal(pai,true);
+        frmCadDisciplina = new FrmDisciplinaModal(pai, true);
         frmCadDisciplina.setVisible(true);
     }//GEN-LAST:event_chamarTelaCadDisciplina
 
     private void limparAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparAlunosActionPerformed
         // TODO add your handling code here:
-         nomeAluno.setText("");
+        nomeAluno.setText("");
         anoAluno.setText("");
-        disciplinaAluno.setText("");        
-        
+
+
     }//GEN-LAST:event_limparAlunosActionPerformed
 
     private void removerAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerAlunoActionPerformed
         // TODO add your handling code here:
         int index = tabelaAlunos.getSelectedRow();
-        
+
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
 
-           alunos.remove(index);
+            alunos.remove(index);
             Object remove;
-            remove = modelo.getValueAt(index,0);
+            remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
 
@@ -300,41 +283,23 @@ private DefaultTableModel modelo = new DefaultTableModel();
             JOptionPane.showMessageDialog(null, "Selecione uma aluno ");
 
         }
-        listaDisciplinas.setSelectedIndex(index);
-        listaDisciplinas.ensureIndexIsVisible(index);
+
 
     }//GEN-LAST:event_removerAlunoActionPerformed
 
-    private void atualizarDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarDisciplinaActionPerformed
-        // TODO add your handling code here:
-        disciplinasAluno = Disciplina.getDisciplinas();
-        this.listaDisciplinas.setModel(model);
-        model.clear();
-        for(Disciplina disc:disciplinasAluno){
-                   
-            model.addElement(disc.getNome());
-        }
-        
-        
-    }//GEN-LAST:event_atualizarDisciplinaActionPerformed
-
-    private void listaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaDisciplinasMouseClicked
-        // TODO add your handling code here:
-        String nomeDisc=listaDisciplinas.getSelectedValue();
-        disciplinaAluno.setText(nomeDisc);
-    }//GEN-LAST:event_listaDisciplinasMouseClicked
-
-    private void disciplinaAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disciplinaAlunoMouseClicked
-        // TODO add your handling code here:
-        if(disciplinaAluno.getText().equals("")){
-            JOptionPane.showMessageDialog(null, " Selecione uma disciplina da lista");
-        }
-    }//GEN-LAST:event_disciplinaAlunoMouseClicked
-
-    private void limparLista1fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparLista1fecharActionPerformed
+    private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_limparLista1fecharActionPerformed
+    }//GEN-LAST:event_fecharActionPerformed
+
+    private void listaboxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaboxMouseClicked
+        // TODO add your handling code here:
+        listabox.removeAllItems();
+        disciplinasAluno = Disciplina.getDisciplinas();
+        for (Disciplina obj : disciplinasAluno) {
+            listabox.addItem(obj.getNome());
+    }//GEN-LAST:event_listaboxMouseClicked
+    }
 
     /**
      * @param args the command line arguments
@@ -377,29 +342,23 @@ private DefaultTableModel modelo = new DefaultTableModel();
                 dialog.setVisible(true);
             }
         });
-        
-            
-        }
-   
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GravarAluno;
     private javax.swing.JTextField anoAluno;
     private javax.swing.JButton cadastrarDisciplina;
-    private javax.swing.JButton cadastrarDisciplina1;
-    private javax.swing.JTextField disciplinaAluno;
-    private javax.swing.JButton gerarXML;
+    private javax.swing.JButton fechar;
+    private javax.swing.JButton gerarXml;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton limparAlunos;
-    private javax.swing.JButton limparLista1;
-    private javax.swing.JList<String> listaDisciplinas;
+    private javax.swing.JComboBox<String> listabox;
     private javax.swing.JTextField nomeAluno;
     private javax.swing.JButton removerAluno;
     private javax.swing.JTable tabelaAlunos;
