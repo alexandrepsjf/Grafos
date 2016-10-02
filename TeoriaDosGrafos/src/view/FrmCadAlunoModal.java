@@ -29,8 +29,11 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     public FrmCadAlunoModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         pai = parent;
-
+ 
         initComponents();
+        modelo.addColumn("Aluno");
+          modelo.addColumn("Ano");
+           modelo.addColumn("Disciplina");
     }
 
     /**
@@ -241,21 +244,15 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
     private void GravarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GravarAlunoActionPerformed
         // TODO add your handling code here:
-
         Aluno aluno = new Aluno();
         aluno.setNome(nomeAluno.getText());
+        aluno.setAno((String) anoAluno.getText());        
+        aluno.setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));   
         tabelaAlunos.setModel(modelo);
-        modelo.addColumn("Nome");
-        modelo.addColumn("Ano");
-        modelo.addColumn("Disciplina");
-        aluno.setAno((String) anoAluno.getText());
-        aluno.setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));              
-        modelo.addRow(new Object[]{nomeAluno.getText(), anoAluno.getText(), aluno.getDisciplina().getNome()});
+        modelo.addRow(new Object[]{nomeAluno.getText(), anoAluno.getText(), aluno.getDisciplina().getNome()});  
         alunos.add(aluno);
         nomeAluno.setText("");
         anoAluno.setText("");
-
-
     }//GEN-LAST:event_GravarAlunoActionPerformed
 
     private void chamarTelaCadDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamarTelaCadDisciplina
@@ -268,8 +265,6 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         // TODO add your handling code here:
         nomeAluno.setText("");
         anoAluno.setText("");
-
-
     }//GEN-LAST:event_limparAlunosActionPerformed
 
     private void removerAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerAlunoActionPerformed
@@ -286,10 +281,7 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma aluno ");
-
         }
-
-
     }//GEN-LAST:event_removerAlunoActionPerformed
 
     private void fecharfecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharfecharActionPerformed
@@ -309,13 +301,11 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         // TODO add your handling code here:
         int index = tabelaAlunos.getSelectedRow();
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
-
             nomeAluno.setText(alunos.get(index).getNome());
             anoAluno.setText(alunos.get(index).getAno());
             nomeAluno.setText(alunos.get(index).getNome());
             listabox.removeAllItems();
-            listabox.addItem(alunos.get(index).getDisciplina().getNome());            
-
+            listabox.addItem(alunos.get(index).getDisciplina().getNome()); 
         }
 
 

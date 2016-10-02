@@ -55,6 +55,11 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de disciplinas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         limparLista.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         limparLista.setText("Limpar");
@@ -73,16 +78,6 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
-        listaDisciplinas.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                listaDisciplinasComponentAdded(evt);
-            }
-        });
-        listaDisciplinas.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                listaDisciplinasComponentShown(evt);
-            }
-        });
         jScrollPane1.setViewportView(listaDisciplinas);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
@@ -260,20 +255,15 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
       this.dispose();
     }//GEN-LAST:event_fecharActionPerformed
 
-    private void listaDisciplinasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_listaDisciplinasComponentAdded
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        
-        model.clear();
+      
+        this.listaDisciplinas.setModel(model);         
         for(Disciplina disc:disciplinasAluno){
                  
             model.addElement(disc.getNome());
         }
-    }//GEN-LAST:event_listaDisciplinasComponentAdded
-
-    private void listaDisciplinasComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_listaDisciplinasComponentShown
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,  " foi removido com sucesso ");
-    }//GEN-LAST:event_listaDisciplinasComponentShown
+    }//GEN-LAST:event_formWindowOpened
 
    
 
