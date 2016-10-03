@@ -5,8 +5,16 @@
  */
 package view;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
@@ -22,6 +30,7 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private DefaultTableModel modelo = new DefaultTableModel();
     private final List<Aluno> alunos = new ArrayList<Aluno>();
     private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
+    private String xml1 = null;
 
     /**
      * Creates new form FrmCadClienteModal
@@ -29,11 +38,11 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     public FrmCadAlunoModal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         pai = parent;
- 
+
         initComponents();
         modelo.addColumn("Aluno");
-          modelo.addColumn("Ano");
-           modelo.addColumn("Disciplina");
+        modelo.addColumn("Ano");
+        modelo.addColumn("Disciplina");
     }
 
     /**
@@ -61,6 +70,8 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         tabelaAlunos = new javax.swing.JTable();
         fechar = new javax.swing.JButton();
         listabox = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        abrirXML = new javax.swing.JButton();
 
         jTextField2.setText("jTextField2");
 
@@ -110,6 +121,11 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         gerarXml.setBackground(new java.awt.Color(255, 51, 51));
         gerarXml.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         gerarXml.setText("Gerar XML");
+        gerarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerarXmlActionPerformed(evt);
+            }
+        });
 
         removerAluno.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         removerAluno.setText("Remover");
@@ -119,6 +135,7 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
             }
         });
 
+        tabelaAlunos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 11))); // NOI18N
         tabelaAlunos.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,95 +166,109 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarActionPerformed(evt);
+            }
+        });
+
+        abrirXML.setBackground(new java.awt.Color(255, 204, 51));
+        abrirXML.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        abrirXML.setText("Abrir XML");
+        abrirXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirXMLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(GravarAluno)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(limparAlunos))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(174, 174, 174)
-                                            .addComponent(removerAluno)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(fechar))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(listabox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel2))
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nomeAluno, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                            .addComponent(anoAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(listabox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(anoAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                .addComponent(nomeAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(GravarAluno)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(limparAlunos)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(removerAluno)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(fechar)
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(abrirXML)
+                                .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {anoAluno, listabox, nomeAluno});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fechar, jButton1});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {abrirXML, gerarXml});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listabox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(listabox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(limparAlunos)
                             .addComponent(removerAluno)
                             .addComponent(fechar)
-                            .addComponent(GravarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(GravarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(abrirXML)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {anoAluno, nomeAluno});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {GravarAluno, fechar, limparAlunos, removerAluno});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {GravarAluno, fechar, jButton1, limparAlunos, removerAluno});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {abrirXML, gerarXml});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -246,10 +277,10 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         // TODO add your handling code here:
         Aluno aluno = new Aluno();
         aluno.setNome(nomeAluno.getText());
-        aluno.setAno((String) anoAluno.getText());        
-        aluno.setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));   
+        aluno.setAno((String) anoAluno.getText());
+        aluno.setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));
         tabelaAlunos.setModel(modelo);
-        modelo.addRow(new Object[]{nomeAluno.getText(), anoAluno.getText(), aluno.getDisciplina().getNome()});  
+        modelo.addRow(new Object[]{nomeAluno.getText(), anoAluno.getText(), aluno.getDisciplina().getNome()});
         alunos.add(aluno);
         nomeAluno.setText("");
         anoAluno.setText("");
@@ -270,13 +301,14 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private void removerAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerAlunoActionPerformed
         // TODO add your handling code here:
         int index = tabelaAlunos.getSelectedRow();
-
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
 
             alunos.remove(index);
             Object remove;
             remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
+            nomeAluno.setText("");
+            anoAluno.setText("");
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
 
         } else {
@@ -305,11 +337,77 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
             anoAluno.setText(alunos.get(index).getAno());
             nomeAluno.setText(alunos.get(index).getNome());
             listabox.removeAllItems();
-            listabox.addItem(alunos.get(index).getDisciplina().getNome()); 
+            listabox.addItem(alunos.get(index).getDisciplina().getNome());
         }
 
 
     }//GEN-LAST:event_tabelaAlunosMouseClicked
+
+    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
+        // TODO add your handling code here:
+        int index = tabelaAlunos.getSelectedRow();
+        if ((modelo.getRowCount() > 0) && (index >= 0)) {
+
+            alunos.get(index).setNome(nomeAluno.getText());
+            alunos.get(index).setAno((String) anoAluno.getText());
+            alunos.get(index).setDisciplina(disciplinasAluno.get(listabox.getSelectedIndex()));
+            tabelaAlunos.setModel(modelo);
+            modelo.removeRow(index);
+            modelo.insertRow(index, new Object[]{nomeAluno.getText(), anoAluno.getText(), alunos.get(index).getDisciplina().getNome()});
+            nomeAluno.setText("");
+            anoAluno.setText("");
+            Object edit;
+            edit = modelo.getValueAt(index, 0);
+
+            JOptionPane.showMessageDialog(null, edit.toString() + " foi editado com sucesso ");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma aluno ");
+        }
+    }//GEN-LAST:event_editarActionPerformed
+
+    private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
+        // TODO add your handling code here:
+
+        XStream xstream = new XStream(new DomDriver());
+
+       // for (Aluno aluno : alunos) {
+         //   String xml = xstream.toXML(alunos);
+           // xml1 = xml1 + xml;
+        //}
+            String xml = xstream.toXML(alunos);
+
+        System.out.println(xml);
+        File file = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
+
+        try (PrintWriter print = new PrintWriter(file)) {
+            print.write(xml);
+            print.flush();
+            print.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_gerarXmlActionPerformed
+
+    private void abrirXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirXMLActionPerformed
+        try {
+            // TODO add your handling code here:
+            FileReader leitor= new  FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
+            XStream xstream = new XStream(new DomDriver());
+            List <Aluno> alunos = new ArrayList();
+            alunos =(ArrayList) xstream.fromXML(leitor);
+
+            for (Aluno inserir: alunos){
+                this.tabelaAlunos.setModel(modelo);
+                modelo.addRow(new Object[]{inserir.getNome(), inserir.getAno(), inserir.getDisciplina().getNome()});
+                
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }//GEN-LAST:event_abrirXMLActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,10 +455,12 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GravarAluno;
+    private javax.swing.JButton abrirXML;
     private javax.swing.JTextField anoAluno;
     private javax.swing.JButton cadastrarDisciplina;
     private javax.swing.JButton fechar;
     private javax.swing.JButton gerarXml;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -17,7 +17,7 @@ public class Disciplina {
     private String nome;
     private String ano;
     private String periodo;
-    public static List disciplinas = new ArrayList<Disciplina>();
+    public static List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
     public Disciplina(String nome, String ano, String periodo) {
         this.nome = nome;
@@ -25,13 +25,9 @@ public class Disciplina {
         this.periodo = periodo;
            }
 
-    public static List getDisciplinas() {
-        return disciplinas;
-    }
-
-    public void setDisciplinas(List disciplinas) {
-        this.disciplinas = disciplinas;
-    }
+    public static List<Disciplina> getDisciplinas() {
+        return (List<Disciplina>) disciplinas;
+    }   
 
     public void setNome(String nome) {
         this.nome = nome;

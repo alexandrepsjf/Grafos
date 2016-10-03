@@ -19,7 +19,8 @@ import model.Disciplina;
  * @author Weber
  */
 public class FrmDisciplinaModal extends javax.swing.JDialog {
-private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();    
+
+    private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
     private DefaultListModel model = new DefaultListModel();
 
     /**
@@ -52,6 +53,7 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
         nomeDisciplina = new javax.swing.JTextField();
         listarDisciplina = new javax.swing.JButton();
         limparLista1 = new javax.swing.JButton();
+        editar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de disciplinas");
@@ -78,6 +80,11 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
             }
         });
 
+        listaDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaDisciplinasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaDisciplinas);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
@@ -98,7 +105,7 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
         });
 
         listarDisciplina.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        listarDisciplina.setText("Remover Disciplina");
+        listarDisciplina.setText("Remover ");
         listarDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removerDisciplinaActionPerformed(evt);
@@ -110,6 +117,14 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
         limparLista1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fecharActionPerformed(evt);
+            }
+        });
+
+        editar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        editar.setText("Editar");
+        editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarActionPerformed(evt);
             }
         });
 
@@ -139,12 +154,14 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(gravarDisciplina)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(listarDisciplina)
+                                .addComponent(listarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(limparLista)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(limparLista1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                                .addComponent(limparLista1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
@@ -179,7 +196,8 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
                             .addComponent(limparLista)
                             .addComponent(listarDisciplina)
                             .addComponent(gravarDisciplina)
-                            .addComponent(limparLista1))))
+                            .addComponent(limparLista1)
+                            .addComponent(editar))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -252,20 +270,53 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
 
     private void fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharActionPerformed
         // TODO add your handling code here:
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_fecharActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-      
-        this.listaDisciplinas.setModel(model);         
-        for(Disciplina disc:disciplinasAluno){
-                 
+
+        this.listaDisciplinas.setModel(model);
+        for (Disciplina disc : disciplinasAluno) {
+
             model.addElement(disc.getNome());
         }
     }//GEN-LAST:event_formWindowOpened
 
-   
+    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
+        // TODO add your handling code here:
+        int index = listaDisciplinas.getSelectedIndex();
+        if ((model.size() > 0) && (index >= 0)) {
+            this.listaDisciplinas.setModel(model);
+            Disciplina.getDisciplinas().get(index).setNome(nomeDisciplina.getText());
+            Disciplina.getDisciplinas().get(index).setAno(anoDisciplina.getText());
+            Disciplina.getDisciplinas().get(index).setPeriodo(periodoDisciplina.getText());
+            Object edit;
+            edit = model.remove(index);
+            model.add(index, Disciplina.getDisciplinas().get(index).getNome());
+            nomeDisciplina.setText("");
+            anoDisciplina.setText("");
+            periodoDisciplina.setText("");
+
+            JOptionPane.showMessageDialog(null, edit.toString() + " foi editada com sucesso ");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma disciplina ");
+
+        }
+        listaDisciplinas.setSelectedIndex(index);
+        listaDisciplinas.ensureIndexIsVisible(index);
+
+    }//GEN-LAST:event_editarActionPerformed
+
+    private void listaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaDisciplinasMouseClicked
+        // TODO add your handling code here:
+        int index = listaDisciplinas.getSelectedIndex();
+        nomeDisciplina.setText(disciplinasAluno.get(index).getNome());
+        anoDisciplina.setText(disciplinasAluno.get(index).getAno());
+        periodoDisciplina.setText(disciplinasAluno.get(index).getPeriodo());
+
+    }//GEN-LAST:event_listaDisciplinasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -311,6 +362,7 @@ private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField anoDisciplina;
+    private javax.swing.JButton editar;
     private javax.swing.JButton gravarDisciplina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
