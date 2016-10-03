@@ -57,6 +57,10 @@ public class Disciplina {
         return periodo;
     }
 
+    public static void setDisciplinas(List<Disciplina> disciplinas) {
+        Disciplina.disciplinas = disciplinas;
+    }
+
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }

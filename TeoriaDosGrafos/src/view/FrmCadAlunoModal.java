@@ -28,7 +28,7 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
     java.awt.Frame pai;
     private DefaultTableModel modelo = new DefaultTableModel();
-    private final List<Aluno> alunos = new ArrayList<Aluno>();
+    private List<Aluno> alunos = new ArrayList<Aluno>();
     private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
     private String xml1 = null;
 
@@ -369,21 +369,24 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
         // TODO add your handling code here:
 
-        XStream xstream = new XStream(new DomDriver());
-
-       // for (Aluno aluno : alunos) {
-         //   String xml = xstream.toXML(alunos);
-           // xml1 = xml1 + xml;
-        //}
+        try {
+            XStream xstream = new XStream(new DomDriver());
             String xml = xstream.toXML(alunos);
-
-        System.out.println(xml);
-        File file = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
-
-        try (PrintWriter print = new PrintWriter(file)) {
+            System.out.println(xml);
+            File file = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
+            PrintWriter print = new PrintWriter(file);
             print.write(xml);
+            XStream xstream2 = new XStream(new DomDriver());
+            List<Disciplina> disciplinasGeradas = Disciplina.getDisciplinas();
+            String xml2 = xstream2.toXML(disciplinasAluno);
+            File file2 = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML2.xml");
+            PrintWriter print2 = new PrintWriter(file2);
+            print2.write(xml2);
+            System.out.println(xml2);
             print.flush();
             print.close();
+            print2.flush();
+            print2.close();
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
@@ -393,20 +396,28 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private void abrirXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirXMLActionPerformed
         try {
             // TODO add your handling code here:
-            FileReader leitor= new  FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
-            XStream xstream = new XStream(new DomDriver());
-            List <Aluno> alunos = new ArrayList();
-            alunos =(ArrayList) xstream.fromXML(leitor);
+            FileReader leitor = new FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
+            FileReader leitor2 = new FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML2.xml");
 
-            for (Aluno inserir: alunos){
-                this.tabelaAlunos.setModel(modelo);
+            XStream xstream = new XStream(new DomDriver());
+            this.tabelaAlunos.setModel(modelo);
+
+            
+            while (modelo.getRowCount() > 0) {
+                modelo.removeRow(0);
+
+            }
+            alunos = (ArrayList) xstream.fromXML(leitor);
+            disciplinasAluno = (ArrayList) xstream.fromXML(leitor2);
+            Disciplina.setDisciplinas(disciplinasAluno);
+            for (Aluno inserir : alunos) {
+
                 modelo.addRow(new Object[]{inserir.getNome(), inserir.getAno(), inserir.getDisciplina().getNome()});
-                
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+
     }//GEN-LAST:event_abrirXMLActionPerformed
 
     /**
