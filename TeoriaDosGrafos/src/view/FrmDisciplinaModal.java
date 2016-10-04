@@ -5,13 +5,24 @@
  */
 package view;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import model.Aluno;
 import model.Disciplina;
 
 /**
@@ -20,8 +31,9 @@ import model.Disciplina;
  */
 public class FrmDisciplinaModal extends javax.swing.JDialog {
 
-    private final List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
+    private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
     private DefaultListModel model = new DefaultListModel();
+    private String choose = null;
 
     /**
      * Creates new form FrmDisciplinaModal
@@ -54,6 +66,10 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
         listarDisciplina = new javax.swing.JButton();
         limparLista1 = new javax.swing.JButton();
         editar = new javax.swing.JButton();
+        gerarXml = new javax.swing.JButton();
+        abrirXML = new javax.swing.JButton();
+        url = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de disciplinas");
@@ -128,6 +144,27 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
             }
         });
 
+        gerarXml.setBackground(new java.awt.Color(255, 0, 0));
+        gerarXml.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        gerarXml.setText("Gerar XML");
+        gerarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerarXmlActionPerformed(evt);
+            }
+        });
+
+        abrirXML.setBackground(new java.awt.Color(255, 204, 0));
+        abrirXML.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        abrirXML.setText("Abri XML");
+        abrirXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirXMLActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setText("Local do Arquivo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,21 +173,8 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(68, 68, 68))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nomeDisciplina)
-                                    .addComponent(anoDisciplina)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(gravarDisciplina)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -161,19 +185,43 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                                 .addComponent(limparLista1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(editar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 69, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(80, 80, 80))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(anoDisciplina, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(periodoDisciplina, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nomeDisciplina))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gerarXml)
+                                    .addComponent(abrirXML, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addGap(80, 80, 80)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {anoDisciplina, nomeDisciplina, periodoDisciplina});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {abrirXML, gerarXml});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -181,27 +229,39 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(41, 41, 41)
-                                .addComponent(nomeDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(nomeDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(gerarXml))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(anoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(periodoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(abrirXML, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(limparLista)
                             .addComponent(listarDisciplina)
                             .addComponent(gravarDisciplina)
                             .addComponent(limparLista1)
-                            .addComponent(editar))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                            .addComponent(editar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 5, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {anoDisciplina, nomeDisciplina, periodoDisciplina});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {abrirXML, gerarXml});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -318,6 +378,61 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
 
     }//GEN-LAST:event_listaDisciplinasMouseClicked
 
+    private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
+        // TODO add your handling code here:
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroPDF = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroPDF);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
+
+        }
+
+        try {
+            XStream xstream2 = new XStream(new DomDriver());
+            List<Disciplina> disciplinasGeradas;
+            String xml2 = xstream2.toXML(disciplinasAluno);
+            File file2 = new File(choose + ".xml");
+            PrintWriter print2 = new PrintWriter(file2);
+            print2.write(xml2);
+            System.out.println(xml2);
+            print2.flush();
+            print2.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_gerarXmlActionPerformed
+
+    private void abrirXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirXMLActionPerformed
+        // TODO add your handling code here:
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroPDF = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroPDF);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
+
+            FileReader leitor = null;
+            try {
+                leitor = new FileReader(choose);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FrmDisciplinaModal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            XStream xstream = new XStream(new DomDriver());
+
+            disciplinasAluno = (ArrayList) xstream.fromXML(leitor);
+            Disciplina.setDisciplinas(disciplinasAluno);
+            this.listaDisciplinas.setModel(model);
+            for (Disciplina disc : disciplinasAluno) {
+                model.addElement(disc.getNome());
+            }
+        }
+    }//GEN-LAST:event_abrirXMLActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -361,13 +476,16 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton abrirXML;
     private javax.swing.JTextField anoDisciplina;
     private javax.swing.JButton editar;
+    private javax.swing.JButton gerarXml;
     private javax.swing.JButton gravarDisciplina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton limparLista;
     private javax.swing.JButton limparLista1;
@@ -375,5 +493,6 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
     private javax.swing.JButton listarDisciplina;
     private javax.swing.JTextField nomeDisciplina;
     private javax.swing.JTextField periodoDisciplina;
+    private javax.swing.JTextField url;
     // End of variables declaration//GEN-END:variables
 }

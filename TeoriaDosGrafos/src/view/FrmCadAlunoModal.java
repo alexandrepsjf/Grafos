@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
 import model.Disciplina;
@@ -31,6 +33,15 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private List<Aluno> alunos = new ArrayList<Aluno>();
     private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
     private String xml1 = null;
+    private String choose = null;
+
+    public void setChoose(String choose) {
+        this.choose = choose;
+    }
+
+    public String getChoose() {
+        return choose;
+    }
 
     /**
      * Creates new form FrmCadClienteModal
@@ -55,6 +66,9 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private void initComponents() {
 
         jTextField2 = new javax.swing.JTextField();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        FileChooser = new javax.swing.JFileChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         nomeAluno = new javax.swing.JTextField();
@@ -72,8 +86,18 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         listabox = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         abrirXML = new javax.swing.JButton();
+        url = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         jTextField2.setText("jTextField2");
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        FileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\negro\\Desktop"));
+        FileChooser.setDialogTitle("Esta é minha caixa aberta");
+        FileChooser.setFileFilter(new MyCustomFilter());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de alunos");
@@ -183,46 +207,63 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel6.setText("Local do Arquivo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel4))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(listabox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(anoAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                                .addComponent(nomeAluno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(GravarAluno)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(limparAlunos)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(removerAluno)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(fechar)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(abrirXML)
-                                .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(293, 293, 293))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(40, 40, 40)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(nomeAluno)))
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(78, 78, 78)
+                                            .addComponent(listabox, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27))
+                                    .addComponent(jLabel6)))
+                            .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(GravarAluno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(limparAlunos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removerAluno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(fechar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(abrirXML)
+                .addGap(51, 51, 51))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {anoAluno, listabox, nomeAluno});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fechar, jButton1});
 
@@ -231,37 +272,47 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cadastrarDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(anoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(48, 48, 48)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(listabox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(limparAlunos)
-                            .addComponent(removerAluno)
-                            .addComponent(fechar)
-                            .addComponent(GravarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(abrirXML)))
-                .addGap(18, 18, 18)
+                            .addComponent(listabox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(abrirXML)
+                    .addComponent(limparAlunos)
+                    .addComponent(removerAluno)
+                    .addComponent(fechar)
+                    .addComponent(GravarAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {anoAluno, nomeAluno});
@@ -368,25 +419,25 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
     private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
         // TODO add your handling code here:
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroPDF = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroPDF);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
+
+        }
 
         try {
             XStream xstream = new XStream(new DomDriver());
             String xml = xstream.toXML(alunos);
             System.out.println(xml);
-            File file = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
+            File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
             print.write(xml);
-            XStream xstream2 = new XStream(new DomDriver());
-            List<Disciplina> disciplinasGeradas = Disciplina.getDisciplinas();
-            String xml2 = xstream2.toXML(disciplinasAluno);
-            File file2 = new File("C:\\Users\\Sujajeb\\Desktop\\arquivoXML2.xml");
-            PrintWriter print2 = new PrintWriter(file2);
-            print2.write(xml2);
-            System.out.println(xml2);
             print.flush();
             print.close();
-            print2.flush();
-            print2.close();
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
@@ -394,30 +445,36 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     }//GEN-LAST:event_gerarXmlActionPerformed
 
     private void abrirXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirXMLActionPerformed
-        try {
-            // TODO add your handling code here:
-            FileReader leitor = new FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML.xml");
-            FileReader leitor2 = new FileReader("C:\\Users\\Sujajeb\\Desktop\\arquivoXML2.xml");
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroPDF = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroPDF);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
 
-            XStream xstream = new XStream(new DomDriver());
-            this.tabelaAlunos.setModel(modelo);
+            try {
+                // TODO add your handling code here:
 
-            
-            while (modelo.getRowCount() > 0) {
-                modelo.removeRow(0);
+                FileReader leitor = new FileReader(choose);
 
+                XStream xstream = new XStream(new DomDriver());
+                this.tabelaAlunos.setModel(modelo);
+
+                while (modelo.getRowCount() > 0) {
+                    modelo.removeRow(0);
+
+                }
+                alunos = (ArrayList) xstream.fromXML(leitor);
+
+                for (Aluno inserir : alunos) {
+
+                    modelo.addRow(new Object[]{inserir.getNome(), inserir.getAno(), inserir.getDisciplina().getNome()});
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            alunos = (ArrayList) xstream.fromXML(leitor);
-            disciplinasAluno = (ArrayList) xstream.fromXML(leitor2);
-            Disciplina.setDisciplinas(disciplinasAluno);
-            for (Aluno inserir : alunos) {
-
-                modelo.addRow(new Object[]{inserir.getNome(), inserir.getAno(), inserir.getDisciplina().getNome()});
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_abrirXMLActionPerformed
 
     /**
@@ -464,7 +521,24 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
 
     }
 
+    class MyCustomFilter extends javax.swing.filechooser.FileFilter {
+
+        @Override
+        public boolean accept(File file) {
+            // Allow only directories, or files with ".txt" extension
+            return file.isDirectory() || file.getAbsolutePath().endsWith(".xml");
+        }
+
+        @Override
+        public String getDescription() {
+            // This description will be displayed in the dialog,
+            // hard-coded = ugly, should be done via I18N
+            return "Text documents (*.xml)";
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser FileChooser;
     private javax.swing.JButton GravarAluno;
     private javax.swing.JButton abrirXML;
     private javax.swing.JTextField anoAluno;
@@ -476,6 +550,9 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton limparAlunos;
@@ -483,5 +560,6 @@ public class FrmCadAlunoModal extends javax.swing.JDialog {
     private javax.swing.JTextField nomeAluno;
     private javax.swing.JButton removerAluno;
     private javax.swing.JTable tabelaAlunos;
+    private javax.swing.JTextField url;
     // End of variables declaration//GEN-END:variables
 }
