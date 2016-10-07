@@ -203,7 +203,6 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
                                         .addComponent(jLabel5)
                                         .addGap(99, 99, 99))
                                     .addComponent(jLabel3))
@@ -248,12 +247,13 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(limparLista)
-                            .addComponent(gravarDisciplina)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(limparLista1)
-                            .addComponent(listarDisciplina)
-                            .addComponent(editar)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(limparLista)
+                                .addComponent(gravarDisciplina)
+                                .addComponent(listarDisciplina)
+                                .addComponent(editar))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 5, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -403,7 +403,7 @@ public class FrmDisciplinaModal extends javax.swing.JDialog {
             print2.close();
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FrmCadAlunoModal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_gerarXmlActionPerformed
 
