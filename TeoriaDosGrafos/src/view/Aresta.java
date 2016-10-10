@@ -20,8 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import model.Aluno;
-import model.Disciplina;
+
 
 /**
  *
@@ -33,7 +32,7 @@ public class Aresta extends javax.swing.JDialog {
     private DefaultTableModel modelo = new DefaultTableModel();
     private DefaultListModel model = new DefaultListModel();
     private List<Node> vertices = new ArrayList<Node>();
-    private List<Disciplina> disciplinasAluno = Disciplina.getDisciplinas();
+    private List<Edge> arestas = new ArrayList<Edge>();
     private String xml1 = null;
     private String choose = null;
 
@@ -53,9 +52,9 @@ public class Aresta extends javax.swing.JDialog {
         pai = parent;
 
         initComponents();
-        modelo.addColumn("Aluno");
-        modelo.addColumn("Ano");
-        modelo.addColumn("Disciplina");
+        modelo.addColumn("Nome");
+        modelo.addColumn("1 Vertice");
+        modelo.addColumn("2 Vertice");
     }
 
     /**
@@ -464,47 +463,45 @@ public class Aresta extends javax.swing.JDialog {
 
     private void CriarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CriarArestaActionPerformed
         // TODO add your handling code here:
-        Aluno aluno = new Aluno();
-        aluno.setNome(nomeAluno.getText());
-        aluno.setAno((String) nomeAresta.getText());
-        aluno.setDisciplina(disciplinasAluno.get(listaNode01.getSelectedIndex()));
-        tabelaAlunos.setModel(modelo);
-        modelo.addRow(new Object[]{nomeAluno.getText(), nomeAresta.getText(), aluno.getDisciplina().getNome()});
-        alunos.add(aluno);
-        nomeAluno.setText("");
+        Edge aresta = new Edge();
+        aresta.setNome(nomeAresta.getText());
+        aresta.setNode1(vertices.get(listaNode01.getSelectedIndex()));
+        aresta.setNode2(vertices.get(listaNode02.getSelectedIndex()));
+        tabelaArestas.setModel(modelo);
+        modelo.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
+        arestas.add(aresta);
         nomeAresta.setText("");
     }//GEN-LAST:event_CriarArestaActionPerformed
 
     private void limparTextoArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparTextoArestaActionPerformed
         // TODO add your handling code here:
-        nomeAluno.setText("");
+        nomeAresta.setText("");
         nomeAresta.setText("");
     }//GEN-LAST:event_limparTextoArestaActionPerformed
 
     private void removerArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerArestaActionPerformed
         // TODO add your handling code here:
-        int index = tabelaAlunos.getSelectedRow();
+        int index = tabelaArestas.getSelectedRow();
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
 
-            alunos.remove(index);
+            arestas.remove(index);
             Object remove;
             remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
-            nomeAluno.setText("");
+            nomeAresta.setText("");
             nomeAresta.setText("");
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
 
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma aluno ");
+            JOptionPane.showMessageDialog(null, "Selecione uma aresta ");
         }
     }//GEN-LAST:event_removerArestaActionPerformed
 
     private void listaNode01MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaNode01MouseClicked
         // TODO add your handling code here:
         listaNode01.removeAllItems();
-        disciplinasAluno = Disciplina.getDisciplinas();
-        for (Disciplina obj : disciplinasAluno) {
-            listaNode01.addItem(obj.getNome());
+        for (Node obj : vertices) {
+            listaNode01.addItem(obj.getId());
     }//GEN-LAST:event_listaNode01MouseClicked
     }
     private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
@@ -523,16 +520,19 @@ public class Aresta extends javax.swing.JDialog {
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
-        int index = tabelaAlunos.getSelectedRow();
+        int index = tabelaArestas.getSelectedRow();
+        
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
-
-            alunos.get(index).setNome(nomeAluno.getText());
-            alunos.get(index).setAno((String) nomeAresta.getText());
-            alunos.get(index).setDisciplina(disciplinasAluno.get(listaNode01.getSelectedIndex()));
-            tabelaAlunos.setModel(modelo);
+            Object teste = listaNode02.getSelectedItem();
+            System.out.println(teste);
+            teste = listaNode02.getSelectedItem().toString();
+            System.out.println(teste);
+            arestas.get(index).setNode1(vertices.get(listaNode01.getSelectedIndex()));
+            arestas.get(index).setNode1(vertices.get(listaNode02.getSelectedIndex()));
+            // arestas.get(index.setNome(nome);
             modelo.removeRow(index);
-            modelo.insertRow(index, new Object[]{nomeAluno.getText(), nomeAresta.getText(), alunos.get(index).getDisciplina().getNome()});
-            nomeAluno.setText("");
+            modelo.insertRow(index, new Object[]{nomeAresta.getText(), arestas.get(index).getNode1().getId() , arestas.get(index).getNode2().getId()});
+            nomeAresta.setText("");
             nomeAresta.setText("");
             Object edit;
             edit = modelo.getValueAt(index, 0);
@@ -558,7 +558,7 @@ public class Aresta extends javax.swing.JDialog {
 
         try {
             XStream xstream = new XStream(new DomDriver());
-            String xml = xstream.toXML(alunos);
+            String xml = xstream.toXML(arestas);
             System.out.println(xml);
             File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
@@ -584,19 +584,18 @@ public class Aresta extends javax.swing.JDialog {
                 // TODO add your handling code here:
 
                 FileReader leitor = new FileReader(choose);
-
                 XStream xstream = new XStream(new DomDriver());
-                this.tabelaAlunos.setModel(modelo);
+                this.tabelaArestas.setModel(modelo);
 
                 while (modelo.getRowCount() > 0) {
                     modelo.removeRow(0);
 
                 }
-                alunos = (ArrayList) xstream.fromXML(leitor);
+                arestas = (ArrayList) xstream.fromXML(leitor);
 
-                for (Aluno inserir : alunos) {
+                for (Edge inserir : arestas) {
 
-                    modelo.addRow(new Object[]{inserir.getNome(), inserir.getAno(), inserir.getDisciplina().getNome()});
+                    modelo.addRow(new Object[]{inserir.getNome(), inserir.getNode1().getId(), inserir.getNode2().getId()});
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
@@ -606,10 +605,15 @@ public class Aresta extends javax.swing.JDialog {
 
     private void criarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarNoActionPerformed
         // TODO add your handling code here:
-        Node no=new Node();
+        Node no = new Node();
+        listaVertices.setModel(model);
+        model.removeAllElements();
         no.setId(nomeVertice.getText());
         vertices.add(no);
         nomeVertice.setText("");
+        for(Node vertice : vertices){
+            model.addElement(vertice.getId());
+        }
         
     }//GEN-LAST:event_criarNoActionPerformed
 

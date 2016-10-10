@@ -20,6 +20,11 @@ public class Edge {
        this.nome=(String)( node1.getId()+ node2.getId());
     }
 
+    public Edge() {
+    }
+    
+    
+
     public Node getNode1() {
         return node1;
     }
