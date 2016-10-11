@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package graph;
 
 /**
  *
@@ -12,13 +12,9 @@ package view;
 public class Node {
     String id;
 
-    public Node(String id) {
-        this.id = id;
+    public Node() {
     }
 
-    Node() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public String getId() {
         return id;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package graph;
 
 /**
  *
@@ -14,17 +14,10 @@ public class Edge {
     Node node2; 
     String nome;
 
-    public Edge(Node node1, Node node2) {
-        this.node1 = node1;
-        this.node2 = node2;
-       this.nome=(String)( node1.getId()+ node2.getId());
-    }
-
     public Edge() {
     }
-    
-    
 
+    
     public Node getNode1() {
         return node1;
     }
