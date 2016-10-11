@@ -7,8 +7,6 @@ package graph;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import graph.Edge;
-import graph.Node;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -92,6 +90,8 @@ public class Aresta extends javax.swing.JDialog {
         jMenuItem2 = new javax.swing.JMenuItem();
         FileChooser = new javax.swing.JFileChooser();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaArestas = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         PainelAresta = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -105,6 +105,11 @@ public class Aresta extends javax.swing.JDialog {
         limparTextoAresta = new javax.swing.JButton();
         nomeAresta = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        PainelXML = new javax.swing.JPanel();
+        abrirXML = new javax.swing.JButton();
+        url = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        gerarXml = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         criarNo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -112,6 +117,8 @@ public class Aresta extends javax.swing.JDialog {
         editarVertice = new javax.swing.JButton();
         removerVertice = new javax.swing.JButton();
         limparTextoVertice = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaVertices = new javax.swing.JList<>();
         jLabel8 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
@@ -127,6 +134,27 @@ public class Aresta extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setText("Cadastro de Vertices e Arestas");
+
+        tabelaArestas.setAutoCreateRowSorter(true);
+        tabelaArestas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tabelaArestas.setFont(tabelaArestas.getFont().deriveFont((tabelaArestas.getFont().getStyle() | java.awt.Font.ITALIC) | java.awt.Font.BOLD, tabelaArestas.getFont().getSize()+7));
+        tabelaArestas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NOME", "1º VERTICE", "2º VERTICE"
+            }
+        ));
+        tabelaArestas.setGridColor(new java.awt.Color(102, 102, 102));
+        tabelaArestas.getTableHeader().setResizingAllowed(false);
+        tabelaArestas.getTableHeader().setReorderingAllowed(false);
+        tabelaArestas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaArestasMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabelaArestas);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel9.setText("Lista de Arestas");
@@ -208,30 +236,31 @@ public class Aresta extends javax.swing.JDialog {
             .addGroup(PainelArestaLayout.createSequentialGroup()
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PainelArestaLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(EditarAresta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(limparTextoAresta)
-                        .addGap(25, 25, 25))
-                    .addGroup(PainelArestaLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addContainerGap()
+                        .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PainelArestaLayout.createSequentialGroup()
                                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(PainelArestaLayout.createSequentialGroup()
                                         .addGap(54, 54, 54)
                                         .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5)
-                                    .addGroup(PainelArestaLayout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(16, 16, 16)
-                                        .addComponent(listaNode01, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel2)
-                                .addGap(12, 12, 12))
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(PainelArestaLayout.createSequentialGroup()
-                                .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
+                                .addComponent(jLabel4)
+                                .addGap(16, 16, 16)
+                                .addComponent(listaNode01, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel2)
+                        .addGap(12, 12, 12))
+                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(EditarAresta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(limparTextoAresta)
+                            .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CriarAresta)
                     .addComponent(removerAresta, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -268,6 +297,67 @@ public class Aresta extends javax.swing.JDialog {
         );
 
         PainelArestaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {EditarAresta, limparTextoAresta, removerAresta});
+
+        PainelXML.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        abrirXML.setBackground(new java.awt.Color(255, 255, 204));
+        abrirXML.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        abrirXML.setText("Abrir XML");
+        abrirXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirXMLActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel6.setText("Local do Arquivo");
+
+        gerarXml.setBackground(new java.awt.Color(204, 255, 204));
+        gerarXml.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        gerarXml.setText("Gerar XML");
+        gerarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerarXmlActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PainelXMLLayout = new javax.swing.GroupLayout(PainelXML);
+        PainelXML.setLayout(PainelXMLLayout);
+        PainelXMLLayout.setHorizontalGroup(
+            PainelXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelXMLLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
+            .addGroup(PainelXMLLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(PainelXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(abrirXML)
+                    .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PainelXMLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PainelXMLLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {abrirXML, gerarXml});
+
+        PainelXMLLayout.setVerticalGroup(
+            PainelXMLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelXMLLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(abrirXML)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        PainelXMLLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {abrirXML, gerarXml});
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -349,6 +439,14 @@ public class Aresta extends javax.swing.JDialog {
                 .addGap(19, 19, 19))
         );
 
+        listaVertices.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        listaVertices.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaVerticesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaVertices);
+
         jLabel8.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel8.setText("Lista de Vertices");
 
@@ -357,11 +455,21 @@ public class Aresta extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(187, 187, 187))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,10 +477,12 @@ public class Aresta extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(PainelAresta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(206, 206, 206))))
+                        .addGap(18, 18, 18)
+                        .addComponent(PainelXML, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,13 +491,18 @@ public class Aresta extends javax.swing.JDialog {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(PainelXML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PainelAresta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(296, 296, 296))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -435,6 +550,20 @@ public class Aresta extends javax.swing.JDialog {
             listaNode01.addItem(obj.getId());
     }//GEN-LAST:event_listaNode01MouseClicked
     }
+    private void tabelaArestasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaArestasMouseClicked
+        // TODO add your handling code here:
+        int index = tabelaArestas.getSelectedRow();
+        if ((modelo.getRowCount() > 0) && (index >= 0)) {
+            nomeAresta.setText(arestas.get(index).getNome());
+            nomeAresta.setText(arestas.get(index).getNome());
+            listaNode01.removeAllItems();
+            listaNode01.addItem(arestas.get(index).getNode1().getId());
+            listaNode02.removeAllItems();
+            listaNode02.addItem(arestas.get(index).getNode2().getId());
+        }
+
+    }//GEN-LAST:event_tabelaArestasMouseClicked
+
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
@@ -458,6 +587,59 @@ public class Aresta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione uma aresta ");
         }
     }//GEN-LAST:event_editarActionPerformed
+
+    private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
+        // TODO add your handling code here:
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroXML);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
+        }
+
+        try {
+            XStream xstream = new XStream(new DomDriver());
+            String xml = xstream.toXML(arestas);
+            System.out.println(xml);
+            File file = new File(choose + ".xml");
+            PrintWriter print = new PrintWriter(file);
+            print.write(xml);
+            print.flush();
+            print.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_gerarXmlActionPerformed
+
+    private void abrirXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirXMLActionPerformed
+        JFileChooser arquivo = new JFileChooser();
+        FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
+        arquivo.addChoosableFileFilter(filtroXML);
+        arquivo.setAcceptAllFileFilterUsed(false);
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            url.setText(arquivo.getSelectedFile().getAbsolutePath());
+            choose = url.getText();
+            try {
+                // TODO add your handling code here:
+
+                FileReader leitor = new FileReader(choose);
+                XStream xstream = new XStream(new DomDriver());
+                this.tabelaArestas.setModel(modelo);
+                while (modelo.getRowCount() > 0) {
+                    modelo.removeRow(0);
+                }
+                arestas = (ArrayList) xstream.fromXML(leitor);
+                for (Edge inserir : arestas) {
+                    modelo.addRow(new Object[]{inserir.getNome(), inserir.getNode1().getId(), inserir.getNode2().getId()});
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_abrirXMLActionPerformed
 
     private void criarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarNoActionPerformed
         // TODO add your handling code here:
@@ -494,6 +676,12 @@ public class Aresta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione uma Vertice ");
         }
     }//GEN-LAST:event_editarVerticeActionPerformed
+
+    private void listaVerticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaVerticesMouseClicked
+        // TODO add your handling code here:
+        int index = listaVertices.getSelectedIndex();
+        nomeVertice.setText(vertices.get(index).getId());
+    }//GEN-LAST:event_listaVerticesMouseClicked
 
     private void listaNode02MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaNode02MouseClicked
         // TODO add your handling code here:
@@ -575,6 +763,14 @@ public class Aresta extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -613,26 +809,35 @@ public class Aresta extends javax.swing.JDialog {
     private javax.swing.JButton EditarAresta;
     private javax.swing.JFileChooser FileChooser;
     private javax.swing.JPanel PainelAresta;
+    private javax.swing.JPanel PainelXML;
+    private javax.swing.JButton abrirXML;
     private javax.swing.JButton criarNo;
     private javax.swing.JButton editarVertice;
+    private javax.swing.JButton gerarXml;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton limparTextoAresta;
     private javax.swing.JButton limparTextoVertice;
     private javax.swing.JComboBox<String> listaNode01;
     private javax.swing.JComboBox<String> listaNode02;
+    private javax.swing.JList<String> listaVertices;
     private javax.swing.JTextField nomeAresta;
     private javax.swing.JTextField nomeVertice;
     private javax.swing.JButton removerAresta;
     private javax.swing.JButton removerVertice;
+    private javax.swing.JTable tabelaArestas;
+    private javax.swing.JTextField url;
     // End of variables declaration//GEN-END:variables
 }
