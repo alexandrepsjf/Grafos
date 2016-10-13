@@ -222,6 +222,11 @@ public class Aresta extends javax.swing.JDialog {
                 nomeArestaMouseClicked(evt);
             }
         });
+        nomeAresta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeArestaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome da Aresta");
 
@@ -239,17 +244,13 @@ public class Aresta extends javax.swing.JDialog {
                         .addContainerGap()
                         .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PainelArestaLayout.createSequentialGroup()
-                                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PainelArestaLayout.createSequentialGroup()
-                                        .addGap(54, 54, 54)
-                                        .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(54, 54, 54)
+                                .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
                             .addGroup(PainelArestaLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(16, 16, 16)
-                                .addComponent(listaNode01, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(listaNode01, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29)
                         .addComponent(jLabel2)
                         .addGap(12, 12, 12))
@@ -260,7 +261,6 @@ public class Aresta extends javax.swing.JDialog {
                         .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(limparTextoAresta)
                             .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CriarAresta)
                     .addComponent(removerAresta, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -531,7 +531,7 @@ public class Aresta extends javax.swing.JDialog {
         int index = tabelaArestas.getSelectedRow();
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
             arestas.remove(index);
-            Object remove;                    
+            Object remove;
             remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
             nomeAresta.setText("");
@@ -646,13 +646,16 @@ public class Aresta extends javax.swing.JDialog {
         Node no = new Node();
         listaVertices.setModel(model);
         model.removeAllElements();
-        no.setId(nomeVertice.getText());
-        vertices.add(no);
-        nomeVertice.setText("");
-        for (Node vertice : vertices) {
-            model.addElement(vertice.getId());
+        if (nomeVertice.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Selecione um nome para o Vértice ");
+        } else {
+            no.setId(nomeVertice.getText());
+            vertices.add(no);
+            nomeVertice.setText("");
+            for (Node vertice : vertices) {
+                model.addElement(vertice.getId());
+            }
         }
-
     }//GEN-LAST:event_criarNoActionPerformed
 
     private void editarVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarVerticeActionPerformed
@@ -661,15 +664,18 @@ public class Aresta extends javax.swing.JDialog {
         if ((vertices.size() > 0) && (index >= 0)) {
 
             String nome = nomeVertice.getText();
-            vertices.get(index).setId(nome);
-            nomeVertice.setText("");
+            if (nome.equals("")) {
+                JOptionPane.showMessageDialog(null, "Selecione um nome para o Vértice ");
+            } else {
+                vertices.get(index).setId(nome);
+                nomeVertice.setText("");
 
-            JOptionPane.showMessageDialog(null, "O Vertice " + nome + " foi editado com sucesso ");
-            model.removeAllElements();
+                JOptionPane.showMessageDialog(null, "O Vertice " + nome + " foi editado com sucesso ");
+                model.removeAllElements();
 
-            for (Node vertice : vertices) {
-                model.addElement(vertice.getId());
-
+                for (Node vertice : vertices) {
+                    model.addElement(vertice.getId());
+                }
             }
 
         } else {
@@ -680,7 +686,9 @@ public class Aresta extends javax.swing.JDialog {
     private void listaVerticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaVerticesMouseClicked
         // TODO add your handling code here:
         int index = listaVertices.getSelectedIndex();
-        nomeVertice.setText(vertices.get(index).getId());
+        if (index >= 0) {
+            nomeVertice.setText(vertices.get(index).getId());
+        }
     }//GEN-LAST:event_listaVerticesMouseClicked
 
     private void listaNode02MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaNode02MouseClicked
@@ -721,6 +729,10 @@ public class Aresta extends javax.swing.JDialog {
         // TODO add your handling code here:
         nomeVertice.setText("");
     }//GEN-LAST:event_limparTextoVerticeActionPerformed
+
+    private void nomeArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeArestaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeArestaActionPerformed
 
     /**
      * @param args the command line arguments
