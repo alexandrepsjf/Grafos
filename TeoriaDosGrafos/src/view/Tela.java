@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graph;
+package view;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import model.Edge;
+import model.Node;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,13 +27,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sujajeb
  */
-public class Aresta extends javax.swing.JDialog {
+public class Tela extends javax.swing.JDialog {
 
     java.awt.Frame pai;
     private DefaultTableModel modelo = new DefaultTableModel();
     private DefaultListModel model = new DefaultListModel();
     private List<Node> vertices = new ArrayList<Node>();
     private List<Edge> arestas = new ArrayList<Edge>();
+     XStream xstream = new XStream(new DomDriver());
     private String xml1 = null;
     private String choose = null;
     private String head = "<? Xml version = \"1.0\" encoding = \"UTF-8\"?>\n"
@@ -68,10 +71,22 @@ public class Aresta extends javax.swing.JDialog {
     /**
      * Creates new form FrmCadClienteModal
      */
-    public Aresta(java.awt.Frame parent, boolean modal) {
+    public Tela(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         pai = parent;
         initComponents();
+     xstream.omitField(Edge.class, "node1");
+    xstream.omitField(Edge.class, "node2");      
+        xstream.alias("graph", Tela.class);        
+        xstream.alias("node", Node.class);
+        xstream.alias("edge", Edge.class);
+        xstream.useAttributeFor("source", String.class);
+        xstream.useAttributeFor("target", String.class);
+         xstream.useAttributeFor("id", String.class);
+         xstream.addImplicitCollection(Tela.class, "vertices");
+      xstream.addImplicitCollection(Tela.class, "arestas");
+      xstream.addImplicitCollection(Tela.class, "vertices");
+      xstream.addImplicitCollection(Tela.class, "arestas");
         modelo.addColumn("Nome");
         modelo.addColumn("1º Vertice");
         modelo.addColumn("2º Vertice");
@@ -511,7 +526,7 @@ public class Aresta extends javax.swing.JDialog {
     private void CriarArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CriarArestaActionPerformed
         // TODO add your handling code here:
         Edge aresta = new Edge();
-        aresta.setNome(nomeAresta.getText());
+        aresta.setId(nomeAresta.getText());
         aresta.setNode1(vertices.get(listaNode01.getSelectedIndex()));
         aresta.setNode2(vertices.get(listaNode02.getSelectedIndex()));
         tabelaArestas.setModel(modelo);
@@ -535,7 +550,7 @@ public class Aresta extends javax.swing.JDialog {
             remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
             nomeAresta.setText("");
-            nomeAresta.setText("");
+            nomeAresta.setText("");         
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
 
         } else {
@@ -554,8 +569,8 @@ public class Aresta extends javax.swing.JDialog {
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
         if ((modelo.getRowCount() > 0) && (index >= 0)) {
-            nomeAresta.setText(arestas.get(index).getNome());
-            nomeAresta.setText(arestas.get(index).getNome());
+            nomeAresta.setText(arestas.get(index).getId());
+            nomeAresta.setText(arestas.get(index).getId());
             listaNode01.removeAllItems();
             listaNode01.addItem(arestas.get(index).getNode1().getId());
             listaNode02.removeAllItems();
@@ -575,7 +590,7 @@ public class Aresta extends javax.swing.JDialog {
             System.out.println(teste);
             arestas.get(index).setNode1(vertices.get(listaNode01.getSelectedIndex()));
             arestas.get(index).setNode2(vertices.get(listaNode02.getSelectedIndex()));
-            // arestas.get(index).setNome(nome);
+            // arestas.get(index).setNome(id);
             modelo.removeRow(index);
             modelo.insertRow(index, new Object[]{nomeAresta.getText(), arestas.get(index).getNode1().getId(), arestas.get(index).getNode2().getId()});
             nomeAresta.setText("");
@@ -594,14 +609,15 @@ public class Aresta extends javax.swing.JDialog {
         FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
         arquivo.addChoosableFileFilter(filtroXML);
         arquivo.setAcceptAllFileFilterUsed(false);
-        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             url.setText(arquivo.getSelectedFile().getAbsolutePath());
             choose = url.getText();
         }
 
         try {
-            XStream xstream = new XStream(new DomDriver());
-            String xml = xstream.toXML(arestas);
+           
+            String xml = xstream.toXML(vertices); 
+            xml += xstream.toXML(arestas);
             System.out.println(xml);
             File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
@@ -610,7 +626,7 @@ public class Aresta extends javax.swing.JDialog {
             print.close();
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_gerarXmlActionPerformed
 
@@ -633,10 +649,10 @@ public class Aresta extends javax.swing.JDialog {
                 }
                 arestas = (ArrayList) xstream.fromXML(leitor);
                 for (Edge inserir : arestas) {
-                    modelo.addRow(new Object[]{inserir.getNome(), inserir.getNode1().getId(), inserir.getNode2().getId()});
+                    modelo.addRow(new Object[]{inserir.getId(), inserir.getNode1().getId(), inserir.getNode2().getId()});
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Aresta.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_abrirXMLActionPerformed
@@ -752,21 +768,69 @@ public class Aresta extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Aresta.class
+            java.util.logging.Logger.getLogger(Tela.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Aresta.class
+            java.util.logging.Logger.getLogger(Tela.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Aresta.class
+            java.util.logging.Logger.getLogger(Tela.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Aresta.class
+            java.util.logging.Logger.getLogger(Tela.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -787,7 +851,7 @@ public class Aresta extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Aresta dialog = new Aresta(new javax.swing.JFrame(), true);
+                Tela dialog = new Tela(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
