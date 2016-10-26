@@ -610,8 +610,8 @@ public class Tela extends javax.swing.JDialog {
         modelo.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
         arestas.add(aresta);
         nomeAresta.setText("");
-        aresta.getNode1().setGrau(1+aresta.getNode1().getGrau());
-        aresta.getNode2().setGrau(1+aresta.getNode2().getGrau());
+        aresta.getNode1().setGrau(1 + aresta.getNode1().getGrau());
+        aresta.getNode2().setGrau(1 + aresta.getNode2().getGrau());
     }//GEN-LAST:event_CriarArestaActionPerformed
 
     private void limparTextoArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparTextoArestaActionPerformed
@@ -838,18 +838,18 @@ public class Tela extends javax.swing.JDialog {
 
     private void grauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauActionPerformed
         // TODO add your handling code here:
-        String grauTotal="";
-         if (verticeGrau.getText().equals("")) {
+        String grauTotal = "";
+        if (verticeGrau.getText().equals("")) {
 
             for (Node no : vertices) {
-                grauTotal += " Grau Vertice " + no.getId() + " é " + no.getGrau()+"\n";
+                grauTotal += " Grau Vertice " + no.getId() + " é " + no.getGrau() + "\n";
             }
         } else {
 
             for (Node no : vertices) {
-                if (no.getId().equals(verticeGrau.getText())){                    
-                grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
-            }
+                if (no.getId().equals(verticeGrau.getText())) {
+                    grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
+                }
             }
         }
         JOptionPane.showMessageDialog(null, grauTotal);
@@ -860,18 +860,18 @@ public class Tela extends javax.swing.JDialog {
 
     private void incidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incidenteActionPerformed
         // TODO add your handling code here:
-        String incidenciaTotal="";
-         if (verticeGrau.getText().equals("")) {
+        String incidenciaTotal = "";
+        if (verticeGrau.getText().equals("")) {
 
             for (Edge aresta : arestas) {
-                incidenciaTotal += " O Vertice " + aresta.getNode1().getId() + " é incidente com " + aresta.getNode2().getId()+"\n";
+                incidenciaTotal += " O Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
             }
         } else {
 
             for (Edge aresta : arestas) {
-                if (aresta.getNode1().getId().equals(verticeGrau.getText())||aresta.getNode2().getId().equals(verticeGrau.getText())){                    
-                incidenciaTotal += " O Vertice " + aresta.getNode1().getId() + " é incidente com " + aresta.getNode2().getId()+"\n";
-            }
+                if (aresta.getNode1().getId().equals(verticeGrau.getText()) || aresta.getNode2().getId().equals(verticeGrau.getText())) {
+                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
+                }
             }
         }
         JOptionPane.showMessageDialog(null, incidenciaTotal);
