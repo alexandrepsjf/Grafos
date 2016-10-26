@@ -5,6 +5,9 @@
  */
 package view;
 
+import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Sujajeb
@@ -147,6 +150,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmCad.setVisible(true);
 
     }//GEN-LAST:event_chamarTelaCadastro
+
+    public JCheckBox getDigrafo() {
+        return digrafo;
+    }
+
+    public void setDigrafo(JCheckBox digrafo) {
+        this.digrafo = digrafo;
+    }
+
+    public JTextField getIdGrafo() {
+        return idGrafo;
+    }
+
+    public void setIdGrafo(JTextField idGrafo) {
+        this.idGrafo = idGrafo;
+    }
 
     private void idGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idGrafoActionPerformed
         // TODO add your handling code here:
