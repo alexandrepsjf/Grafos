@@ -1016,27 +1016,32 @@ public class Tela extends javax.swing.JDialog {
 
     private void arestaAdjacenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arestaAdjacenteActionPerformed
         // TODO add your handling code here:
-        String adjacenciaTotal = "";
-        
-        if (arestaGrau.getText().equals("")) {
-                
+        String adjacenciaTotal = "", adjacenciaParcial = "" ;
+                if (arestaGrau.getText().equals("")) {
+
             for (Node no : vertices) {
-                for (Edge aresta : arestas){
-                    if(no.equals(aresta.getNode1()) || no.equals(aresta.getNode2())){
-                        
+                adjacenciaParcial = "";
+                int cont = 0;
+                for (Edge aresta : arestas) {                    
+                    if (no.equals(aresta.getNode1()) || no.equals(aresta.getNode2())) {
+                        cont++;
+                        adjacenciaParcial += " " + aresta.getId();
                     }
+
                 }
-                incidenciaTotal += " A aresta " + aresta.getId() + " é adjacente ao vértice " + aresta.getNode1().getId() + "\n";
+                if (cont > 1) {
+                    adjacenciaTotal += " \n As arestas " + adjacenciaParcial+" são adjacentes";
+                }
             }
         } else {
 
             for (Edge aresta : arestas) {
                 if (aresta.getNode1().getId().equals(arestaGrau.getText()) || aresta.getNode2().getId().equals(arestaGrau.getText())) {
-                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
+                    adjacenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, incidenciaTotal);
+        JOptionPane.showMessageDialog(null, adjacenciaTotal);
         verticeGrau.setText(null);
         nomeVertice.setText(null);
     }//GEN-LAST:event_arestaAdjacenteActionPerformed
