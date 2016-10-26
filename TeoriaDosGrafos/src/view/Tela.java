@@ -145,7 +145,7 @@ public class Tela extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         arestaIncidente = new javax.swing.JButton();
         arestaIncidente1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        arestaGrau = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         ordemGrafo = new javax.swing.JButton();
 
@@ -316,13 +316,9 @@ public class Tela extends javax.swing.JDialog {
                             .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel5))
-                            .addGroup(PainelArestaLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(PainelArestaLayout.createSequentialGroup()
-                        .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(15, 15, 15)
+                            .addComponent(jLabel2)))
+                    .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EditarAresta)
                     .addComponent(limparTextoAresta)
@@ -595,7 +591,7 @@ public class Tela extends javax.swing.JDialog {
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -608,7 +604,7 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(arestaIncidente1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -1000,7 +996,7 @@ public class Tela extends javax.swing.JDialog {
     private void arestaIncidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arestaIncidenteActionPerformed
         // TODO add your handling code here:
         String incidenciaTotal = "";
-        if (verticeGrau.getText().equals("")) {
+        if (arestaGrau.getText().equals("")) {
 
             for (Edge aresta : arestas) {
                 incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getNode2().getId() + "\n";
@@ -1008,7 +1004,7 @@ public class Tela extends javax.swing.JDialog {
         } else {
 
             for (Edge aresta : arestas) {
-                if (aresta.getNode1().getId().equals(verticeGrau.getText()) || aresta.getNode2().getId().equals(verticeGrau.getText())) {
+                if (aresta.getNode1().getId().equals(arestaGrau.getText()) || aresta.getNode2().getId().equals(arestaGrau.getText())) {
                     incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
                 }
             }
@@ -1020,16 +1016,22 @@ public class Tela extends javax.swing.JDialog {
 
     private void arestaAdjacenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arestaAdjacenteActionPerformed
         // TODO add your handling code here:
-        String incidenciaTotal = "";
-        if (verticeGrau.getText().equals("")) {
-
-            for (Edge aresta : arestas) {
+        String adjacenciaTotal = "";
+        
+        if (arestaGrau.getText().equals("")) {
+                
+            for (Node no : vertices) {
+                for (Edge aresta : arestas){
+                    if(no.equals(aresta.getNode1()) || no.equals(aresta.getNode2())){
+                        
+                    }
+                }
                 incidenciaTotal += " A aresta " + aresta.getId() + " é adjacente ao vértice " + aresta.getNode1().getId() + "\n";
             }
         } else {
 
             for (Edge aresta : arestas) {
-                if (aresta.getNode1().getId().equals(verticeGrau.getText()) || aresta.getNode2().getId().equals(verticeGrau.getText())) {
+                if (aresta.getNode1().getId().equals(arestaGrau.getText()) || aresta.getNode2().getId().equals(arestaGrau.getText())) {
                     incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
                 }
             }
@@ -1177,6 +1179,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JPanel PainelXML;
     private javax.swing.JButton abrirXML;
     private javax.swing.JButton adjacente;
+    private javax.swing.JTextField arestaGrau;
     private javax.swing.JButton arestaIncidente;
     private javax.swing.JButton arestaIncidente1;
     private javax.swing.JButton criarNo;
@@ -1203,7 +1206,6 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelVertice;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton limparTextoAresta;
     private javax.swing.JButton limparTextoVertice;
     private javax.swing.JComboBox<String> listaNode01;
