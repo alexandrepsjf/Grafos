@@ -313,11 +313,9 @@ public class Tela extends javax.swing.JDialog {
                                 .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PainelArestaLayout.createSequentialGroup()
-                                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))
                             .addGroup(PainelArestaLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -563,10 +561,20 @@ public class Tela extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         arestaIncidente.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        arestaIncidente.setText("<html>ARESTA</br> INCIDESNTES</html>");
+        arestaIncidente.setText("<html>ARESTA</br> INCIDENTE</html>");
+        arestaIncidente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arestaIncidenteActionPerformed(evt);
+            }
+        });
 
         arestaIncidente1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        arestaIncidente1.setText("<html>ARESTA</br> ADJACENTES</html>");
+        arestaIncidente1.setText("<html>ARESTA</br> ADJACENTE</html>");
+        arestaIncidente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arestaAdjacenteActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel12.setText("ARESTAS");
@@ -601,7 +609,7 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(arestaIncidente1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {arestaIncidente, arestaIncidente1});
@@ -969,7 +977,7 @@ public class Tela extends javax.swing.JDialog {
 
     private void adjacenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adjacenteActionPerformed
         // TODO add your handling code here:
-         String adjacenciaTotal = "";
+        String adjacenciaTotal = "";
         if (verticeGrau.getText().equals("")) {
 
             for (Edge aresta : arestas) {
@@ -986,8 +994,50 @@ public class Tela extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, adjacenciaTotal);
         verticeGrau.setText(null);
         nomeVertice.setText(null);
-                    
+
     }//GEN-LAST:event_adjacenteActionPerformed
+
+    private void arestaIncidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arestaIncidenteActionPerformed
+        // TODO add your handling code here:
+        String incidenciaTotal = "";
+        if (verticeGrau.getText().equals("")) {
+
+            for (Edge aresta : arestas) {
+                incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getNode2().getId() + "\n";
+            }
+        } else {
+
+            for (Edge aresta : arestas) {
+                if (aresta.getNode1().getId().equals(verticeGrau.getText()) || aresta.getNode2().getId().equals(verticeGrau.getText())) {
+                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, incidenciaTotal);
+        verticeGrau.setText(null);
+        nomeVertice.setText(null);
+    }//GEN-LAST:event_arestaIncidenteActionPerformed
+
+    private void arestaAdjacenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arestaAdjacenteActionPerformed
+        // TODO add your handling code here:
+        String incidenciaTotal = "";
+        if (verticeGrau.getText().equals("")) {
+
+            for (Edge aresta : arestas) {
+                incidenciaTotal += " A aresta " + aresta.getId() + " é adjacente ao vértice " + aresta.getNode1().getId() + "\n";
+            }
+        } else {
+
+            for (Edge aresta : arestas) {
+                if (aresta.getNode1().getId().equals(verticeGrau.getText()) || aresta.getNode2().getId().equals(verticeGrau.getText())) {
+                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, incidenciaTotal);
+        verticeGrau.setText(null);
+        nomeVertice.setText(null);
+    }//GEN-LAST:event_arestaAdjacenteActionPerformed
 
     /**
      * @param args the command line arguments
