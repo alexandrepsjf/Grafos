@@ -34,7 +34,7 @@ public class Tela extends javax.swing.JDialog {
     private DefaultListModel model = new DefaultListModel();
     private List<Node> vertices = new ArrayList<Node>();
     private List<Edge> arestas = new ArrayList<Edge>();
-     XStream xstream = new XStream(new DomDriver());
+    XStream xstream = new XStream(new DomDriver());
     private String xml1 = null;
     private String choose = null;
     private String head = "<? Xml version = \"1.0\" encoding = \"UTF-8\"?>\n"
@@ -75,18 +75,18 @@ public class Tela extends javax.swing.JDialog {
         super(parent, modal);
         pai = parent;
         initComponents();
-     xstream.omitField(Edge.class, "node1");
-    xstream.omitField(Edge.class, "node2");      
-        xstream.alias("graph", Tela.class);        
+        xstream.omitField(Edge.class, "node1");
+        xstream.omitField(Edge.class, "node2");
+        xstream.alias("graph", Tela.class);
         xstream.alias("node", Node.class);
         xstream.alias("edge", Edge.class);
         xstream.useAttributeFor("source", String.class);
         xstream.useAttributeFor("target", String.class);
-         xstream.useAttributeFor("id", String.class);
-         xstream.addImplicitCollection(Tela.class, "vertices");
-      xstream.addImplicitCollection(Tela.class, "arestas");
-      xstream.addImplicitCollection(Tela.class, "vertices");
-      xstream.addImplicitCollection(Tela.class, "arestas");
+        xstream.useAttributeFor("id", String.class);
+        xstream.addImplicitCollection(Tela.class, "vertices");
+        xstream.addImplicitCollection(Tela.class, "arestas");
+        xstream.addImplicitCollection(Tela.class, "vertices");
+        xstream.addImplicitCollection(Tela.class, "arestas");
         modelo.addColumn("Nome");
         modelo.addColumn("1º Vertice");
         modelo.addColumn("2º Vertice");
@@ -135,13 +135,13 @@ public class Tela extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaVertices = new javax.swing.JList<>();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        ordemGrafo = new javax.swing.JButton();
+        grau = new javax.swing.JButton();
+        verticeGrau = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        incidente = new javax.swing.JButton();
+        adjacente = new javax.swing.JButton();
+        arestaIncidente = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -473,20 +473,35 @@ public class Tela extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel8.setText("Lista de Vertices");
 
-        jButton1.setText("ORDEM DO GRAFO");
+        ordemGrafo.setText("ORDEM DO GRAFO");
+        ordemGrafo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ordemGrafoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
-        jButton2.setText("GRAU ");
+        grau.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
+        grau.setText("GRAU ");
+        grau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grauActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 3, 8)); // NOI18N
         jLabel10.setText("DEIXE EM BRANCO PARA TODOS");
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
-        jButton3.setText("INCIDENTES");
+        incidente.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
+        incidente.setText("INCIDENTES");
+        incidente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incidenteActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("ADJACENTES");
+        adjacente.setText("ADJACENTES");
 
-        jButton5.setText("\"ARESTA /n INCIDESNTES\"");
+        arestaIncidente.setText("<html>ARESTA</br> INCIDESNTES</html>");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -509,26 +524,26 @@ public class Tela extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addComponent(ordemGrafo)
                                 .addGap(46, 46, 46))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(grau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3)
+                                .addComponent(incidente)
                                 .addGap(13, 13, 13))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(84, 84, 84)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(verticeGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(53, 53, 53)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(adjacente, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel10)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))))
@@ -557,28 +572,28 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(PainelAresta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane1)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(ordemGrafo)
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(grau, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(incidente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(verticeGrau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(adjacente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -595,6 +610,8 @@ public class Tela extends javax.swing.JDialog {
         modelo.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
         arestas.add(aresta);
         nomeAresta.setText("");
+        aresta.getNode1().setGrau(1+aresta.getNode1().getGrau());
+        aresta.getNode2().setGrau(1+aresta.getNode2().getGrau());
     }//GEN-LAST:event_CriarArestaActionPerformed
 
     private void limparTextoArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparTextoArestaActionPerformed
@@ -612,7 +629,7 @@ public class Tela extends javax.swing.JDialog {
             remove = modelo.getValueAt(index, 0);
             modelo.removeRow(index);
             nomeAresta.setText("");
-            nomeAresta.setText("");         
+            nomeAresta.setText("");
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
 
         } else {
@@ -671,14 +688,14 @@ public class Tela extends javax.swing.JDialog {
         FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
         arquivo.addChoosableFileFilter(filtroXML);
         arquivo.setAcceptAllFileFilterUsed(false);
-                if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        if (arquivo.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             url.setText(arquivo.getSelectedFile().getAbsolutePath());
             choose = url.getText();
         }
 
         try {
-           
-            String xml = xstream.toXML(vertices); 
+
+            String xml = xstream.toXML(vertices);
             xml += xstream.toXML(arestas);
             System.out.println(xml);
             File file = new File(choose + ".xml");
@@ -747,6 +764,7 @@ public class Tela extends javax.swing.JDialog {
             } else {
                 vertices.get(index).setId(nome);
                 nomeVertice.setText("");
+                verticeGrau.setText(null);
 
                 JOptionPane.showMessageDialog(null, "O Vertice " + nome + " foi editado com sucesso ");
                 model.removeAllElements();
@@ -766,6 +784,7 @@ public class Tela extends javax.swing.JDialog {
         int index = listaVertices.getSelectedIndex();
         if (index >= 0) {
             nomeVertice.setText(vertices.get(index).getId());
+            verticeGrau.setText(vertices.get(index).getId());
         }
     }//GEN-LAST:event_listaVerticesMouseClicked
 
@@ -811,6 +830,54 @@ public class Tela extends javax.swing.JDialog {
     private void nomeArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeArestaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeArestaActionPerformed
+
+    private void ordemGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordemGrafoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "A ordem do Grafo " + this.id + " é " + vertices.size());
+    }//GEN-LAST:event_ordemGrafoActionPerformed
+
+    private void grauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauActionPerformed
+        // TODO add your handling code here:
+        String grauTotal="";
+         if (verticeGrau.getText().equals("")) {
+
+            for (Node no : vertices) {
+                grauTotal += " Grau Vertice " + no.getId() + " é " + no.getGrau()+"\n";
+            }
+        } else {
+
+            for (Node no : vertices) {
+                if (no.getId().equals(verticeGrau.getText())){                    
+                grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
+            }
+            }
+        }
+        JOptionPane.showMessageDialog(null, grauTotal);
+        verticeGrau.setText(null);
+        nomeVertice.setText(null);
+
+    }//GEN-LAST:event_grauActionPerformed
+
+    private void incidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incidenteActionPerformed
+        // TODO add your handling code here:
+        String incidenciaTotal="";
+         if (verticeGrau.getText().equals("")) {
+
+            for (Edge aresta : arestas) {
+                incidenciaTotal += " O Vertice " + aresta.getNode1().getId() + " é incidente com " + aresta.getNode2().getId()+"\n";
+            }
+        } else {
+
+            for (Edge aresta : arestas) {
+                if (aresta.getNode1().getId().equals(verticeGrau.getText())||aresta.getNode2().getId().equals(verticeGrau.getText())){                    
+                incidenciaTotal += " O Vertice " + aresta.getNode1().getId() + " é incidente com " + aresta.getNode2().getId()+"\n";
+            }
+            }
+        }
+        JOptionPane.showMessageDialog(null, incidenciaTotal);
+        verticeGrau.setText(null);
+        nomeVertice.setText(null);
+    }//GEN-LAST:event_incidenteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -949,14 +1016,13 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JPanel PainelAresta;
     private javax.swing.JPanel PainelXML;
     private javax.swing.JButton abrirXML;
+    private javax.swing.JButton adjacente;
+    private javax.swing.JButton arestaIncidente;
     private javax.swing.JButton criarNo;
     private javax.swing.JButton editarVertice;
     private javax.swing.JButton gerarXml;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton grau;
+    private javax.swing.JButton incidente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -972,7 +1038,6 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton limparTextoAresta;
     private javax.swing.JButton limparTextoVertice;
     private javax.swing.JComboBox<String> listaNode01;
@@ -980,9 +1045,11 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JList<String> listaVertices;
     private javax.swing.JTextField nomeAresta;
     private javax.swing.JTextField nomeVertice;
+    private javax.swing.JButton ordemGrafo;
     private javax.swing.JButton removerAresta;
     private javax.swing.JButton removerVertice;
     private javax.swing.JTable tabelaArestas;
     private javax.swing.JTextField url;
+    private javax.swing.JTextField verticeGrau;
     // End of variables declaration//GEN-END:variables
 }

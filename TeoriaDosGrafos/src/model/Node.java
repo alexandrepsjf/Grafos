@@ -11,6 +11,7 @@ package model;
  */
 public class Node {
     String id;
+    int grau;
 
     public Node() {
     }
@@ -18,6 +19,14 @@ public class Node {
 
     public String getId() {
         return id;
+    }
+
+    public int getGrau() {
+        return grau;
+    }
+
+    public void setGrau(int grau) {
+        this.grau = grau;
     }
 
     public void setId(String id) {
