@@ -298,7 +298,6 @@ public class Tela extends javax.swing.JDialog {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(listaNode01, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,10 +306,11 @@ public class Tela extends javax.swing.JDialog {
                         .addGap(3, 3, 3)
                         .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EditarAresta)
@@ -656,7 +656,7 @@ public class Tela extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PainelAresta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, Short.MAX_VALUE)
                     .addComponent(PainelXML, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -891,20 +891,21 @@ public class Tela extends javax.swing.JDialog {
     private void removerVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerVerticeActionPerformed
         // TODO add your handling code here:
         int index = listaVertices.getSelectedIndex();
+        int cont = 0, tam = arestas.size();
         if ((vertices.size() > 0) && (index >= 0)) {
             Object remove;
             remove = model.get(index).toString();
             model.remove(index);
             nomeVertice.setText("");
-            for (Edge aresta : arestas) {
-                if (aresta.getNode1().equals(vertices.get(index)) || aresta.getNode2().equals(vertices.get(index))) {
-                    modelo.removeRow(arestas.indexOf(aresta));
-                }
-            }
-            for (int linha = 0; linha < tabelaArestas.getRowCount(); linha++) {
-                if (modelo.getValueAt(linha, 1).equals(arestas.get(linha).getNode1().getId()) || modelo.getValueAt(linha, 2).equals(arestas.get(linha).getNode1().getId())); //3=coluna;
-
-            }
+            while (cont < tam) {
+                if (arestas.get(cont).getNode2().equals(vertices.get(index)) || arestas.get(cont).getNode1().equals(vertices.get(index))) {
+                    arestas.remove(cont);
+                    modelo.removeRow(cont);
+                    cont=-1;
+                    tam=arestas.size();
+                }                
+                cont++;               
+            } 
             JOptionPane.showMessageDialog(null, "O Vertice " + remove + " foi removido com sucesso ");
             vertices.remove(index);
         } else {
