@@ -22,6 +22,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import model.Graph;
+import model.Graphml;
 
 /**
  *
@@ -34,16 +36,29 @@ public class Tela extends javax.swing.JDialog {
     private DefaultListModel model = new DefaultListModel();
     private List<Node> vertices = new ArrayList<Node>();
     private List<Edge> arestas = new ArrayList<Edge>();
+    Graph graph = new Graph();
+    Graphml graphml= new Graphml();
     XStream xstream = new XStream(new DomDriver());
     private String xml1 = null;
-    private String choose = null;
-    private String head = "<? Xml version = \"1.0\" encoding = \"UTF-8\"?>\n"
-            + "<GraphML xmlns = \"http://graphml.graphdrawing.org/xmlns\"  \n"
-            + "    xmlns: xsi = \"http://www.w3.org/2001/XMLSchema-instance\"\n"
-            + "    xsi: schemaLocation = \"http://graphml.graphdrawing.org/xmlns \n"
-            + "    ' http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd \'>";
+    private String choose = null;    
     private String id, edgedefault;
 
+       public Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+    }
+
+    public String getXml1() {
+        return xml1;
+    }
+
+    public void setXml1(String xml1) {
+        this.xml1 = xml1;
+    }
+    
     public String getId() {
         return id;
     }
@@ -74,19 +89,25 @@ public class Tela extends javax.swing.JDialog {
     public Tela(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         pai = parent;
-        initComponents();
         xstream.omitField(Edge.class, "node1");
         xstream.omitField(Edge.class, "node2");
-        xstream.alias("graph", Tela.class);
+        xstream.omitField(Node.class, "grau");
+        xstream.alias("graph", Graph.class);
         xstream.alias("node", Node.class);
         xstream.alias("edge", Edge.class);
+        xstream.alias("graphml", Tela.class);
+        xstream.useAttributeFor(FrmPrincipal.class);
         xstream.useAttributeFor("source", String.class);
         xstream.useAttributeFor("target", String.class);
+        xstream.useAttributeFor("xmlns", String.class);
+        xstream.useAttributeFor("edgedefault", String.class);
         xstream.useAttributeFor("id", String.class);
-        xstream.addImplicitCollection(Tela.class, "vertices");
-        xstream.addImplicitCollection(Tela.class, "arestas");
-        xstream.addImplicitCollection(Tela.class, "vertices");
-        xstream.addImplicitCollection(Tela.class, "arestas");
+        xstream.aliasAttribute("nodes", "Vertices");
+        xstream.aliasAttribute("edges", "Arestas");
+        xstream.addImplicitCollection(Graph.class, "nodes");
+        xstream.addImplicitCollection(Graph.class, "edge");
+        xstream.useAttributeFor(Tela.class, "xmlns");       
+        initComponents();
         modelo.addColumn("Nome");
         modelo.addColumn("1º Vertice");
         modelo.addColumn("2º Vertice");
@@ -767,6 +788,11 @@ public class Tela extends javax.swing.JDialog {
 
     private void gerarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarXmlActionPerformed
         // TODO add your handling code here:
+        graph.setNodes(vertices);
+        graph.setEdge(arestas);
+        graph.setEdgedefault(edgedefault);
+        graph.setId(id);
+        graphml.addGrafo(graph);
         JFileChooser arquivo = new JFileChooser();
         FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
         arquivo.addChoosableFileFilter(filtroXML);
@@ -777,13 +803,11 @@ public class Tela extends javax.swing.JDialog {
         }
 
         try {
-
-            String xml = xstream.toXML(vertices);
-            xml += xstream.toXML(arestas);
-            System.out.println(xml);
+            xml1 = xstream.toXML(graphml);
+            System.out.println(xml1);
             File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
-            print.write(xml);
+            print.write(xml1);
             print.flush();
             print.close();
 
@@ -802,9 +826,12 @@ public class Tela extends javax.swing.JDialog {
             choose = url.getText();
             try {
                 // TODO add your handling code here:
-
                 FileReader leitor = new FileReader(choose);
                 XStream xstream = new XStream(new DomDriver());
+                 graphml=(Graphml)xstream.fromXML(leitor);
+                 
+                 vertices =graphml.getGrafo(0).getNodes();
+                 arestas =  graphml.getGrafo(0).getEdge();
                 this.tabelaArestas.setModel(modelo);
                 while (modelo.getRowCount() > 0) {
                     modelo.removeRow(0);
@@ -901,11 +928,11 @@ public class Tela extends javax.swing.JDialog {
                 if (arestas.get(cont).getNode2().equals(vertices.get(index)) || arestas.get(cont).getNode1().equals(vertices.get(index))) {
                     arestas.remove(cont);
                     modelo.removeRow(cont);
-                    cont=-1;
-                    tam=arestas.size();
-                }                
-                cont++;               
-            } 
+                    cont = -1;
+                    tam = arestas.size();
+                }
+                cont++;
+            }
             JOptionPane.showMessageDialog(null, "O Vertice " + remove + " foi removido com sucesso ");
             vertices.remove(index);
         } else {

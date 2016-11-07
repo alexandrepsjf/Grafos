@@ -14,9 +14,8 @@ import java.util.List;
  */
 public class Graph {
      private String id, edgedefault;
-     private List<Node> Vertices = new ArrayList<Node>();
-    private List<Edge> Arestas = new ArrayList<Edge>();
-
+     private List<Node> nodes = new ArrayList<Node>();
+    private List<Edge> edge = new ArrayList<Edge>();
     public Graph() {
     }
 
@@ -36,23 +35,23 @@ public class Graph {
         this.edgedefault = edgedefault;
     }
 
-    public List<Node> getVertices() {
-        return Vertices;
+    public List<Node> getNodes() {
+        return nodes;
     }
 
-    public void setVertices(List<Node> Vertices) {
-        this.Vertices = Vertices;
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
     }
 
-    public List<Edge> getArestas() {
-        return Arestas;
+    public List<Edge> getEdge() {
+        return edge;
     }
 
-    public void setArestas(List<Edge> Arestas) {
-        this.Arestas = Arestas;
+    public void setEdge(List<Edge> edge) {
+        this.edge = edge;
     }
     public void addAresta( Edge aresta){
-        this.Arestas.add(aresta);
+        this.edge.add(aresta);
     }
     
 }
