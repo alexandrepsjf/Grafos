@@ -13,8 +13,10 @@ import java.util.List;
  * @author Alexandre
  */
 public class Graphml {
+
     private List<Graph> graphml;
-private String xmlns = "<? Xml version = \"1.0\" encoding = \"UTF-8\"?>\n";
+    private String xmlns = "http://graphml.graphdrawing.org/xmlns";     
+
     public List<Graph> getGraphml() {
         return graphml;
     }
@@ -34,10 +36,12 @@ private String xmlns = "<? Xml version = \"1.0\" encoding = \"UTF-8\"?>\n";
     public Graphml() {
         this.graphml = new ArrayList<Graph>();
     }
-    public void addGrafo( Graph grafo){
+
+    public void addGrafo(Graph grafo) {
         graphml.add(grafo);
     }
-    public Graph getGrafo( int index){
-    return this.graphml.get(index);}
-    }
 
+    public Graph getGrafo(int index) {
+        return this.graphml.get(index);
+    }
+}

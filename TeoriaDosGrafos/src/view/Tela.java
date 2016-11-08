@@ -94,9 +94,8 @@ public class Tela extends javax.swing.JDialog {
         xstream.omitField(Node.class, "grau");
         xstream.alias("graph", Graph.class);
         xstream.alias("node", Node.class);
-        xstream.alias("edge", Edge.class);
-        xstream.alias("graphml", Tela.class);
-        xstream.useAttributeFor(FrmPrincipal.class);
+        xstream.alias("edge", Edge.class);        
+        xstream.alias("graphml", Graphml.class);
         xstream.useAttributeFor("source", String.class);
         xstream.useAttributeFor("target", String.class);
         xstream.useAttributeFor("xmlns", String.class);
@@ -105,8 +104,8 @@ public class Tela extends javax.swing.JDialog {
         xstream.aliasAttribute("nodes", "Vertices");
         xstream.aliasAttribute("edges", "Arestas");
         xstream.addImplicitCollection(Graph.class, "nodes");
-        xstream.addImplicitCollection(Graph.class, "edge");
-        xstream.useAttributeFor(Tela.class, "xmlns");       
+        xstream.addImplicitCollection(Graph.class, "edge"); 
+        xstream.addImplicitCollection(Graphml.class, "graphml");       
         initComponents();
         modelo.addColumn("Nome");
         modelo.addColumn("1º Vertice");
@@ -804,7 +803,7 @@ public class Tela extends javax.swing.JDialog {
 
         try {
             xml1 = xstream.toXML(graphml);
-            System.out.println(xml1);
+            System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+xml1);
             File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
             print.write(xml1);
