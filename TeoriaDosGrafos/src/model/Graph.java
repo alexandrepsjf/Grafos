@@ -56,12 +56,12 @@ public class Graph {
    
     
     public String[][] matrizAdjacencia (Graph graph){
-        int size=graph.getNodes().size();
+        int size=graph.nodes.size();
         int i=size;
         int j=size;
-        String matriz[][]=new String [i+1][j+1];
-        for(i=1;i<size+1;i++){  
-            String ponto=edge.get(i).getId();
+        String matriz[][]=new String [i][j];
+        for(i=1;i<size;i++){  
+            String ponto=nodes.get(i).getId();
             matriz[0][i]=ponto;}
             
         return matriz;

@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1094,7 +1095,7 @@ public class Tela extends javax.swing.JDialog {
 
     private void MatrizAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatrizAdjacenciaActionPerformed
         graph.setNodes(vertices);
-        System.out.println(graph.matrizAdjacencia(graph));
+        System.out.println(Arrays.toString(graph.matrizAdjacencia(graph)));
     }//GEN-LAST:event_MatrizAdjacenciaActionPerformed
 
     private void listaNode01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaNode01ActionPerformed
