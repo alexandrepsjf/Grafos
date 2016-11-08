@@ -53,5 +53,18 @@ public class Graph {
     public void addAresta( Edge aresta){
         this.edge.add(aresta);
     }
+   
+    
+    public String[][] matrizAdjacencia (Graph graph){
+        int size=graph.getNodes().size();
+        int i=size;
+        int j=size;
+        String matriz[][]=new String [i+1][j+1];
+        for(i=1;i<size+1;i++){  
+            String ponto=edge.get(i).getId();
+            matriz[0][i]=ponto;}
+            
+        return matriz;
+    }
     
 }

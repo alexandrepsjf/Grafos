@@ -165,6 +165,7 @@ public class Tela extends javax.swing.JDialog {
         arestaIncidente = new javax.swing.JButton();
         arestaIncidente1 = new javax.swing.JButton();
         arestaGrau = new javax.swing.JTextField();
+        MatrizAdjacencia = new javax.swing.JButton();
         ordemGrafo = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -226,6 +227,11 @@ public class Tela extends javax.swing.JDialog {
         listaNode01.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listaNode01MouseClicked(evt);
+            }
+        });
+        listaNode01.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaNode01ActionPerformed(evt);
             }
         });
 
@@ -576,6 +582,13 @@ public class Tela extends javax.swing.JDialog {
             }
         });
 
+        MatrizAdjacencia.setText("jButton1");
+        MatrizAdjacencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MatrizAdjacenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -583,12 +596,14 @@ public class Tela extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(arestaIncidente1)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MatrizAdjacencia)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -599,7 +614,9 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(arestaIncidente1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MatrizAdjacencia))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1075,6 +1092,15 @@ public class Tela extends javax.swing.JDialog {
         nomeVertice.setText(null);
     }//GEN-LAST:event_arestaAdjacenteActionPerformed
 
+    private void MatrizAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatrizAdjacenciaActionPerformed
+        graph.setNodes(vertices);
+        System.out.println(graph.matrizAdjacencia(graph));
+    }//GEN-LAST:event_MatrizAdjacenciaActionPerformed
+
+    private void listaNode01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaNode01ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaNode01ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1209,6 +1235,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JButton CriarAresta;
     private javax.swing.JButton EditarAresta;
     private javax.swing.JFileChooser FileChooser;
+    private javax.swing.JButton MatrizAdjacencia;
     private javax.swing.JPanel PainelAresta;
     private javax.swing.JPanel PainelXML;
     private javax.swing.JButton abrirXML;
