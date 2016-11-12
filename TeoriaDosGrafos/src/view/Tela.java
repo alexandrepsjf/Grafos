@@ -38,13 +38,13 @@ public class Tela extends javax.swing.JDialog {
     private List<Node> vertices = new ArrayList<Node>();
     private List<Edge> arestas = new ArrayList<Edge>();
     Graph graph = new Graph();
-    Graphml graphml= new Graphml();
+    Graphml graphml = new Graphml();
     XStream xstream = new XStream(new DomDriver());
     private String xml1 = null;
-    private String choose = null;    
+    private String choose = null;
     private String id, edgedefault;
 
-       public Graph getGraph() {
+    public Graph getGraph() {
         return graph;
     }
 
@@ -59,7 +59,7 @@ public class Tela extends javax.swing.JDialog {
     public void setXml1(String xml1) {
         this.xml1 = xml1;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -95,7 +95,7 @@ public class Tela extends javax.swing.JDialog {
         xstream.omitField(Node.class, "grau");
         xstream.alias("graph", Graph.class);
         xstream.alias("node", Node.class);
-        xstream.alias("edge", Edge.class);        
+        xstream.alias("edge", Edge.class);
         xstream.alias("graphml", Graphml.class);
         xstream.useAttributeFor("source", String.class);
         xstream.useAttributeFor("target", String.class);
@@ -105,8 +105,8 @@ public class Tela extends javax.swing.JDialog {
         xstream.aliasAttribute("nodes", "Vertices");
         xstream.aliasAttribute("edges", "Arestas");
         xstream.addImplicitCollection(Graph.class, "nodes");
-        xstream.addImplicitCollection(Graph.class, "edge"); 
-        xstream.addImplicitCollection(Graphml.class, "graphml");       
+        xstream.addImplicitCollection(Graph.class, "edge");
+        xstream.addImplicitCollection(Graphml.class, "graphml");
         initComponents();
         modelo.addColumn("Nome");
         modelo.addColumn("1º Vertice");
@@ -166,10 +166,10 @@ public class Tela extends javax.swing.JDialog {
         arestaIncidente = new javax.swing.JButton();
         arestaIncidente1 = new javax.swing.JButton();
         arestaGrau = new javax.swing.JTextField();
-        MatrizAdjacencia = new javax.swing.JButton();
         ordemGrafo = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        MatrizAdjacencia = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -395,7 +395,7 @@ public class Tela extends javax.swing.JDialog {
             .addGroup(PainelXMLLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(abrirXML, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(gerarXml, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel6)
@@ -583,13 +583,6 @@ public class Tela extends javax.swing.JDialog {
             }
         });
 
-        MatrizAdjacencia.setText("jButton1");
-        MatrizAdjacencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MatrizAdjacenciaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -597,14 +590,12 @@ public class Tela extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(arestaIncidente1)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MatrizAdjacencia)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -615,9 +606,7 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(arestaIncidente1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(arestaIncidente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(MatrizAdjacencia))
+                .addComponent(arestaGrau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -638,6 +627,13 @@ public class Tela extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel12.setText("ARESTAS");
 
+        MatrizAdjacencia.setText("Matriz de adjacências");
+        MatrizAdjacencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MatrizAdjacenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -647,11 +643,15 @@ public class Tela extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(MatrizAdjacencia))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -694,7 +694,7 @@ public class Tela extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PainelAresta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, Short.MAX_VALUE)
                     .addComponent(PainelXML, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -714,7 +714,9 @@ public class Tela extends javax.swing.JDialog {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addGap(17, 17, 17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MatrizAdjacencia)
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -821,7 +823,7 @@ public class Tela extends javax.swing.JDialog {
 
         try {
             xml1 = xstream.toXML(graphml);
-            System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+xml1);
+            System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + xml1);
             File file = new File(choose + ".xml");
             PrintWriter print = new PrintWriter(file);
             print.write(xml1);
@@ -845,10 +847,11 @@ public class Tela extends javax.swing.JDialog {
                 // TODO add your handling code here:
                 FileReader leitor = new FileReader(choose);
                 XStream xstream = new XStream(new DomDriver());
-                 graphml=(Graphml)xstream.fromXML(leitor);
-                 
-                 vertices =graphml.getGrafo(0).getNodes();
-                 arestas =  graphml.getGrafo(0).getEdge();
+
+                graph = (Graph) xstream.fromXML(leitor);
+                graphml.addGrafo(graph);
+                vertices = graphml.getGrafo(0).getNodes();
+                arestas = graphml.getGrafo(0).getEdge();
                 this.tabelaArestas.setModel(modelo);
                 while (modelo.getRowCount() > 0) {
                     modelo.removeRow(0);
@@ -1095,7 +1098,9 @@ public class Tela extends javax.swing.JDialog {
 
     private void MatrizAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatrizAdjacenciaActionPerformed
         graph.setNodes(vertices);
-        System.out.println(Arrays.toString(graph.matrizAdjacencia(graph)));
+        graph.setEdge(arestas);
+        System.out.println(graph.matrizAdjacencia(graph));
+        JOptionPane.showMessageDialog(null, graph.matrizAdjacencia(graph));
     }//GEN-LAST:event_MatrizAdjacenciaActionPerformed
 
     private void listaNode01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaNode01ActionPerformed

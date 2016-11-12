@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,9 +14,11 @@ import java.util.List;
  * @author Alexandre
  */
 public class Graph {
-     private String id, edgedefault;
-     private List<Node> nodes = new ArrayList<Node>();
+
+    private String id, edgedefault;
+    private List<Node> nodes = new ArrayList<Node>();
     private List<Edge> edge = new ArrayList<Edge>();
+
     public Graph() {
     }
 
@@ -50,21 +53,32 @@ public class Graph {
     public void setEdge(List<Edge> edge) {
         this.edge = edge;
     }
-    public void addAresta( Edge aresta){
+
+    public void addAresta(Edge aresta) {
         this.edge.add(aresta);
     }
-   
-    
-    public String[][] matrizAdjacencia (Graph graph){
-        int size=graph.nodes.size();
-        int i=size;
-        int j=size;
-        String matriz[][]=new String [i][j];
-        for(i=1;i<size;i++){  
-            String ponto=nodes.get(i).getId();
-            matriz[0][i]=ponto;}
-            
-        return matriz;
+
+    public String matrizAdjacencia(Graph graph) {
+        String espaco = " ";
+        int size = graph.nodes.size(), i, j, tam;
+        int matriz[][] = new int[size][size];
+        String matrizTotal = "";
+        for (Edge aresta : graph.getEdge()) {
+            int no1 = graph.getNodes().indexOf(aresta.getNode1());
+            int no2 = graph.getNodes().indexOf(aresta.getNode2());
+            matriz[no1][no2] = 1;
+            matriz[no2][no1] = 1;
+        }
+        for (int a = 0; a < size; a++) {            
+            matrizTotal += espaco + graph.getNodes().get(a).getId();
+        }
+        for (i = 0; i < size; i++) {
+            matrizTotal += "\n" + graph.getNodes().get(i).getId();
+            for (j = 0; j < size; j++) {
+                   matrizTotal += espaco + matriz[i][j];
+            }
+        }
+        return ("\n\n " + matrizTotal);
     }
-    
+
 }
