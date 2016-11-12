@@ -101,4 +101,31 @@ public class Graph {
         }
         return lista;
     }
+
+    public String matrizIncidencia(Graph graph) {
+        String incidencia = " ";
+         String espaco = " ";
+        int index=0,i,j;
+        int size1 = graph.getNodes().size();
+        int size2 = graph.getEdge().size();
+        int matriz[][] = new int[size1][size2];
+        for (Edge aresta : graph.getEdge()) {
+            int no1 = graph.getNodes().indexOf(aresta.getNode1());
+            int no2 = graph.getNodes().indexOf(aresta.getNode2());
+            matriz[no1][index] = 1;
+            matriz[no2][index] = 1;
+            index++;
+        }
+        for (int a = 0; a < size2; a++) {
+            incidencia +=espaco  + graph.getEdge().get(a).getId();
+        }
+        for (i = 0; i < size1; i++) {
+            incidencia += "\n" + graph.getNodes().get(i).getId();
+            for (j = 0; j < size2; j++) {
+                incidencia += espaco + espaco+ matriz[i][j];
+            }
+        }
+        return incidencia;
+
+    }
 }

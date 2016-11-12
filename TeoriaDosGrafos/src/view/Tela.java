@@ -233,11 +233,6 @@ public class Tela extends javax.swing.JDialog {
                 listaNode01MouseClicked(evt);
             }
         });
-        listaNode01.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaNode01ActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel4.setText("1º Nó ");
@@ -647,6 +642,11 @@ public class Tela extends javax.swing.JDialog {
         conjunto.setText("Conjunto");
 
         matrizIncidencia.setText("Matriz de incidência");
+        matrizIncidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matrizIncidenciaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1130,17 +1130,21 @@ public class Tela extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, graph.matrizAdjacencia(graph));
     }//GEN-LAST:event_MatrizAdjacenciaActionPerformed
 
-    private void listaNode01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaNode01ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listaNode01ActionPerformed
-
     private void listaAdjacenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAdjacenciaActionPerformed
         // TODO add your handling code here:
-         graph.setNodes(vertices);
+        graph.setNodes(vertices);
         graph.setEdge(arestas);
         System.out.println(graph.listaAdjacencia(graph));
-       JOptionPane.showMessageDialog(null, graph.listaAdjacencia(graph));
+        JOptionPane.showMessageDialog(null, graph.listaAdjacencia(graph));
     }//GEN-LAST:event_listaAdjacenciaActionPerformed
+
+    private void matrizIncidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizIncidenciaActionPerformed
+        // TODO add your handling code here:
+        graph.setNodes(vertices);
+        graph.setEdge(arestas);
+        System.out.println(graph.matrizIncidencia(graph));
+        JOptionPane.showMessageDialog(null, graph.matrizIncidencia(graph));
+    }//GEN-LAST:event_matrizIncidenciaActionPerformed
 
     /**
      * @param args the command line arguments
