@@ -640,6 +640,11 @@ public class Tela extends javax.swing.JDialog {
         });
 
         conjunto.setText("Conjunto");
+        conjunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conjuntoActionPerformed(evt);
+            }
+        });
 
         matrizIncidencia.setText("Matriz de incidência");
         matrizIncidencia.addActionListener(new java.awt.event.ActionListener() {
@@ -901,13 +906,13 @@ public class Tela extends javax.swing.JDialog {
         if (nomeVertice.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um nome para o Vértice ");
         } else {
-
             no.setId(nomeVertice.getText());
             vertices.add(no);
-            nomeVertice.setText("");
-            for (Node vertice : vertices) {
-                model.addElement(vertice.getId());
-            }
+
+        }
+        nomeVertice.setText("");
+        for (Node vertice : vertices) {
+            model.addElement(vertice.getId());
         }
     }//GEN-LAST:event_criarNoActionPerformed
 
@@ -1032,7 +1037,6 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         String incidenciaTotal = "";
         if (verticeGrau.getText().equals("")) {
-
             for (Edge aresta : arestas) {
                 incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
             }
@@ -1145,6 +1149,14 @@ public class Tela extends javax.swing.JDialog {
         System.out.println(graph.matrizIncidencia(graph));
         JOptionPane.showMessageDialog(null, graph.matrizIncidencia(graph));
     }//GEN-LAST:event_matrizIncidenciaActionPerformed
+
+    private void conjuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conjuntoActionPerformed
+        // TODO add your handling code here:
+         graph.setNodes(vertices);
+        graph.setEdge(arestas);
+        System.out.println(graph.conjunto(graph));
+        JOptionPane.showMessageDialog(null, graph.conjunto(graph));
+    }//GEN-LAST:event_conjuntoActionPerformed
 
     /**
      * @param args the command line arguments

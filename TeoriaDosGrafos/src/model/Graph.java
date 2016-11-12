@@ -104,8 +104,8 @@ public class Graph {
 
     public String matrizIncidencia(Graph graph) {
         String incidencia = " ";
-         String espaco = " ";
-        int index=0,i,j;
+        String espaco = " ";
+        int index = 0, i, j;
         int size1 = graph.getNodes().size();
         int size2 = graph.getEdge().size();
         int matriz[][] = new int[size1][size2];
@@ -117,15 +117,28 @@ public class Graph {
             index++;
         }
         for (int a = 0; a < size2; a++) {
-            incidencia +=espaco  + graph.getEdge().get(a).getId();
+            incidencia += espaco + graph.getEdge().get(a).getId();
         }
         for (i = 0; i < size1; i++) {
             incidencia += "\n" + graph.getNodes().get(i).getId();
             for (j = 0; j < size2; j++) {
-                incidencia += espaco + espaco+ matriz[i][j];
+                incidencia += espaco + espaco + matriz[i][j];
             }
         }
         return incidencia;
+
+    }
+
+    public String conjunto(Graph graph) {
+        String conjunto , no = "", arestas = "";
+        for (Node vertice : graph.getNodes()) {
+            no += vertice.getId() + " --> ";
+        }
+        for (Edge aresta : graph.getEdge()) {
+            arestas += aresta.getId() + " --> ";
+        }
+        conjunto = "Vértices \n" + no + "\n Arestas \n" + arestas;
+        return conjunto;
 
     }
 }
