@@ -60,7 +60,7 @@ public class Graph {
 
     public String matrizAdjacencia(Graph graph) {
         String espaco = " ";
-        int size = graph.nodes.size(), i, j, tam;
+        int size = graph.nodes.size(), i, j;
         int matriz[][] = new int[size][size];
         String matrizTotal = "";
         for (Edge aresta : graph.getEdge()) {
@@ -69,16 +69,36 @@ public class Graph {
             matriz[no1][no2] = 1;
             matriz[no2][no1] = 1;
         }
-        for (int a = 0; a < size; a++) {            
+        for (int a = 0; a < size; a++) {
             matrizTotal += espaco + graph.getNodes().get(a).getId();
         }
         for (i = 0; i < size; i++) {
             matrizTotal += "\n" + graph.getNodes().get(i).getId();
             for (j = 0; j < size; j++) {
-                   matrizTotal += espaco + matriz[i][j];
+                matrizTotal += espaco + matriz[i][j];
             }
         }
         return ("\n\n " + matrizTotal);
     }
 
+    public String listaAdjacencia(Graph graph) {
+        String lista = "";
+        int size = graph.nodes.size(), i, j;
+        int matriz[][] = new int[size][size];
+        for (Edge aresta : graph.getEdge()) {
+            int no1 = graph.getNodes().indexOf(aresta.getNode1());
+            int no2 = graph.getNodes().indexOf(aresta.getNode2());
+            matriz[no1][no2] = 1;
+            matriz[no2][no1] = 1;
+        }
+        for (i = 0; i < size; i++) {
+            lista += "\n" + graph.getNodes().get(i).getId();
+            for (j = 0; j < size; j++) {
+                if (matriz[i][j] == 1) {
+                    lista += " -->" + graph.getNodes().get(j).getId();
+                }
+            }
+        }
+        return lista;
+    }
 }
