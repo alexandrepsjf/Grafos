@@ -6,7 +6,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,8 +15,8 @@ import java.util.List;
 public class Graph {
 
     private String id, edgedefault;
-    private List<Node> nodes = new ArrayList<Node>();
-    private List<Edge> edge = new ArrayList<Edge>();
+    private ArrayList<Node> nodes = new ArrayList<Node>();
+    private ArrayList<Edge> edge = new ArrayList<>();
 
     public Graph() {
     }
@@ -38,19 +37,19 @@ public class Graph {
         this.edgedefault = edgedefault;
     }
 
-    public List<Node> getNodes() {
+    public ArrayList<Node> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = (nodes);
     }
 
-    public List<Edge> getEdge() {
+    public ArrayList<Edge> getEdge() {
         return edge;
     }
 
-    public void setEdge(List<Edge> edge) {
+    public void setEdge(ArrayList<Edge> edge) {
         this.edge = edge;
     }
 
@@ -78,7 +77,7 @@ public class Graph {
                 matrizTotal += espaco + matriz[i][j];
             }
         }
-        return ("\n\n " + matrizTotal);
+        return ("\n\n\n " + matrizTotal);
     }
 
     public String listaAdjacencia(Graph graph) {
@@ -139,6 +138,18 @@ public class Graph {
         }
         conjunto = "Vértices \n" + no + "\n Arestas \n" + arestas;
         return conjunto;
-
     }
+    public String grauNo(Graph graph){
+        String grauTotal="";
+        for (Edge aresta : graph.getEdge()) {
+            aresta.getNode1().grau+=1;
+            aresta.getNode2().grau+=1;
+        }
+         for (Node no : graph.getNodes()) {
+               
+                    grauTotal = "\n Grau Vertice " + no.getId() + " é " + no.getGrau();
+                
+            }
+        return grauTotal;
+}
 }

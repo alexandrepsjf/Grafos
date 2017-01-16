@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.Graph;
 import model.Graphml;
+import model.ListaNodes;
 
 /**
  *
@@ -33,10 +33,10 @@ import model.Graphml;
 public class Tela extends javax.swing.JDialog {
 
     java.awt.Frame pai;
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel tabela = new DefaultTableModel();
     private DefaultListModel model = new DefaultListModel();
-    private List<Node> vertices = new ArrayList<Node>();
-    private List<Edge> arestas = new ArrayList<Edge>();
+    private ArrayList<Node> vertices = new ArrayList<Node>();
+    private ArrayList<Edge> arestas = new ArrayList<Edge>();
     Graph graph = new Graph();
     Graphml graphml = new Graphml();
     XStream xstream = new XStream(new DomDriver());
@@ -93,8 +93,10 @@ public class Tela extends javax.swing.JDialog {
         xstream.omitField(Edge.class, "node1");
         xstream.omitField(Edge.class, "node2");
         xstream.omitField(Node.class, "grau");
+//        xstream.omitField(Graph.class, "edge");
         xstream.alias("graph", Graph.class);
         xstream.alias("node", Node.class);
+        xstream.alias("nodes", ListaNodes.class);
         xstream.alias("edge", Edge.class);
         xstream.alias("graphml", Graphml.class);
         xstream.useAttributeFor("source", String.class);
@@ -102,15 +104,17 @@ public class Tela extends javax.swing.JDialog {
         xstream.useAttributeFor("xmlns", String.class);
         xstream.useAttributeFor("edgedefault", String.class);
         xstream.useAttributeFor("id", String.class);
-        xstream.aliasAttribute("nodes", "Vertices");
-        xstream.aliasAttribute("edges", "Arestas");
-        xstream.addImplicitCollection(Graph.class, "nodes");
-        xstream.addImplicitCollection(Graph.class, "edge");
-        xstream.addImplicitCollection(Graphml.class, "graphml");
+
+//xstream.alias("elbows", ElbowList.class);
+//xstream.addImplicitCollection(ArrayList.class, "nodes", Graph.class);
+//xstream.addImplicitCollection(ArrayList.class, "edge", Graph.class);
+//        xstream.addImplicitArray(ListaNodes.class, "nodes",Graph.class);
+        xstream.addImplicitArray(Graph.class, "nodes");
+        xstream.addImplicitArray(Graph.class, "edge");
         initComponents();
-        modelo.addColumn("Nome");
-        modelo.addColumn("1º Vertice");
-        modelo.addColumn("2º Vertice");
+        tabela.addColumn("Nome");
+        tabela.addColumn("1º Vertice");
+        tabela.addColumn("2º Vertice");
     }
 
     /**
@@ -760,8 +764,8 @@ public class Tela extends javax.swing.JDialog {
         aresta.setId(nomeAresta.getText());
         aresta.setNode1(vertices.get(listaNode01.getSelectedIndex()));
         aresta.setNode2(vertices.get(listaNode02.getSelectedIndex()));
-        tabelaArestas.setModel(modelo);
-        modelo.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
+        tabelaArestas.setModel(tabela);
+        tabela.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
         arestas.add(aresta);
         nomeAresta.setText("");
         aresta.getNode1().setGrau(1 + aresta.getNode1().getGrau());
@@ -777,11 +781,11 @@ public class Tela extends javax.swing.JDialog {
     private void removerArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerArestaActionPerformed
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
-        if ((modelo.getRowCount() > 0) && (index >= 0)) {
+        if ((tabela.getRowCount() > 0) && (index >= 0)) {
             arestas.remove(index);
             Object remove;
-            remove = modelo.getValueAt(index, 0);
-            modelo.removeRow(index);
+            remove = tabela.getValueAt(index, 0);
+            tabela.removeRow(index);
             nomeAresta.setText("");
             nomeAresta.setText("");
             JOptionPane.showMessageDialog(null, remove.toString() + " foi removido com sucesso ");
@@ -801,7 +805,7 @@ public class Tela extends javax.swing.JDialog {
     private void tabelaArestasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaArestasMouseClicked
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
-        if ((modelo.getRowCount() > 0) && (index >= 0)) {
+        if ((tabela.getRowCount() > 0) && (index >= 0)) {
             nomeAresta.setText(arestas.get(index).getId());
             nomeAresta.setText(arestas.get(index).getId());
             arestaGrau.setText(arestas.get(index).getId());
@@ -817,7 +821,7 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
 
-        if ((modelo.getRowCount() > 0) && (index >= 0)) {
+        if ((tabela.getRowCount() > 0) && (index >= 0)) {
             Object teste = listaNode02.getSelectedItem();
             System.out.println(teste);
             teste = listaNode02.getSelectedItem().toString();
@@ -825,12 +829,12 @@ public class Tela extends javax.swing.JDialog {
             arestas.get(index).setNode1(vertices.get(listaNode01.getSelectedIndex()));
             arestas.get(index).setNode2(vertices.get(listaNode02.getSelectedIndex()));
             // arestas.get(index).setNome(id);
-            modelo.removeRow(index);
-            modelo.insertRow(index, new String[]{nomeAresta.getText(), arestas.get(index).getNode1().getId(), arestas.get(index).getNode2().getId()});
+            tabela.removeRow(index);
+            tabela.insertRow(index, new String[]{nomeAresta.getText(), arestas.get(index).getNode1().getId(), arestas.get(index).getNode2().getId()});
             nomeAresta.setText("");
             nomeAresta.setText("");
             Object edit;
-            edit = modelo.getValueAt(index, 0);
+            edit = tabela.getValueAt(index, 0);
             JOptionPane.showMessageDialog(null, "A Aresta " + edit.toString() + " foi editado com sucesso ");
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma aresta ");
@@ -843,7 +847,7 @@ public class Tela extends javax.swing.JDialog {
         graph.setEdge(arestas);
         graph.setEdgedefault(edgedefault);
         graph.setId(id);
-        graphml.addGrafo(graph);
+        graphml.setGraph(graph);
         JFileChooser arquivo = new JFileChooser();
         FileNameExtensionFilter filtroXML = new FileNameExtensionFilter("Arquivos XML", "xml");
         arquivo.addChoosableFileFilter(filtroXML);
@@ -878,19 +882,37 @@ public class Tela extends javax.swing.JDialog {
             try {
                 // TODO add your handling code here:
                 FileReader leitor = new FileReader(choose);
-                XStream xstream = new XStream(new DomDriver());
-
-                graph = (Graph) xstream.fromXML(leitor);
-                graphml.addGrafo(graph);
-                vertices = graphml.getGrafo(0).getNodes();
-                arestas = graphml.getGrafo(0).getEdge();
-                this.tabelaArestas.setModel(modelo);
-                while (modelo.getRowCount() > 0) {
-                    modelo.removeRow(0);
+                //XStream xstream = new XStream(new DomDriver());
+                graphml = null;
+                graphml = (Graphml) xstream.fromXML(leitor);
+                ArrayList lst = graphml.getGraph().getEdge();
+                graphml.getGraph().setNodes(new ArrayList<Node>());
+                graphml.getGraph().setEdge(new ArrayList<Edge>());
+                for (Object e : lst) {
+                    if (e instanceof Node) {
+                        graphml.getGraph().getNodes().add((Node) e);
+                    } else {
+                        graphml.getGraph().getEdge().add((Edge) e);
+                    }
                 }
-                arestas = (ArrayList) xstream.fromXML(leitor);
-                for (Edge inserir : arestas) {
-                    modelo.addRow(new String[]{inserir.getId(), inserir.getNode1().getId(), inserir.getNode2().getId()});
+
+                //graphml.setGraph(graph);
+                 vertices =(ArrayList<Node>) graphml.getGraph().getNodes();
+                arestas =(ArrayList<Edge>) graphml.getGraph().getEdge();
+                graph.setEdge(arestas);
+                graph.setNodes(vertices);
+                this.tabelaArestas.setModel(tabela);
+                this.listaVertices.setModel(model);
+                while (tabela.getRowCount() > 0) {
+                    tabela.removeRow(0);
+                }
+                for (Edge inserir : graphml.getGraph().getEdge()) {
+                    tabela.addRow(new String[]{inserir.getId(), inserir.getSource(), inserir.getTarget()});
+                }
+                model.removeAllElements();
+                for (Node vertice : graphml.getGraph().getNodes()) {
+                    
+                    model.addElement(vertice.getId());
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
@@ -979,7 +1001,7 @@ public class Tela extends javax.swing.JDialog {
             while (cont < tam) {
                 if (arestas.get(cont).getNode2().equals(vertices.get(index)) || arestas.get(cont).getNode1().equals(vertices.get(index))) {
                     arestas.remove(cont);
-                    modelo.removeRow(cont);
+                    tabela.removeRow(cont);
                     cont = -1;
                     tam = arestas.size();
                 }
@@ -1013,20 +1035,22 @@ public class Tela extends javax.swing.JDialog {
 
     private void grauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauActionPerformed
         // TODO add your handling code here:
-        String grauTotal = "";
-        if (verticeGrau.getText().equals("")) {
-
-            for (Node no : vertices) {
-                grauTotal += " Grau Vertice " + no.getId() + " é " + no.getGrau() + "\n";
-            }
-        } else {
-
-            for (Node no : vertices) {
-                if (no.getId().equals(verticeGrau.getText())) {
-                    grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
-                }
-            }
-        }
+        
+//        String grauTotal = "";
+//        if (verticeGrau.getText().equals("")) {
+//
+//            for (Node no : vertices) {
+//                grauTotal += " Grau Vertice " + no.getId() + " é " + no.getGrau() + "\n";
+//            }
+//        } else {
+//
+//            for (Node no : vertices) {
+//                if (no.getId().equals(verticeGrau.getText())) {
+//                    grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
+//                }
+//            }
+//        }
+String grauTotal=graph.grauNo(graph);
         JOptionPane.showMessageDialog(null, grauTotal);
         verticeGrau.setText(null);
         nomeVertice.setText(null);
@@ -1152,7 +1176,7 @@ public class Tela extends javax.swing.JDialog {
 
     private void conjuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conjuntoActionPerformed
         // TODO add your handling code here:
-         graph.setNodes(vertices);
+        graph.setNodes(vertices);
         graph.setEdge(arestas);
         System.out.println(graph.conjunto(graph));
         JOptionPane.showMessageDialog(null, graph.conjunto(graph));

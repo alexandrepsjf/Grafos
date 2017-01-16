@@ -5,20 +5,21 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Alexandre
  */
 public class Graphml {
 
-    private List<Graph> graphml;
-    private String xmlns = "http://graphml.graphdrawing.org/xmlns";     
+    private Graph graph;
+    private String xmlns = "http://graphml.graphdrawing.org/xmlns";
 
-    public List<Graph> getGraphml() {
-        return graphml;
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 
     public String getXmlns() {
@@ -27,21 +28,5 @@ public class Graphml {
 
     public void setXmlns(String xmlns) {
         this.xmlns = xmlns;
-    }
-
-    public void setGraphml(List<Graph> graphml) {
-        this.graphml = graphml;
-    }
-
-    public Graphml() {
-        this.graphml = new ArrayList<Graph>();
-    }
-
-    public void addGrafo(Graph grafo) {
-        graphml.add(grafo);
-    }
-
-    public Graph getGrafo(int index) {
-        return this.graphml.get(index);
     }
 }
