@@ -788,7 +788,7 @@ public class Tela extends javax.swing.JDialog {
         tabelaArestas.setModel(tabela);
         tabela.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
         arestas.add(aresta);
-        nomeAresta.setText("");       
+        nomeAresta.setText("");
     }//GEN-LAST:event_CriarArestaActionPerformed
 
     private void limparTextoArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparTextoArestaActionPerformed
@@ -915,8 +915,8 @@ public class Tela extends javax.swing.JDialog {
                 }
 
                 //graphml.setGraph(graph);
-                 vertices =(ArrayList<Node>) graphml.getGraph().getNodes();
-                arestas =(ArrayList<Edge>) graphml.getGraph().getEdge();
+                vertices = (ArrayList<Node>) graphml.getGraph().getNodes();
+                arestas = (ArrayList<Edge>) graphml.getGraph().getEdge();
                 graph.setEdge(arestas);
                 graph.setNodes(vertices);
                 this.tabelaArestas.setModel(tabela);
@@ -929,7 +929,7 @@ public class Tela extends javax.swing.JDialog {
                 }
                 model.removeAllElements();
                 for (Node vertice : graphml.getGraph().getNodes()) {
-                    
+
                     model.addElement(vertice.getId());
                 }
             } catch (FileNotFoundException ex) {
@@ -1053,10 +1053,9 @@ public class Tela extends javax.swing.JDialog {
 
     private void grauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grauActionPerformed
         // TODO add your handling code here:
-        
 
-String selected=verticeGrau.getText();
-String grauTotal=graph.grauNo(graph,selected);
+        String selected = verticeGrau.getText();
+        String grauTotal = graph.grauNo(graph, selected);
 
         JOptionPane.showMessageDialog(null, grauTotal);
         verticeGrau.setText(null);
@@ -1112,13 +1111,13 @@ String grauTotal=graph.grauNo(graph,selected);
         if (arestaGrau.getText().equals("")) {
 
             for (Edge aresta : arestas) {
-                incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getNode2().getId() + "\n";
+                incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getTarget() + "\n";
             }
         } else {
 
             for (Edge aresta : arestas) {
-                if (aresta.getNode1().getId().equals(arestaGrau.getText()) || aresta.getNode2().getId().equals(arestaGrau.getText())) {
-                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
+                if (aresta.getSource().equals(arestaGrau.getText()) || aresta.getTarget().equals(arestaGrau.getText())) {
+                    incidenciaTotal += " Os Vertices " + aresta.getSource() + " e " + aresta.getTarget() + " são incidente com a aresta " + aresta.getId() + "\n";
                 }
             }
         }
@@ -1191,27 +1190,26 @@ String grauTotal=graph.grauNo(graph,selected);
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-          try {
+        String adjacenciaTotal = "\"digraph G {\\n";
+        adjacenciaTotal += graph.listaAdjacencia(graph);
+        adjacenciaTotal += "}";        
+       
             Process p;
             File arquivo = new File("src\\os\\dot\\fileS.dot");
             try (FileWriter fw = new FileWriter(arquivo)) {
-                fw.write(jtaEntrada.getText());
-                fw.flush();
-            } catch (IOException ex) {
-                System.out.println("Erro ao Criar Arquivo: " + ex.getMessage());
-            }
+                fw.write(adjacenciaTotal);
+                fw.flush();            
             String commandLine = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\fileS.png";
-
             p = Runtime.getRuntime().exec(commandLine);
             while (p.isAlive()) {
             }
 
             File arqImg = new File("src\\os\\img\\fileS.png");
             ImageIcon image = new ImageIcon(arqImg.getCanonicalPath());
-            
             image.getImage().flush();
-           imagem.setIcon(image);
+            imagem.setIcon(image);
             imagem.setText("");
+            JOptionPane.showMessageDialog(null, image);
 
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());

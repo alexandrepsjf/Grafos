@@ -94,9 +94,11 @@ public class Graph {
             lista += "\n" + graph.getNodes().get(i).getId();
             for (j = 0; j < size; j++) {
                 if (matriz[i][j] == 1) {
-                    lista += " -->" + graph.getNodes().get(j).getId();
+                    lista += " ->" + graph.getNodes().get(j).getId();
                 }
+                lista+=";";
             }
+            
         }
         return lista;
     }
