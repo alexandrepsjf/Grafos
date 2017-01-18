@@ -188,6 +188,7 @@ public class Tela extends javax.swing.JDialog {
         FileChooser.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         imagem.setText("jLabel13");
+        imagem.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jtaEntrada.setColumns(20);
         jtaEntrada.setRows(5);
@@ -1199,7 +1200,7 @@ public class Tela extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String adjacenciaTotal = "\"digraph G {\\n";
+        String adjacenciaTotal = "digraph G {";
         adjacenciaTotal += graph.listaAdjacencia(graph);
         adjacenciaTotal += "}";
 
@@ -1218,8 +1219,8 @@ public class Tela extends javax.swing.JDialog {
             image.getImage().flush();
             imagem.setIcon(image);
             imagem.setText("");
-            JOptionPane.showMessageDialog(null, image);
-
+            JOptionPane.showMessageDialog(null,null,"Imagem do grafo",0, image);
+          
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());
         }

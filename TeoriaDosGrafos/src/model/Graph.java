@@ -96,9 +96,9 @@ public class Graph {
                 if (matriz[i][j] == 1) {
                     lista += " ->" + graph.getNodes().get(j).getId();
                 }
-                lista+=";";
+                lista += ";";
             }
-            
+
         }
         return lista;
     }
@@ -131,7 +131,7 @@ public class Graph {
     }
 
     public String conjunto(Graph graph) {
-        String conjunto , no = "", arestas = "";
+        String conjunto, no = "", arestas = "";
         for (Node vertice : graph.getNodes()) {
             no += vertice.getId() + " --> ";
         }
@@ -141,29 +141,30 @@ public class Graph {
         conjunto = "Vértices \n" + no + "\n Arestas \n" + arestas;
         return conjunto;
     }
-    public String grauNo(Graph graph, String selected){
-        String grauTotal="";
+
+    public String grauNo(Graph graph, String selected) {
+        String grauTotal = "";
         for (Edge aresta : graph.getEdge()) {
-            aresta.getNode1().grau=0;
-            aresta.getNode2().grau=0;
+            aresta.getNode1().grau = 0;
+            aresta.getNode2().grau = 0;
         }
         for (Edge aresta : graph.getEdge()) {
-            aresta.getNode1().grau+=1;
-            aresta.getNode2().grau+=1;
+            aresta.getNode1().grau += 1;
+            aresta.getNode2().grau += 1;
         }
-        if(selected.isEmpty()){
-        
-         for (Node no : graph.getNodes()) {
-               
-                    grauTotal = "\n Grau Vertice " + no.getId() + " é " + no.getGrau();
-                
-            }}else{
-             for (Node no : graph.getNodes()) {
+        if (selected.isEmpty()) {
+            for (Node no : graph.getNodes()) {
+
+                grauTotal += "\n Grau Vertice " + no.getId() + " é " + no.getGrau();
+
+            }
+        } else {
+            for (Node no : graph.getNodes()) {
                 if (no.getId().equals(selected)) {
                     grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
                 }
             }
         }
         return grauTotal;
-}
+    }
 }
