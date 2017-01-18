@@ -914,7 +914,16 @@ public class Tela extends javax.swing.JDialog {
                     }
                 }
 
-                //graphml.setGraph(graph);
+                for (Edge aresta : graphml.getGraph().getEdge()) {
+                    for (Node no : graphml.getGraph().getNodes()) {
+                        if (no.getId().equals(aresta.getSource())) {
+                            aresta.setNode1(no);
+                        }
+                        if (no.getId().equals(aresta.getTarget())) {
+                            aresta.setNode2(no);
+                        }
+                    }
+                }
                 vertices = (ArrayList<Node>) graphml.getGraph().getNodes();
                 arestas = (ArrayList<Edge>) graphml.getGraph().getEdge();
                 graph.setEdge(arestas);
@@ -1192,13 +1201,13 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         String adjacenciaTotal = "\"digraph G {\\n";
         adjacenciaTotal += graph.listaAdjacencia(graph);
-        adjacenciaTotal += "}";        
-       
-            Process p;
-            File arquivo = new File("src\\os\\dot\\fileS.dot");
-            try (FileWriter fw = new FileWriter(arquivo)) {
-                fw.write(adjacenciaTotal);
-                fw.flush();            
+        adjacenciaTotal += "}";
+
+        Process p;
+        File arquivo = new File("src\\os\\dot\\fileS.dot");
+        try (FileWriter fw = new FileWriter(arquivo)) {
+            fw.write(adjacenciaTotal);
+            fw.flush();
             String commandLine = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\fileS.png";
             p = Runtime.getRuntime().exec(commandLine);
             while (p.isAlive()) {
