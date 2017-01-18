@@ -139,8 +139,9 @@ public class Graph {
         conjunto = "Vértices \n" + no + "\n Arestas \n" + arestas;
         return conjunto;
     }
-    public String grauNo(Graph graph){
+    public String grauNo(Graph graph, String selected){
         String grauTotal="";
+        if(selected.equals("")){
         for (Edge aresta : graph.getEdge()) {
             aresta.getNode1().grau+=1;
             aresta.getNode2().grau+=1;
@@ -149,7 +150,13 @@ public class Graph {
                
                     grauTotal = "\n Grau Vertice " + no.getId() + " é " + no.getGrau();
                 
+            }}else{
+             for (Node no : graph.getNodes()) {
+                if (no.getId().equals(selected)) {
+                    grauTotal = " Grau Vertice " + no.getId() + " é " + no.getGrau();
+                }
             }
+        }
         return grauTotal;
 }
 }
