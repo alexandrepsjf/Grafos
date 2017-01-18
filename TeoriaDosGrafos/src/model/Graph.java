@@ -143,11 +143,16 @@ public class Graph {
     }
     public String grauNo(Graph graph, String selected){
         String grauTotal="";
-        if(selected.equals("")){
+        for (Edge aresta : graph.getEdge()) {
+            aresta.getNode1().grau=0;
+            aresta.getNode2().grau=0;
+        }
         for (Edge aresta : graph.getEdge()) {
             aresta.getNode1().grau+=1;
             aresta.getNode2().grau+=1;
         }
+        if(selected.isEmpty()){
+        
          for (Node no : graph.getNodes()) {
                
                     grauTotal = "\n Grau Vertice " + no.getId() + " é " + no.getGrau();
