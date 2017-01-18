@@ -1111,13 +1111,13 @@ public class Tela extends javax.swing.JDialog {
         if (arestaGrau.getText().equals("")) {
 
             for (Edge aresta : arestas) {
-                incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getTarget() + "\n";
+                incidenciaTotal += " A aresta " + aresta.getId() + " é incidente no vértice " + aresta.getNode2().getId() + "\n";
             }
         } else {
 
             for (Edge aresta : arestas) {
-                if (aresta.getSource().equals(arestaGrau.getText()) || aresta.getTarget().equals(arestaGrau.getText())) {
-                    incidenciaTotal += " Os Vertices " + aresta.getSource() + " e " + aresta.getTarget() + " são incidente com a aresta " + aresta.getId() + "\n";
+                if (aresta.getNode1().getId().equals(arestaGrau.getText()) || aresta.getNode2().getId().equals(arestaGrau.getText())) {
+                    incidenciaTotal += " Os Vertices " + aresta.getNode1().getId() + " e " + aresta.getNode2().getId() + " são incidente com a aresta " + aresta.getId() + "\n";
                 }
             }
         }
