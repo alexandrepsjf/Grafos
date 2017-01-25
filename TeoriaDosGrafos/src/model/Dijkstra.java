@@ -7,7 +7,7 @@ import java.util.List;
 public class Dijkstra {
 
     // assumes Nodes are numbered 0, 1, ... n and that the source Node is 0
-    public static ArrayList<Node> findShortestPath(Graph graph, Node target) {
+    public static ArrayList<Node> findShortestPath(Graph graph,Node source, Node target) {
         Node[] nodes = new Node[graph.getNodes().size()];
         Edge[] edges = new Edge[graph.getEdge().size()];
         int y = 0, k = 0;

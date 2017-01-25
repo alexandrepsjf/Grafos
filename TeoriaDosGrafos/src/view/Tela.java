@@ -1246,15 +1246,28 @@ public class Tela extends javax.swing.JDialog {
 
     private void algoritmoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algoritmoDijkstraActionPerformed
         // TODO add your handling code here:
-        String idTarget = "";
-        JOptionPane.showInputDialog("digite o nó alvo", idTarget);
-        for (Node target : graph.getNodes()) {
-            if (idTarget.equals(target.getId())) {
-                Dijkstra.findShortestPath(graph, target);
-            } else {
-                JOptionPane.showConfirmDialog(null, "Este nó não existe");
-    }//GEN-LAST:event_algoritmoDijkstraActionPerformed
+        String idTarget = "",idSource="", caminhoMinimo = "";
+        ArrayList<Node> caminho = new ArrayList<Node>();
+        Node target = null,source=null;
+        idSource = JOptionPane.showInputDialog("digite o nó origem", idTarget);
+        idTarget = JOptionPane.showInputDialog("digite o nó alvo", idTarget);
+        for (Node no : graph.getNodes()) {
+            if (no.getId().equals(idTarget)) {
+                target = no;
+            }
+            if (no.getId().equals(idSource)) {
+                source = no;
+            }
         }
+        if (target != null) {
+            caminho = Dijkstra.findShortestPath(graph, source,target);
+        } else {
+            JOptionPane.showConfirmDialog(null, "Este nó não existe");
+    }//GEN-LAST:event_algoritmoDijkstraActionPerformed
+        for (Node no : caminho) {
+            caminhoMinimo +=" -> "+ no.getId();
+        }
+        JOptionPane.showMessageDialog(null, caminhoMinimo);
     }
 
     /**

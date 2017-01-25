@@ -1,5 +1,4 @@
 digraph G {
-aa ->bb ->dd;
-bb ->aa;
-cc;
-dd ->aa;}
+aa ->aa ->gg;
+bb ->gg;
+gg ->aa ->bb;}
