@@ -25,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import model.Dijkstra;
 import model.Graph;
 import model.Graphml;
 import model.ListaNodes;
@@ -177,6 +178,9 @@ public class Tela extends javax.swing.JDialog {
         listaAdjacencia = new javax.swing.JButton();
         conjunto = new javax.swing.JButton();
         matrizIncidencia = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        algoritmoDijkstra = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -678,6 +682,20 @@ public class Tela extends javax.swing.JDialog {
                 matrizIncidenciaActionPerformed(evt);
             }
         });
+
+        jMenu1.setText("Algoritmo");
+
+        algoritmoDijkstra.setText("Dijkstra");
+        algoritmoDijkstra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                algoritmoDijkstraActionPerformed(evt);
+            }
+        });
+        jMenu1.add(algoritmoDijkstra);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1219,12 +1237,25 @@ public class Tela extends javax.swing.JDialog {
             image.getImage().flush();
             imagem.setIcon(image);
             imagem.setText("");
-            JOptionPane.showMessageDialog(null,null,"Imagem do grafo",0, image);
-          
+            JOptionPane.showMessageDialog(null, null, "Imagem do grafo", 0, image);
+
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void algoritmoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algoritmoDijkstraActionPerformed
+        // TODO add your handling code here:
+        String idTarget = "";
+        JOptionPane.showInputDialog("digite o nó alvo", idTarget);
+        for (Node target : graph.getNodes()) {
+            if (idTarget.equals(target.getId())) {
+                Dijkstra.findShortestPath(graph, target);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Este nó não existe");
+    }//GEN-LAST:event_algoritmoDijkstraActionPerformed
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -1365,6 +1396,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JPanel PainelXML;
     private javax.swing.JButton abrirXML;
     private javax.swing.JButton adjacente;
+    private javax.swing.JMenuItem algoritmoDijkstra;
     private javax.swing.JTextField arestaGrau;
     private javax.swing.JButton arestaIncidente;
     private javax.swing.JButton arestaIncidente1;
@@ -1388,6 +1420,8 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
