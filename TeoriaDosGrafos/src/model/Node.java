@@ -12,7 +12,15 @@ package model;
 public class Node {
     String id;
     int grau;
+    int distancia;
 
+    public int getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(int distancia) {
+        this.distancia = distancia;
+    }
     public Node() {
     }
 

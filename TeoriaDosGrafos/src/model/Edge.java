@@ -13,7 +13,15 @@ public class Edge {
     Node node1;
     Node node2; 
     String id, source, target;
+    int weight;
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
     public Edge() {
     }
 
