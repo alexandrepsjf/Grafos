@@ -25,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import model.CaminhoMinimo;
 import model.Dijkstra;
 import model.Graph;
 import model.Graphml;
@@ -47,6 +48,7 @@ public class Tela extends javax.swing.JDialog {
     private String xml1 = null;
     private String choose = null;
     private String id, edgedefault;
+    public CaminhoMinimo menorCaminho = new CaminhoMinimo();
 
     public Graph getGraph() {
         return graph;
@@ -113,6 +115,7 @@ public class Tela extends javax.swing.JDialog {
         tabela.addColumn("Nome");
         tabela.addColumn("1º Vertice");
         tabela.addColumn("2º Vertice");
+        tabela.addColumn("Peso");
     }
 
     /**
@@ -145,6 +148,8 @@ public class Tela extends javax.swing.JDialog {
         limparTextoAresta = new javax.swing.JButton();
         nomeAresta = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        peso = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
         PainelXML = new javax.swing.JPanel();
         abrirXML = new javax.swing.JButton();
         url = new javax.swing.JTextField();
@@ -213,7 +218,7 @@ public class Tela extends javax.swing.JDialog {
 
             },
             new String [] {
-                "NOME", "1º VERTICE", "2º VERTICE"
+                "NOME", "1º VERTICE", "2º VERTICE", "PESO"
             }
         ));
         tabelaArestas.setGridColor(new java.awt.Color(102, 102, 102));
@@ -295,16 +300,14 @@ public class Tela extends javax.swing.JDialog {
 
         jLabel2.setText("Nome da Aresta");
 
+        jLabel13.setText("Peso da Aresta");
+
         javax.swing.GroupLayout PainelArestaLayout = new javax.swing.GroupLayout(PainelAresta);
         PainelAresta.setLayout(PainelArestaLayout);
         PainelArestaLayout.setHorizontalGroup(
             PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PainelArestaLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelArestaLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelArestaLayout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -313,13 +316,10 @@ public class Tela extends javax.swing.JDialog {
                         .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelArestaLayout.createSequentialGroup()
                                 .addComponent(EditarAresta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelArestaLayout.createSequentialGroup()
-                                        .addComponent(limparTextoAresta)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(removerAresta))
-                                    .addComponent(CriarAresta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addComponent(limparTextoAresta)
+                                .addGap(31, 31, 31)
+                                .addComponent(removerAresta))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelArestaLayout.createSequentialGroup()
                                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel5)
@@ -328,9 +328,25 @@ public class Tela extends javax.swing.JDialog {
                                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(listaNode01, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(listaNode02, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(60, 60, 60)
-                                .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                                        .addGap(60, 60, 60)
+                                        .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(nomeAresta, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                            .addComponent(peso)))
+                                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                                        .addGap(72, 72, 72)
+                                        .addComponent(jLabel13)))))
                         .addGap(37, 37, 37))))
+            .addGroup(PainelArestaLayout.createSequentialGroup()
+                .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PainelArestaLayout.setVerticalGroup(
             PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,13 +361,20 @@ public class Tela extends javax.swing.JDialog {
                     .addGroup(PainelArestaLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(nomeAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(listaNode02, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))
+                    .addGroup(PainelArestaLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(peso, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CriarAresta, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(PainelArestaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EditarAresta)
                     .addComponent(limparTextoAresta)
@@ -702,50 +725,49 @@ public class Tela extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(168, 168, 168)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(MatrizAdjacencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(matrizIncidencia)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jPanelVertice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(2, 2, 2))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(59, 59, 59)
+                                                .addGap(62, 62, 62)
                                                 .addComponent(ordemGrafo))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(91, 91, 91)
+                                                .addGap(92, 92, 92)
                                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jPanelVertice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(117, 117, 117)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(71, 71, 71))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(conjunto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(MatrizAdjacencia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(listaAdjacencia, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(matrizIncidencia)
+                                .addGap(18, 18, 18)
+                                .addComponent(conjunto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(listaAdjacencia, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -755,9 +777,9 @@ public class Tela extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(PainelAresta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(PainelXML, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -769,23 +791,23 @@ public class Tela extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, Short.MAX_VALUE)
                     .addComponent(PainelXML, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelVertice, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ordemGrafo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanelVertice, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(ordemGrafo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel12)
+                            .addGap(1, 1, 1)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(MatrizAdjacencia)
@@ -802,12 +824,14 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         Edge aresta = new Edge();
         aresta.setId(nomeAresta.getText());
+        aresta.setWeight(Integer.parseInt(peso.getText()));
         aresta.setNode1(vertices.get(listaNode01.getSelectedIndex()));
         aresta.setNode2(vertices.get(listaNode02.getSelectedIndex()));
         tabelaArestas.setModel(tabela);
-        tabela.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId()});
+        tabela.addRow(new Object[]{nomeAresta.getText(), aresta.getNode1().getId(), aresta.getNode2().getId(), aresta.getWeight()});
         arestas.add(aresta);
         nomeAresta.setText("");
+        peso.setText(null);
     }//GEN-LAST:event_CriarArestaActionPerformed
 
     private void limparTextoArestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparTextoArestaActionPerformed
@@ -845,11 +869,11 @@ public class Tela extends javax.swing.JDialog {
         int index = tabelaArestas.getSelectedRow();
         if ((tabela.getRowCount() > 0) && (index >= 0)) {
             nomeAresta.setText(arestas.get(index).getId());
-            nomeAresta.setText(arestas.get(index).getId());
             arestaGrau.setText(arestas.get(index).getId());
+            peso.setText(String.valueOf(arestas.get(index).getWeight()));
             listaNode01.removeAllItems();
-            listaNode01.addItem(arestas.get(index).getNode1().getId());
             listaNode02.removeAllItems();
+            listaNode01.addItem(arestas.get(index).getNode1().getId());
             listaNode02.addItem(arestas.get(index).getNode2().getId());
         }
 
@@ -859,17 +883,15 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         int index = tabelaArestas.getSelectedRow();
         if ((tabela.getRowCount() > 0) && (index >= 0)) {
-            Object teste = listaNode02.getSelectedItem();
-            System.out.println(teste);
-            teste = listaNode02.getSelectedItem().toString();
-            System.out.println(teste);
             arestas.get(index).setNode1(vertices.get(listaNode01.getSelectedIndex()));
             arestas.get(index).setNode2(vertices.get(listaNode02.getSelectedIndex()));
+            arestas.get(index).setWeight(Integer.parseInt(peso.getText()));
             // arestas.get(index).setNome(id);
             tabela.removeRow(index);
-            tabela.insertRow(index, new String[]{nomeAresta.getText(), arestas.get(index).getNode1().getId(), arestas.get(index).getNode2().getId()});
+            tabela.insertRow(index, new String[]{nomeAresta.getText(), arestas.get(index).getNode1().getId(), arestas.get(index).getNode2().getId(), String.valueOf(arestas.get(index).getWeight())});
             nomeAresta.setText("");
-            nomeAresta.setText("");
+            arestaGrau.setText("");
+            peso.setText("");
             Object edit;
             edit = tabela.getValueAt(index, 0);
             JOptionPane.showMessageDialog(null, "A Aresta " + edit.toString() + " foi editado com sucesso ");
@@ -953,7 +975,7 @@ public class Tela extends javax.swing.JDialog {
                     tabela.removeRow(0);
                 }
                 for (Edge inserir : graphml.getGraph().getEdge()) {
-                    tabela.addRow(new String[]{inserir.getId(), inserir.getSource(), inserir.getTarget()});
+                    tabela.addRow(new String[]{inserir.getId(), inserir.getSource(), inserir.getTarget(), String.valueOf(inserir.getWeight())});
                 }
                 model.removeAllElements();
                 for (Node vertice : graphml.getGraph().getNodes()) {
@@ -1219,7 +1241,10 @@ public class Tela extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String adjacenciaTotal = "digraph G {";
-        adjacenciaTotal += graph.listaAdjacencia(graph);
+        for (Edge a : graph.getEdge()) {
+            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + " ;";
+        }
+//        adjacenciaTotal += graph.listaAdjacencia(graph);
         adjacenciaTotal += "}";
 
         Process p;
@@ -1246,12 +1271,12 @@ public class Tela extends javax.swing.JDialog {
 
     private void algoritmoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algoritmoDijkstraActionPerformed
         // TODO add your handling code here:
-        String idTarget = "",idSource="", caminhoMinimo = "";
-        ArrayList<Node> caminho = new ArrayList<Node>();
-        Node target = null,source=null;
-        idSource = JOptionPane.showInputDialog("digite o nó origem", idTarget);
-        idTarget = JOptionPane.showInputDialog("digite o nó alvo", idTarget);
-        for (Node no : graph.getNodes()) {
+        String idTarget = "", idSource = "", caminhoMinimo = "";
+        List<Node> caminho = new ArrayList<Node>();
+        Node target = null, source = null;
+        idSource = JOptionPane.showInputDialog("digite o nó origem");
+        idTarget = JOptionPane.showInputDialog("digite o nó alvo");
+        for (Node no : graphml.getGraph().getNodes()) {
             if (no.getId().equals(idTarget)) {
                 target = no;
             }
@@ -1259,15 +1284,17 @@ public class Tela extends javax.swing.JDialog {
                 source = no;
             }
         }
-        if (target != null) {
-            caminho = Dijkstra.findShortestPath(graph, source,target);
+        if (target != null && source != null) {
+            caminho = menorCaminho.encontrarMenorCaminhoDijkstra(graphml.getGraph(), source, target);
+//            caminho = Dijkstra.findShortestPath(graph, source, target);
+            for (Node no : caminho) {
+                caminhoMinimo += " -> " + no.getId();
+            }
+            JOptionPane.showMessageDialog(null, caminhoMinimo);
         } else {
             JOptionPane.showConfirmDialog(null, "Este nó não existe");
     }//GEN-LAST:event_algoritmoDijkstraActionPerformed
-        for (Node no : caminho) {
-            caminhoMinimo +=" -> "+ no.getId();
-        }
-        JOptionPane.showMessageDialog(null, caminhoMinimo);
+
     }
 
     /**
@@ -1425,6 +1452,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1453,6 +1481,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JTextField nomeAresta;
     private javax.swing.JTextField nomeVertice;
     private javax.swing.JButton ordemGrafo;
+    private javax.swing.JTextField peso;
     private javax.swing.JButton removerAresta;
     private javax.swing.JButton removerVertice;
     private javax.swing.JTable tabelaArestas;

@@ -96,7 +96,7 @@ public class Graph {
                 if (matriz[i][j] == 1) {
                     lista += " ->" + graph.getNodes().get(j).getId();
                 }
-                lista += ";";
+                
             }
 
         }
@@ -167,6 +167,13 @@ public class Graph {
         }
         return grauTotal;
     }
-    
+      // Retorna a aresta a apartir dos v�rtices de origem e destino
+     public Edge encontrarAresta(Node origem, Node destino){
+    	 for (int i = 0; i < this.edge.size() ; i++){
+    		 if (edge.get(i).getNode1().equals(origem) && edge.get(i).getNode2().equals(destino))
+    			 return edge.get(i);
+    	 }
+    	 return null;
+     }
     
 }
