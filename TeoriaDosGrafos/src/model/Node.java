@@ -76,11 +76,11 @@ public class Node implements Comparable<Node> {
     public int compareTo(Node vertice) {
         if (this.getDistancia() < vertice.getDistancia()) {
             return -1;
-        } else if (this.getDistancia() == vertice.getDistancia()) {
-            return 0;
+        } else if (this.getDistancia() > vertice.getDistancia()) {
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
     public void visitar() {
         this.visitado = true;

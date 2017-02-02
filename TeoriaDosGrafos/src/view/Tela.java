@@ -106,6 +106,9 @@ public class Tela extends javax.swing.JDialog {
         xstream.alias("graphml", Graphml.class);
         xstream.useAttributeFor("source", String.class);
         xstream.useAttributeFor("target", String.class);
+        xstream.useAttributeFor("distancia", String.class);
+        xstream.useAttributeFor("visitado", String.class);
+        xstream.useAttributeFor("weight", String.class);
         xstream.useAttributeFor("xmlns", String.class);
         xstream.useAttributeFor("edgedefault", String.class);
         xstream.useAttributeFor("id", String.class);
@@ -1242,7 +1245,7 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
-            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + " ;";
+            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + " ;\n";
         }
 //        adjacenciaTotal += graph.listaAdjacencia(graph);
         adjacenciaTotal += "}";
