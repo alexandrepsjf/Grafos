@@ -14,6 +14,15 @@ public class Edge {
     Node node2; 
     String id, source, target;
     int weight;
+    private boolean visitado = false;
+
+    public boolean isVisitado() {
+        return visitado;
+    }
+
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
+    }
 
     public int getWeight() {
         return weight;

@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import model.CaminhoMinimo;
 import model.Graph;
 import model.Graphml;
+import model.Kruskal;
 
 /**
  *
@@ -186,6 +187,7 @@ public class Tela extends javax.swing.JDialog {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         algoritmoDijkstra = new javax.swing.JMenuItem();
+        Kruskal = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -716,6 +718,14 @@ public class Tela extends javax.swing.JDialog {
         });
         jMenu1.add(algoritmoDijkstra);
 
+        Kruskal.setText("Kruskal");
+        Kruskal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KruskalActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Kruskal);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -742,21 +752,16 @@ public class Tela extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jPanelVertice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(2, 2, 2))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(62, 62, 62)
-                                                .addComponent(ordemGrafo))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(92, 92, 92)
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addGap(62, 62, 62)
+                                        .addComponent(ordemGrafo))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(92, 92, 92)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -1295,8 +1300,13 @@ public class Tela extends javax.swing.JDialog {
         } else {
             JOptionPane.showConfirmDialog(null, "Este nó não existe");
     }//GEN-LAST:event_algoritmoDijkstraActionPerformed
-
     }
+    private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
+        Kruskal kru = new Kruskal();
+        kru.imprimeKruskal(graph);
+    }//GEN-LAST:event_KruskalActionPerformed
+
+    
 
     /**
      * @param args the command line arguments
@@ -1432,6 +1442,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JButton CriarAresta;
     private javax.swing.JButton EditarAresta;
     private javax.swing.JFileChooser FileChooser;
+    private javax.swing.JMenuItem Kruskal;
     private javax.swing.JButton MatrizAdjacencia;
     private javax.swing.JPanel PainelAresta;
     private javax.swing.JPanel PainelXML;

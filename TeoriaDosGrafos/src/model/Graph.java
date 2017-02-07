@@ -17,8 +17,16 @@ public class Graph {
     private String id, edgedefault;
     private ArrayList<Node> nodes = new ArrayList<Node>();
     private ArrayList<Edge> edge = new ArrayList<>();
-
+    private boolean hasCycle = false;
     public Graph() {
+    }
+
+    public boolean isHasCycle() {
+        return hasCycle;
+    }
+
+    public void setHasCycle(boolean hasCycle) {
+        this.hasCycle = hasCycle;
     }
 
     public String getId() {
@@ -175,5 +183,77 @@ public class Graph {
     	 }
     	 return null;
      }
-    
+
+     public Edge menorPeso() {
+        int j;
+
+        for (j = 0; j < this.getEdge().size(); j++) {
+            if ((this.getEdge().get(j).isVisitado() == false)) {
+                this.getEdge().get(j).setVisitado(true);
+
+                for (int i = (j + 1); i < this.getEdge().size(); i++) {
+
+                    if ((this.getEdge().get(i).isVisitado() == false)
+                            && (this.getEdge().get(j).getWeight() > this.getEdge().get(i).getWeight())) {
+
+                        this.getEdge().get(j).setVisitado(false);
+                        j = i;
+                        this.getEdge().get(j).setVisitado(true);
+                    }
+                }
+
+                break;
+            }
+        }
+
+        return this.getEdge().get(j);
+    }
+
+
+
+public boolean temCiclo(Edge aresta){
+		
+		Node anterior = aresta.getNode2();
+		
+		for(int j=0; j<this.getEdge().size() ;j++){
+			
+			for(int i=0; i<this.getEdge().size() ;i++){
+				
+				if ((aresta==this.getEdge().get(i))&&(this.getEdge().get(i).isVisitado()==false))
+					this.getEdge().get(i).setVisitado(true);
+				else if (aresta!=this.getEdge().get(i)){
+					
+					if (anterior.equals(this.getEdge().get(i).getNode1())){
+						
+						if	(aresta.getNode1().equals(this.getEdge().get(i).getNode2())){
+							this.limparArestaVisitada();
+							this.hasCycle = true;
+							return true;
+						}else{
+							anterior = this.getEdge().get(i).getNode2();
+							this.getEdge().get(i).setVisitado(true);
+						}	
+						
+					}else if (anterior.equals(this.getEdge().get(i).getNode2())){
+						
+						if	(aresta.getNode1().equals(this.getEdge().get(i).getNode1())){
+							this.limparArestaVisitada();
+							this.hasCycle = true;
+							return true;
+						}else{
+							anterior = this.getEdge().get(i).getNode1();
+							this.getEdge().get(i).setVisitado(true);
+						}
+					}
+				}
+			}
+		}
+		this.limparArestaVisitada();
+		this.hasCycle = false;
+		return false;
+	}
+public void limparArestaVisitada(){
+		for(int i=0; i<this.getEdge().size() ;i++)
+			this.getEdge().get(i).setVisitado(false);
+	}
 }
