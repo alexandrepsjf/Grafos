@@ -1,11 +1,11 @@
-digraph G {q -> w ;
-w -> e ;
-q -> r ;
-r -> t ;
-t -> y ;
-y -> u ;
-q -> u ;
-u -> e ;
-e -> q ;
-w -> t ;
+digraph G {q -> w[label=2];
+w -> e[label=34];
+q -> r[label=6];
+r -> t[label=3];
+t -> y[label=9];
+y -> u[label=4];
+q -> u[label=12];
+u -> e[label=3];
+e -> q[label=11];
+w -> t[label=8];
 }

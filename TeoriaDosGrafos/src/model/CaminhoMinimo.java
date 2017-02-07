@@ -37,6 +37,7 @@ public class CaminhoMinimo {
             // Vertice atual tem distancia zero, e todos os outros, 9999("infinita")
             if (grafo.getNodes().get(i).equals(v1)) {
                 grafo.getNodes().get(i).setDistancia(0);
+                naoVisitados.add(grafo.getNodes().get(i));
             } else {
                 grafo.getNodes().get(i).setDistancia(9999);
                 grafo.getNodes().get(i).setVisitado(false);
@@ -77,7 +78,7 @@ public class CaminhoMinimo {
                                 caminho = caminho.getPai();
                             }
                             // Ordena a lista do menor caminho, para que ele seja exibido da origem ao destino.
-                           // Collections.sort(menorCaminho);
+                            Collections.sort(menorCaminho);
                         }
                     }
                 }

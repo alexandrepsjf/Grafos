@@ -26,10 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.CaminhoMinimo;
-import model.Dijkstra;
 import model.Graph;
 import model.Graphml;
-import model.ListaNodes;
 
 /**
  *
@@ -101,7 +99,6 @@ public class Tela extends javax.swing.JDialog {
         xstream.omitField(Node.class, "grau");
         xstream.alias("graph", Graph.class);
         xstream.alias("node", Node.class);
-        xstream.alias("nodes", ListaNodes.class);
         xstream.alias("edge", Edge.class);
         xstream.alias("graphml", Graphml.class);
         xstream.useAttributeFor("source", String.class);
@@ -1245,7 +1242,8 @@ public class Tela extends javax.swing.JDialog {
         // TODO add your handling code here:
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
-            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + " ;\n";
+            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
+
         }
 //        adjacenciaTotal += graph.listaAdjacencia(graph);
         adjacenciaTotal += "}";
