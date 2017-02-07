@@ -27,10 +27,11 @@ public class Kruskal {
         }
 
         return resultado;
-        //break;
+        
     }
-
-    public void gerarImagem(Graph graph) {
+ 
+}
+    /*public void gerarImagem(Graph graph) {
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
             adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
@@ -59,4 +60,4 @@ public class Kruskal {
         }
         //return ImageIcon image = new ImageIcon(arqImg.getCanonicalPath());
     }
-}
+}*/

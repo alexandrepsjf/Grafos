@@ -1307,18 +1307,38 @@ public class Tela extends javax.swing.JDialog {
     }//GEN-LAST:event_algoritmoDijkstraActionPerformed
     }
     private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
-        
-        Kruskal kru = new Kruskal();
-        Graph graphKruskal = new Graph();
-        graphKruskal.setEdge(arestas);
-        graphKruskal.setNodes(vertices);
-        graphKruskal=kru.imprimeKruskal(graphKruskal);
+        Graph resultado = new Graph();
+        Edge arestaAux;
+        for(int i=0;i<graphml.getGraph().getEdge().size();i++){
+					//busca aresta com menor peso ainda nao verificado no grafo inicial
+					arestaAux= graphml.getGraph().menorPeso();
+					//se tal aresta nao formar um ciclo ao ser adicionada, ela eh adicionada a arvore de Kruskal
+					if(!resultado.temCiclo(arestaAux)){
+						resultado.addAresta(arestaAux.getWeight(),arestaAux.getSource(),arestaAux.getTarget());
+					}
+				}
+				
+				
+
+    
+//        int i,j;
+//        for(i=0;i<graphml.getGraph().getEdge().size();i++){
+//            arestas.set(i, graphml.getGraph().getEdge().get(i));
+//        }
+//        for(j=0;j<graphml.getGraph().getNodes().size();j++){
+//            vertices.set(j, graphml.getGraph().getNodes().get(j));
+//        }
+//        Kruskal kru = new Kruskal();
+//        Graph graphKruskal = new Graph();
+//        graphKruskal.setEdge((ArrayList<Edge>) arestas.clone());
+//        graphKruskal.setNodes((ArrayList<Node>) vertices.clone());
+//        graphKruskal=kru.imprimeKruskal(graphKruskal);
         String adjacenciaTotal2 = "digraph G {";
-        for (Edge a : graphKruskal.getEdge()) {
+        for (Edge a : resultado.getEdge()) {
             adjacenciaTotal2 += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
 
         }
-//        adjacenciaTotal += graph.listaAdjacencia(graph);
+        
         adjacenciaTotal2 += "}";
 
         Process p1;

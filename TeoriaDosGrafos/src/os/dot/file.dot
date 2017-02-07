@@ -1,3 +1,5 @@
-digraph G {a -> b[label=4];
-a -> e[label=6];
+digraph G {c -> e[label=2];
+b -> d[label=2];
+a -> d[label=3];
+f -> g[label=65];
 }

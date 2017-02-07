@@ -184,7 +184,7 @@ public class Graph {
     	 return null;
      }
 
-     public Edge menorPeso(Graph graph) {
+     public Edge menorPeso() {
         int j;
 
         for (j = 0; j < graph.getEdge().size(); j++) {
