@@ -48,6 +48,7 @@ public class Tela extends javax.swing.JDialog {
     private String choose = null;
     private String id, edgedefault;
     public CaminhoMinimo menorCaminho = new CaminhoMinimo();
+    Graph inicial = new Graph();
     Graph resultado = new Graph();
         Edge arestaAux= new Edge();
     public Graph getGraph() {
@@ -190,6 +191,9 @@ public class Tela extends javax.swing.JDialog {
         jMenu1 = new javax.swing.JMenu();
         algoritmoDijkstra = new javax.swing.JMenuItem();
         Kruskal = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        Busca = new javax.swing.JMenu();
+        buscaProfundidade = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -730,7 +734,22 @@ public class Tela extends javax.swing.JDialog {
         });
         jMenu1.add(Kruskal);
 
+        jMenuItem3.setText("jMenuItem3");
+        jMenu1.add(jMenuItem3);
+
         jMenuBar1.add(jMenu1);
+
+        Busca.setText("Busca");
+
+        buscaProfundidade.setText("Profundidade");
+        buscaProfundidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscaProfundidadeActionPerformed(evt);
+            }
+        });
+        Busca.add(buscaProfundidade);
+
+        jMenuBar1.add(Busca);
 
         setJMenuBar(jMenuBar1);
 
@@ -1358,6 +1377,43 @@ public class Tela extends javax.swing.JDialog {
         
     }//GEN-LAST:event_KruskalActionPerformed
 
+    private void buscaProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaProfundidadeActionPerformed
+        String profundidade="";
+        inicial=graphml.getGraph();
+        for (Node no : inicial.getNodes()) {
+            for (Edge aresta : inicial.getEdge()) {
+                if (no.equals(aresta.getNode1())) {
+                    no.getArestas().add(aresta);
+                }
+            }
+        }
+         Node target = null, source = null;
+        String idSource = JOptionPane.showInputDialog("digite o nó origem");
+        String idTarget = JOptionPane.showInputDialog("digite o nó alvo");
+        for (Node no : graphml.getGraph().getNodes()) {
+            if (no.getId().equals(idTarget)) {
+                target = no;
+            }
+            if (no.getId().equals(idSource)) {
+                source = no;
+            }
+        }
+        if (target != null && source != null) {
+            resultado.setEdge(inicial.buscaEmProfundidade(source, target));
+//            caminho = Dijkstra.findShortestPath(graph, source, target);
+            for (Edge no : resultado.getEdge()) {
+                profundidade += " -> " + no.getId();
+            }
+            JOptionPane.showMessageDialog(null, profundidade);
+            System.out.println(profundidade);
+        } else {
+            JOptionPane.showConfirmDialog(null, "Este nó não existe");
+    }
+        
+        
+        
+    }//GEN-LAST:event_buscaProfundidadeActionPerformed
+
     
 
     /**
@@ -1491,6 +1547,7 @@ public class Tela extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Busca;
     private javax.swing.JButton CriarAresta;
     private javax.swing.JButton EditarAresta;
     private javax.swing.JFileChooser FileChooser;
@@ -1504,6 +1561,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JTextField arestaGrau;
     private javax.swing.JButton arestaIncidente;
     private javax.swing.JButton arestaIncidente1;
+    private javax.swing.JMenuItem buscaProfundidade;
     private javax.swing.JButton conjunto;
     private javax.swing.JButton criarNo;
     private javax.swing.JButton editarVertice;
@@ -1530,6 +1588,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelVertice;
