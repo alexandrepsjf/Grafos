@@ -156,7 +156,7 @@ public class Tela extends javax.swing.JDialog {
         url = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         gerarXml = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        gerarImagem = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         criarNo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -409,11 +409,11 @@ public class Tela extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButton1.setText("Gerar Imagem ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        gerarImagem.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        gerarImagem.setText("Gerar Imagem ");
+        gerarImagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                gerarImagemActionPerformed(evt);
             }
         });
 
@@ -438,7 +438,7 @@ public class Tela extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(PainelXMLLayout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addComponent(jButton1)
+                .addComponent(gerarImagem)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PainelXMLLayout.setVerticalGroup(
@@ -453,7 +453,7 @@ public class Tela extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(url, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gerarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1243,7 +1243,7 @@ public class Tela extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(null, graph.conjunto(graph));
     }//GEN-LAST:event_conjuntoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void gerarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarImagemActionPerformed
         // TODO add your handling code here:
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
@@ -1258,7 +1258,7 @@ public class Tela extends javax.swing.JDialog {
         try (FileWriter fw = new FileWriter(arquivo)) {
             fw.write(adjacenciaTotal);
             fw.flush();
-            String commandLine = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\fileS.png";
+            String commandLine = "release\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\fileS.png";
             p = Runtime.getRuntime().exec(commandLine);
             while (p.isAlive()) {
             }
@@ -1273,7 +1273,7 @@ public class Tela extends javax.swing.JDialog {
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_gerarImagemActionPerformed
 
     private void algoritmoDijkstraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_algoritmoDijkstraActionPerformed
         // TODO add your handling code here:
@@ -1303,7 +1303,39 @@ public class Tela extends javax.swing.JDialog {
     }
     private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
         Kruskal kru = new Kruskal();
+
         kru.imprimeKruskal(graph);
+
+        graph=kru.imprimeKruskal(graph);
+        String adjacenciaTotal = "digraph G {";
+        for (Edge a : graph.getEdge()) {
+            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
+
+        }
+//        adjacenciaTotal += graph.listaAdjacencia(graph);
+        adjacenciaTotal += "}";
+
+        Process p;
+        File arquivo = new File("src\\os\\dot\\file.dot");
+        try (FileWriter fw = new FileWriter(arquivo)) {
+            fw.write(adjacenciaTotal);
+            fw.flush();
+            String commandLine = "release\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\file.png";
+            p = Runtime.getRuntime().exec(commandLine);
+            while (p.isAlive()) {
+            }
+
+            File arqImg = new File("src\\os\\img\\file.png");
+            ImageIcon image = new ImageIcon(arqImg.getCanonicalPath());
+            image.getImage().flush();
+            imagem.setIcon(image);
+            imagem.setText("");
+            JOptionPane.showMessageDialog(null, null, "Imagem do grafo", 0, image);
+
+        } catch (IOException ex) {
+            System.out.println("Erro do Executar Comando: " + ex.getMessage());
+        }
+
     }//GEN-LAST:event_KruskalActionPerformed
 
     
@@ -1455,11 +1487,11 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JButton conjunto;
     private javax.swing.JButton criarNo;
     private javax.swing.JButton editarVertice;
+    private javax.swing.JButton gerarImagem;
     private javax.swing.JButton gerarXml;
     private javax.swing.JButton grau;
     private javax.swing.JLabel imagem;
     private javax.swing.JButton incidente;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -256,4 +256,7 @@ public void limparArestaVisitada(){
 		for(int i=0; i<this.getEdge().size() ;i++)
 			this.getEdge().get(i).setVisitado(false);
 	}
+
+
+
 }
