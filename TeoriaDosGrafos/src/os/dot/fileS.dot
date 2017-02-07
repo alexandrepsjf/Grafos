@@ -1,8 +1,1 @@
-digraph G {a -> b[label=4];
-a -> d[label=3];
-a -> e[label=6];
-c -> e[label=2];
-c -> b[label=7];
-b -> d[label=2];
-b -> c[label=3];
-}
+digraph G {}
