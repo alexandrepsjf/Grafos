@@ -10,15 +10,16 @@ import view.Tela;
 public class Kruskal {
 
     public Graph imprimeKruskal(Graph inicial) {
-
+        Graph temp = new Graph();
+        temp=inicial;
         Graph resultado = new Graph();
         Edge arestaAux = new Edge();
         int j=0;
         
-        for (int i = 0; i < inicial.getEdge().size(); i++) {
+        for (int i = 0; i < temp.getEdge().size(); i++) {
             //busca aresta com menor peso ainda nao verificado no grafo inicial
-            arestaAux = inicial.menorPeso();
-            inicial.getEdge().remove(arestaAux);
+            arestaAux = temp.menorPeso(temp);
+            temp.getEdge().remove(arestaAux);
             //se tal aresta nao formar um ciclo ao ser adicionada, ela eh adicionada a arvore de Kruskal
             if (!resultado.temCiclo(arestaAux)) {
                 resultado.addAresta(arestaAux);

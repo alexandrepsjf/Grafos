@@ -41,6 +41,11 @@
         <Property name="text" type="java.lang.String" value="digraph G {&#xa;     a -&gt; b -&gt; c;&#xa;     b -&gt; d [label=&quot;0.2&quot;,color=red,penwidth=3.0 ];&#xa;     d -&gt; a;&#xa; }"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JLabel" name="imagem1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel14"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">

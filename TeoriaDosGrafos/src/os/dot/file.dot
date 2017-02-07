@@ -1,1 +1,3 @@
-digraph G {}
+digraph G {a -> b[label=4];
+a -> e[label=6];
+}
