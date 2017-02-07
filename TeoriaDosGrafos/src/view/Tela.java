@@ -1245,6 +1245,8 @@ public class Tela extends javax.swing.JDialog {
 
     private void gerarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarImagemActionPerformed
         // TODO add your handling code here:
+        graph.setNodes(vertices);
+        graph.setEdge(arestas);
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
             adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
