@@ -1245,6 +1245,8 @@ public class Tela extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        graph.setNodes(vertices);
+        graph.setEdge(arestas);
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
             adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
@@ -1303,6 +1305,8 @@ public class Tela extends javax.swing.JDialog {
     }
     private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
         Kruskal kru = new Kruskal();
+        graph.setNodes(vertices);
+        graph.setEdge(arestas);
         kru.imprimeKruskal(graph);
     }//GEN-LAST:event_KruskalActionPerformed
 
