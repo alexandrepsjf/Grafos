@@ -187,18 +187,18 @@ public class Graph {
      public Edge menorPeso() {
         int j;
 
-        for (j = 0; j < graph.getEdge().size(); j++) {
-            if ((graph.getEdge().get(j).isVisitado() == false)) {
-                graph.getEdge().get(j).setVisitado(true);
+        for (j = 0; j < this.getEdge().size(); j++) {
+            if ((this.getEdge().get(j).isVisitado() == false)) {
+                this.getEdge().get(j).setVisitado(true);
 
-                for (int i = (j + 1); i < graph.getEdge().size(); i++) {
+                for (int i = (j + 1); i < this.getEdge().size(); i++) {
 
-                    if ((graph.getEdge().get(i).isVisitado() == false)
-                            && (graph.getEdge().get(j).getWeight() > graph.getEdge().get(i).getWeight())) {
+                    if ((this.getEdge().get(i).isVisitado() == false)
+                            && (this.getEdge().get(j).getWeight() > this.getEdge().get(i).getWeight())) {
 
-                        graph.getEdge().get(j).setVisitado(false);
+                        this.getEdge().get(j).setVisitado(false);
                         j = i;
-                        graph.getEdge().get(j).setVisitado(true);
+                        this.getEdge().get(j).setVisitado(true);
                     }
                 }
                 
@@ -206,7 +206,7 @@ public class Graph {
             }
         }
 
-        return graph.getEdge().get(j);
+        return this.getEdge().get(j);
     }
 
 

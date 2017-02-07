@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import model.CaminhoMinimo;
 import model.Graph;
 import model.Graphml;
-import model.Kruskal;
+
 
 /**
  *
@@ -48,7 +48,8 @@ public class Tela extends javax.swing.JDialog {
     private String choose = null;
     private String id, edgedefault;
     public CaminhoMinimo menorCaminho = new CaminhoMinimo();
-
+    Graph resultado = new Graph();
+        Edge arestaAux= new Edge();
     public Graph getGraph() {
         return graph;
     }
@@ -1248,8 +1249,8 @@ public class Tela extends javax.swing.JDialog {
 
     private void gerarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarImagemActionPerformed
         // TODO add your handling code here:
-        graph.setNodes(vertices);
-        graph.setEdge(arestas);
+        graph.setNodes((ArrayList<Node>) vertices.clone());
+        graph.setEdge((ArrayList<Edge>) arestas.clone());
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
             adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
@@ -1307,36 +1308,29 @@ public class Tela extends javax.swing.JDialog {
     }//GEN-LAST:event_algoritmoDijkstraActionPerformed
     }
     private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
-        Graph resultado = new Graph();
-        Edge arestaAux;
+        
+        graphml.getGraph().setEdge((ArrayList<Edge>) arestas.clone());
+        graphml.getGraph().setNodes((ArrayList<Node>) vertices.clone());
+        
+        
         for(int i=0;i<graphml.getGraph().getEdge().size();i++){
 					//busca aresta com menor peso ainda nao verificado no grafo inicial
 					arestaAux= graphml.getGraph().menorPeso();
 					//se tal aresta nao formar um ciclo ao ser adicionada, ela eh adicionada a arvore de Kruskal
 					if(!resultado.temCiclo(arestaAux)){
-						resultado.addAresta(arestaAux.getWeight(),arestaAux.getSource(),arestaAux.getTarget());
+                                                resultado.temCiclo(arestaAux);
+						resultado.addAresta(arestaAux);
+                                                
 					}
-				}
+				graphml.getGraph().getEdge().remove(arestaAux);}
 				
 				
 
-    
-//        int i,j;
-//        for(i=0;i<graphml.getGraph().getEdge().size();i++){
-//            arestas.set(i, graphml.getGraph().getEdge().get(i));
-//        }
-//        for(j=0;j<graphml.getGraph().getNodes().size();j++){
-//            vertices.set(j, graphml.getGraph().getNodes().get(j));
-//        }
-//        Kruskal kru = new Kruskal();
-//        Graph graphKruskal = new Graph();
-//        graphKruskal.setEdge((ArrayList<Edge>) arestas.clone());
-//        graphKruskal.setNodes((ArrayList<Node>) vertices.clone());
-//        graphKruskal=kru.imprimeKruskal(graphKruskal);
+
         String adjacenciaTotal2 = "digraph G {";
         for (Edge a : resultado.getEdge()) {
             adjacenciaTotal2 += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
-
+            
         }
         
         adjacenciaTotal2 += "}";
@@ -1361,6 +1355,7 @@ public class Tela extends javax.swing.JDialog {
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());
         }
+        
     }//GEN-LAST:event_KruskalActionPerformed
 
     
