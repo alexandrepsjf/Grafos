@@ -201,7 +201,7 @@ public class Graph {
                         this.getEdge().get(j).setVisitado(true);
                     }
                 }
-
+                
                 break;
             }
         }
@@ -257,6 +257,42 @@ public void limparArestaVisitada(){
 			this.getEdge().get(i).setVisitado(false);
 	}
 
-
-
+public	ArrayList<Edge> buscaEmProfundidade(Node raiz, Node buscado){
+        
+    	ArrayList<Edge> arvoreProfundidade = new ArrayList<Edge>(); 
+    	
+    	if(this.buscaRecursiva(raiz, buscado))
+    		System.out.println("Vertice encontrado");
+    	else
+    		System.out.println("Vertice nao encontrado");
+    	
+    	for (int i=0; i<this.getEdge().size(); i++){
+    		if(this.getEdge().get(i).isVisitado())
+    			arvoreProfundidade.add(this.getEdge().get(i));
+    	}
+    	
+    	return arvoreProfundidade;
+    }
+public boolean buscaRecursiva(Node raiz, Node buscado){
+		
+    	
+    	
+    	raiz.setVisitado(true);
+		
+    	if (!raiz.equals(buscado)){
+    		for(int i=0; i<raiz.getArestas().size();i++){
+    			
+    			if (!raiz.getArestas().get(i).getNode2().isVisitado()){
+	    			//acha aresta entre eles e seta como visitada
+	    			raiz.getArestas().get(i).setVisitado(true);
+	    			//continua busca recursivamente
+	    			if (this.buscaRecursiva(raiz.getArestas().get(i).getNode2(),buscado)){
+	    				return true;}
+	    		}
+	    	}
+    	}else{
+    		return true;
+    	}
+    	return false;
+    }
 }

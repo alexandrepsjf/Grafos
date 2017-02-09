@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import model.CaminhoMinimo;
 import model.Graph;
 import model.Graphml;
-import model.Kruskal;
+
 
 /**
  *
@@ -48,7 +48,9 @@ public class Tela extends javax.swing.JDialog {
     private String choose = null;
     private String id, edgedefault;
     public CaminhoMinimo menorCaminho = new CaminhoMinimo();
-
+    Graph inicial = new Graph();
+    Graph resultado = new Graph();
+        Edge arestaAux= new Edge();
     public Graph getGraph() {
         return graph;
     }
@@ -133,6 +135,7 @@ public class Tela extends javax.swing.JDialog {
         FileChooser = new javax.swing.JFileChooser();
         imagem = new javax.swing.JLabel();
         jtaEntrada = new javax.swing.JTextArea();
+        imagem1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaArestas = new javax.swing.JTable();
@@ -188,6 +191,9 @@ public class Tela extends javax.swing.JDialog {
         jMenu1 = new javax.swing.JMenu();
         algoritmoDijkstra = new javax.swing.JMenuItem();
         Kruskal = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        Busca = new javax.swing.JMenu();
+        buscaProfundidade = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -204,6 +210,8 @@ public class Tela extends javax.swing.JDialog {
         jtaEntrada.setColumns(20);
         jtaEntrada.setRows(5);
         jtaEntrada.setText("digraph G {\n     a -> b -> c;\n     b -> d [label=\"0.2\",color=red,penwidth=3.0 ];\n     d -> a;\n }");
+
+        imagem1.setText("jLabel14");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de alunos");
@@ -726,7 +734,22 @@ public class Tela extends javax.swing.JDialog {
         });
         jMenu1.add(Kruskal);
 
+        jMenuItem3.setText("jMenuItem3");
+        jMenu1.add(jMenuItem3);
+
         jMenuBar1.add(jMenu1);
+
+        Busca.setText("Busca");
+
+        buscaProfundidade.setText("Profundidade");
+        buscaProfundidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscaProfundidadeActionPerformed(evt);
+            }
+        });
+        Busca.add(buscaProfundidade);
+
+        jMenuBar1.add(Busca);
 
         setJMenuBar(jMenuBar1);
 
@@ -1245,6 +1268,8 @@ public class Tela extends javax.swing.JDialog {
 
     private void gerarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarImagemActionPerformed
         // TODO add your handling code here:
+        graph.setNodes((ArrayList<Node>) vertices.clone());
+        graph.setEdge((ArrayList<Edge>) arestas.clone());
         String adjacenciaTotal = "digraph G {";
         for (Edge a : graph.getEdge()) {
             adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
@@ -1302,41 +1327,92 @@ public class Tela extends javax.swing.JDialog {
     }//GEN-LAST:event_algoritmoDijkstraActionPerformed
     }
     private void KruskalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KruskalActionPerformed
-        Kruskal kru = new Kruskal();
+        
+        graphml.getGraph().setEdge((ArrayList<Edge>) arestas.clone());
+        graphml.getGraph().setNodes((ArrayList<Node>) vertices.clone());
+        
+        
+        for(int i=0;i<graphml.getGraph().getEdge().size();i++){
+					//busca aresta com menor peso ainda nao verificado no grafo inicial
+					arestaAux= graphml.getGraph().menorPeso();
+					//se tal aresta nao formar um ciclo ao ser adicionada, ela eh adicionada a arvore de Kruskal
+					if(!resultado.temCiclo(arestaAux)){
+                                                resultado.temCiclo(arestaAux);
+						resultado.addAresta(arestaAux);
+                                                
+					}
+				graphml.getGraph().getEdge().remove(arestaAux);}
+				
+				
 
-        kru.imprimeKruskal(graph);
 
-        graph=kru.imprimeKruskal(graph);
-        String adjacenciaTotal = "digraph G {";
-        for (Edge a : graph.getEdge()) {
-            adjacenciaTotal += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
-
+        String adjacenciaTotal2 = "digraph G {";
+        for (Edge a : resultado.getEdge()) {
+            adjacenciaTotal2 += a.getSource() + " -> " + a.getTarget() + "[label=" + a.getWeight() + "];\n";
+            
         }
-//        adjacenciaTotal += graph.listaAdjacencia(graph);
-        adjacenciaTotal += "}";
+        
+        adjacenciaTotal2 += "}";
 
-        Process p;
+        Process p1;
         File arquivo = new File("src\\os\\dot\\file.dot");
         try (FileWriter fw = new FileWriter(arquivo)) {
-            fw.write(adjacenciaTotal);
+            fw.write(adjacenciaTotal2);
             fw.flush();
             String commandLine = "release\\bin\\dot -Tpng " + arquivo.getCanonicalPath() + " -o src\\os\\img\\file.png";
-            p = Runtime.getRuntime().exec(commandLine);
-            while (p.isAlive()) {
+            p1 = Runtime.getRuntime().exec(commandLine);
+            while (p1.isAlive()) {
             }
 
             File arqImg = new File("src\\os\\img\\file.png");
-            ImageIcon image = new ImageIcon(arqImg.getCanonicalPath());
-            image.getImage().flush();
-            imagem.setIcon(image);
-            imagem.setText("");
-            JOptionPane.showMessageDialog(null, null, "Imagem do grafo", 0, image);
+            ImageIcon image1 = new ImageIcon(arqImg.getCanonicalPath());
+            image1.getImage().flush();
+            imagem1.setIcon(image1);
+            imagem1.setText("");
+            JOptionPane.showMessageDialog(null, null, "Imagem do grafo", 0, image1);
 
         } catch (IOException ex) {
             System.out.println("Erro do Executar Comando: " + ex.getMessage());
         }
-
+        
     }//GEN-LAST:event_KruskalActionPerformed
+
+    private void buscaProfundidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaProfundidadeActionPerformed
+        String profundidade="";
+        inicial=graphml.getGraph();
+        for (Node no : inicial.getNodes()) {
+            for (Edge aresta : inicial.getEdge()) {
+                if (no.equals(aresta.getNode1())) {
+                    no.getArestas().add(aresta);
+                }
+            }
+        }
+         Node target = null, source = null;
+        String idSource = JOptionPane.showInputDialog("digite o nó origem");
+        String idTarget = JOptionPane.showInputDialog("digite o nó alvo");
+        for (Node no : graphml.getGraph().getNodes()) {
+            if (no.getId().equals(idTarget)) {
+                target = no;
+            }
+            if (no.getId().equals(idSource)) {
+                source = no;
+            }
+        }
+        if (target != null && source != null) {
+            resultado.setEdge(inicial.buscaEmProfundidade(source, target));
+//            caminho = Dijkstra.findShortestPath(graph, source, target);
+            for (Edge no : resultado.getEdge()) {
+                profundidade += " -> " + no.getId();
+            }
+            JOptionPane.showMessageDialog(null, profundidade);
+            System.out.println(profundidade);
+        } else {
+            JOptionPane.showConfirmDialog(null, "Este nó não existe");
+    }
+        
+        
+        
+    }//GEN-LAST:event_buscaProfundidadeActionPerformed
 
     
 
@@ -1471,6 +1547,7 @@ public class Tela extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Busca;
     private javax.swing.JButton CriarAresta;
     private javax.swing.JButton EditarAresta;
     private javax.swing.JFileChooser FileChooser;
@@ -1484,6 +1561,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JTextField arestaGrau;
     private javax.swing.JButton arestaIncidente;
     private javax.swing.JButton arestaIncidente1;
+    private javax.swing.JMenuItem buscaProfundidade;
     private javax.swing.JButton conjunto;
     private javax.swing.JButton criarNo;
     private javax.swing.JButton editarVertice;
@@ -1491,6 +1569,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JButton gerarXml;
     private javax.swing.JButton grau;
     private javax.swing.JLabel imagem;
+    private javax.swing.JLabel imagem1;
     private javax.swing.JButton incidente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1509,6 +1588,7 @@ public class Tela extends javax.swing.JDialog {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelVertice;
